@@ -1,0 +1,1584 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>AURELIA GRAND RESORT | 奧蕾莉亞尊榮海景度假酒店</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        serif: ['"Cinzel"', '"Noto Sans TC"', 'serif'],
+                        sans: ['"Plus Jakarta Sans"', '"Noto Sans TC"', 'sans-serif'],
+                    },
+                    colors: {
+                        navy: {
+                            950: '#04070d',
+                            900: '#0a0f1c',
+                            800: '#12192c',
+                            700: '#1c2642',
+                        },
+                        gold: {
+                            300: '#f5d98a',
+                            400: '#e5b95c',
+                            500: '#d4af37',
+                            600: '#b38b22',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        html, body {
+            overflow-x: hidden;
+            max-width: 100%;
+            background-color: #04070d;
+            color: #f8fafc;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .glass-panel {
+            background: rgba(18, 25, 44, 0.72);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border: 1px solid rgba(212, 175, 55, 0.18);
+        }
+        .glass-card {
+            background: linear-gradient(145deg, rgba(28, 38, 66, 0.45), rgba(10, 15, 28, 0.85));
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        @media (hover: hover) {
+            .glass-card:hover {
+                transform: translateY(-6px);
+                border-color: rgba(212, 175, 55, 0.45);
+                box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.7), 0 0 20px rgba(212, 175, 55, 0.12);
+            }
+        }
+        .gold-gradient {
+            background: linear-gradient(135deg, #f5d98a 0%, #d4af37 50%, #b38b22 100%);
+        }
+        .gold-text-gradient {
+            background: linear-gradient(135deg, #f5d98a 0%, #d4af37 60%, #e5b95c 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .hero-bg {
+            background-image: linear-gradient(to bottom, rgba(4, 7, 13, 0.45) 0%, rgba(4, 7, 13, 0.6) 60%, #04070d 100%),
+                              url('https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=2070&q=85');
+            background-size: cover;
+            background-position: center;
+        }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .pb-safe { padding-bottom: env(safe-area-inset-bottom, 12px); }
+    </style>
+</head>
+<body class="font-sans antialiased selection:bg-gold-500/30 selection:text-gold-300 pb-20 md:pb-0">
+
+    <!-- ================= 頂部導覽列 ================= -->
+    <nav id="navbar" class="fixed top-0 left-0 right-0 z-40 transition-all duration-300 py-3 md:py-4 bg-navy-950/90 backdrop-blur-md border-b border-white/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
+            <!-- Brand -->
+            <a href="#" class="flex items-center gap-2.5 group">
+                <div class="w-9 h-9 md:w-10 md:h-10 rounded-xl gold-gradient flex items-center justify-center text-navy-950 font-serif font-bold text-lg md:text-xl shadow-lg">A</div>
+                <div>
+                    <span class="font-serif text-lg md:text-xl tracking-widest font-bold text-white block leading-none">AURELIA</span>
+                    <span class="text-[9px] md:text-[10px] tracking-[0.22em] text-gold-400 uppercase block mt-0.5">Grand Resort</span>
+                </div>
+            </a>
+
+            <!-- Desktop Menu -->
+            <div class="hidden lg:flex items-center gap-6 text-sm text-slate-300 font-medium">
+                <a href="#rooms" class="hover:text-gold-400 transition-colors">尊榮房型</a>
+                <a href="#offers" class="hover:text-gold-400 transition-colors flex items-center gap-1">
+                    精選方案
+                    <span class="px-1.5 py-0.5 text-[10px] rounded bg-gold-500/20 text-gold-300 border border-gold-500/30">15</span>
+                </a>
+                <a href="#membership-plans" class="hover:text-gold-400 transition-colors flex items-center gap-1 text-gold-300">
+                    <i data-lucide="crown" class="w-3.5 h-3.5"></i>尊榮會籍
+                </a>
+                <a href="#dining" class="hover:text-gold-400 transition-colors">美饌饗宴</a>
+                <a href="#location" class="hover:text-gold-400 transition-colors">交通指南</a>
+                <a href="#faq" class="hover:text-gold-400 transition-colors">常見問答</a>
+            </div>
+
+            <!-- Right Controls -->
+            <div class="flex items-center gap-2 sm:gap-3">
+                <!-- Currency Switch -->
+                <select id="currency-select" onchange="changeCurrency(this.value)" class="bg-navy-800/90 border border-white/15 text-xs text-slate-200 rounded-lg px-2 py-1.5 focus:outline-none focus:border-gold-400">
+                    <option value="TWD">TWD</option>
+                    <option value="USD">USD</option>
+                    <option value="JPY">JPY</option>
+                </select>
+
+                <!-- Wishlist Badge -->
+                <button onclick="openMemberDashboard('wishlist')" class="relative p-2 rounded-xl bg-navy-800/80 border border-white/10 text-slate-300 hover:text-gold-400 transition-colors" title="心願收藏">
+                    <i data-lucide="heart" class="w-4 h-4"></i>
+                    <span id="nav-wishlist-count" class="hidden absolute -top-1 -right-1 w-4 h-4 rounded-full gold-gradient text-navy-950 text-[10px] font-bold flex items-center justify-center">0</span>
+                </button>
+
+                <!-- Friend Chat Shortcut -->
+                <button onclick="openMemberDashboard('chat')" class="relative p-2 rounded-xl bg-navy-800/80 border border-white/10 text-slate-300 hover:text-gold-400 transition-colors" title="真好友聊天室">
+                    <i data-lucide="message-circle" class="w-4 h-4"></i>
+                    <span class="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-emerald-400 border-2 border-navy-950"></span>
+                </button>
+
+                <!-- Auth / Member Trigger -->
+                <button id="auth-nav-btn" onclick="handleAuthNavClick()" class="px-3.5 py-2 rounded-xl gold-gradient text-navy-950 font-semibold text-xs sm:text-sm flex items-center gap-1.5 shadow-lg hover:brightness-110 transition-all">
+                    <i data-lucide="user" class="w-4 h-4"></i>
+                    <span id="auth-nav-text">會員登入</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ================= 主視覺 HERO SECTION ================= -->
+    <header class="hero-bg relative pt-28 pb-16 md:pt-40 md:pb-28 px-4">
+        <div class="max-w-7xl mx-auto text-center">
+            <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-navy-900/80 border border-gold-500/30 text-gold-300 text-xs mb-5">
+                <i data-lucide="sparkles" class="w-3.5 h-3.5 text-gold-400"></i>
+                <span>2026 亞洲頂級海景奢華度假首選 · 會員專享首訂立折 NT$500</span>
+            </div>
+            <h1 class="font-serif text-3xl sm:text-5xl md:text-6xl font-bold text-white tracking-wide leading-tight mb-4">
+                靜享蔚藍海岸<br class="sm:hidden"> <span class="gold-text-gradient">極致私密奢華</span>
+            </h1>
+            <p class="text-slate-300 text-sm sm:text-base md:text-lg max-w-2xl mx-auto mb-8 leading-relaxed">
+                座落於絕美海岸線制高點，270 度無邊際海景套房、米其林星級主廚美饌與專屬私人管家禮遇，為您譜寫難忘的度假篇章。
+            </p>
+
+            <!-- Booking Search Bar -->
+            <div class="max-w-5xl mx-auto glass-panel rounded-2xl p-4 sm:p-5 shadow-2xl text-left">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
+                    <div>
+                        <label class="block text-[11px] uppercase tracking-wider text-gold-400 font-semibold mb-1">入住日期 Check-in</label>
+                        <input type="date" id="search-checkin" class="w-full bg-navy-900/90 border border-white/15 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-gold-400">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] uppercase tracking-wider text-gold-400 font-semibold mb-1">退房日期 Check-out</label>
+                        <input type="date" id="search-checkout" class="w-full bg-navy-900/90 border border-white/15 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-gold-400">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] uppercase tracking-wider text-gold-400 font-semibold mb-1">入住房客 Guests</label>
+                        <select id="search-guests" class="w-full bg-navy-900/90 border border-white/15 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-gold-400">
+                            <option value="2">2 位成人 · 1 間客房</option>
+                            <option value="3">2 位成人 + 1 位兒童</option>
+                            <option value="4">4 位成人 · 家庭套房</option>
+                            <option value="1">1 位商務貴賓</option>
+                        </select>
+                    </div>
+                    <div class="flex items-end">
+                        <button onclick="scrollToRoomsWithDates()" class="w-full py-2.5 px-5 rounded-xl gold-gradient text-navy-950 font-bold text-sm flex items-center justify-center gap-2 shadow-lg hover:brightness-110 transition-all">
+                            <i data-lucide="search" class="w-4 h-4"></i>
+                            <span>搜尋即時空房</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- ================= 尊榮房型展示區 ================= -->
+    <section id="rooms" class="py-16 md:py-24 px-4 max-w-7xl mx-auto">
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
+            <div>
+                <span class="text-gold-400 text-xs font-semibold tracking-[0.25em] uppercase">Rooms & Suites</span>
+                <h2 class="font-serif text-2xl sm:text-4xl font-bold text-white mt-1">精選海景客房與私人 Villa</h2>
+            </div>
+            <div class="flex flex-wrap items-center gap-2 text-xs text-slate-400">
+                <span class="px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">● 平日享 85 折禮遇</span>
+                <span class="px-2.5 py-1 rounded-full bg-gold-500/10 text-gold-300 border border-gold-500/20">★ 登入會員再享 9 折</span>
+            </div>
+        </div>
+
+        <div id="rooms-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+            <!-- JS 動態渲染房型 -->
+        </div>
+    </section>
+
+    <!-- ================= 15 大特色方案專區 ================= -->
+    <section id="offers" class="py-16 md:py-24 px-4 bg-navy-900/50 border-y border-white/5">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center max-w-3xl mx-auto mb-10">
+                <span class="text-gold-400 text-xs font-semibold tracking-[0.25em] uppercase">Curated Packages</span>
+                <h2 class="font-serif text-2xl sm:text-4xl font-bold text-white mt-1 mb-3">15 大專屬住房與體驗方案</h2>
+                <p class="text-slate-400 text-sm">點擊任一方案將自動套用專屬禮遇代碼與客製化訂房選項</p>
+            </div>
+
+            <!-- Filter Tabs -->
+            <div class="flex items-center justify-start sm:justify-center gap-2 overflow-x-auto no-scrollbar pb-3 mb-8">
+                <button onclick="filterPackages('all', this)" class="pkg-filter-btn active px-4 py-2 rounded-full text-xs font-semibold whitespace-nowrap gold-gradient text-navy-950">全部方案 (15)</button>
+                <button onclick="filterPackages('resort', this)" class="pkg-filter-btn px-4 py-2 rounded-full text-xs font-semibold whitespace-nowrap bg-navy-800 text-slate-300 border border-white/10 hover:border-gold-400">休閒度假 (5)</button>
+                <button onclick="filterPackages('dining', this)" class="pkg-filter-btn px-4 py-2 rounded-full text-xs font-semibold whitespace-nowrap bg-navy-800 text-slate-300 border border-white/10 hover:border-gold-400">美食饗宴 (2)</button>
+                <button onclick="filterPackages('business', this)" class="pkg-filter-btn px-4 py-2 rounded-full text-xs font-semibold whitespace-nowrap bg-navy-800 text-slate-300 border border-white/10 hover:border-gold-400">商務長住與休憩 (3)</button>
+                <button onclick="filterPackages('pet', this)" class="pkg-filter-btn px-4 py-2 rounded-full text-xs font-semibold whitespace-nowrap bg-navy-800 text-slate-300 border border-white/10 hover:border-gold-400">毛孩專區 (1)</button>
+                <button onclick="filterPackages('addon', this)" class="pkg-filter-btn px-4 py-2 rounded-full text-xs font-semibold whitespace-nowrap bg-navy-800 text-slate-300 border border-white/10 hover:border-gold-400">加值與禮券 (4)</button>
+            </div>
+
+            <!-- Packages Grid -->
+            <div id="packages-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                <!-- JS 動態渲染 15 種方案 -->
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= 尊榮會員方案購買專區 ================= -->
+    <section id="membership-plans" class="py-16 md:py-24 px-4 max-w-7xl mx-auto">
+        <div class="text-center max-w-3xl mx-auto mb-12">
+            <span class="text-gold-400 text-xs font-semibold tracking-[0.25em] uppercase">VIP Membership Club</span>
+            <h2 class="font-serif text-2xl sm:text-4xl font-bold text-white mt-1 mb-3">尊榮會籍與年度通行方案購買</h2>
+            <p class="text-slate-400 text-sm">立即開通年度尊榮會籍，享全年訂房最高 75 折、免費海景套房住宿券、行政酒廊通行與開卡點數回饋</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8">
+            <!-- Silver Plan -->
+            <div class="glass-card rounded-3xl p-6 sm:p-8 flex flex-col justify-between">
+                <div>
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="px-3 py-1 rounded-full text-xs font-bold bg-slate-700/60 text-slate-200 border border-slate-500/40">SILVER EXPLORER</span>
+                        <i data-lucide="award" class="w-6 h-6 text-slate-300"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-1">銀卡探索年費會籍</h3>
+                    <p class="text-xs text-slate-400 mb-5">適合一年 1–2 次輕奢度假的探索旅人</p>
+                    <div class="mb-6">
+                        <span class="text-3xl font-bold text-white" data-price="3800">NT$ 3,800</span>
+                        <span class="text-xs text-slate-400"> / 年</span>
+                    </div>
+                    <ul class="space-y-3 text-sm text-slate-300 mb-8">
+                        <li class="flex items-start gap-2.5"><i data-lucide="check-circle-2" class="w-4 h-4 text-gold-400 shrink-0 mt-0.5"></i><span>全年官網訂房享 <strong>88 折</strong> 專屬優惠</span></li>
+                        <li class="flex items-start gap-2.5"><i data-lucide="check-circle-2" class="w-4 h-4 text-gold-400 shrink-0 mt-0.5"></i><span>贈送 <strong>HARVEST 雙人自助早餐券 × 2 張</strong></span></li>
+                        <li class="flex items-start gap-2.5"><i data-lucide="check-circle-2" class="w-4 h-4 text-gold-400 shrink-0 mt-0.5"></i><span>開卡立即獲贈 <strong>1,500 點</strong> 住宿折抵金</span></li>
+                        <li class="flex items-start gap-2.5"><i data-lucide="check-circle-2" class="w-4 h-4 text-gold-400 shrink-0 mt-0.5"></i><span>視房況享延遲退房至 13:00</span></li>
+                    </ul>
+                </div>
+                <button onclick="openMembershipPurchase('silver')" class="w-full py-3 rounded-xl bg-navy-800 hover:bg-navy-700 text-white border border-gold-500/40 font-semibold text-sm transition-all">
+                    立即開通銀卡會籍
+                </button>
+            </div>
+
+            <!-- Gold Plan (Popular) -->
+            <div class="glass-card rounded-3xl p-6 sm:p-8 flex flex-col justify-between border-2 border-gold-400/70 relative shadow-2xl">
+                <div class="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full gold-gradient text-navy-950 text-xs font-bold tracking-wider shadow-lg">
+                    最受歡迎 · 超值回本首選
+                </div>
+                <div>
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="px-3 py-1 rounded-full text-xs font-bold bg-gold-500/20 text-gold-300 border border-gold-400/40">ELITE GOLD</span>
+                        <i data-lucide="crown" class="w-6 h-6 text-gold-400"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-1">金卡尊榮年度會籍</h3>
+                    <p class="text-xs text-slate-400 mb-5">贈一晚海景套房住宿券，開卡即刻回本</p>
+                    <div class="mb-6">
+                        <span class="text-3xl font-bold gold-text-gradient" data-price="12800">NT$ 12,800</span>
+                        <span class="text-xs text-slate-400"> / 年</span>
+                    </div>
+                    <ul class="space-y-3 text-sm text-slate-200 mb-8">
+                        <li class="flex items-start gap-2.5"><i data-lucide="check-circle-2" class="w-4 h-4 text-gold-400 shrink-0 mt-0.5"></i><span>贈送 <strong>豪華海景套房免費住宿券 × 1 晚</strong>（價值 NT$16,800）</span></li>
+                        <li class="flex items-start gap-2.5"><i data-lucide="check-circle-2" class="w-4 h-4 text-gold-400 shrink-0 mt-0.5"></i><span>全年官網訂房享 <strong>8 折</strong> 與房型免費升等一級</span></li>
+                        <li class="flex items-start gap-2.5"><i data-lucide="check-circle-2" class="w-4 h-4 text-gold-400 shrink-0 mt-0.5"></i><span>保證延遲退房至 <strong>14:00</strong> ＋ 雙人芳療 SPA 體驗券</span></li>
+                        <li class="flex items-start gap-2.5"><i data-lucide="check-circle-2" class="w-4 h-4 text-gold-400 shrink-0 mt-0.5"></i><span>開卡立即獲贈 <strong>5,000 點</strong> 住宿折抵金</span></li>
+                    </ul>
+                </div>
+                <button onclick="openMembershipPurchase('gold')" class="w-full py-3.5 rounded-xl gold-gradient text-navy-950 font-bold text-sm shadow-lg hover:brightness-110 transition-all">
+                    立即開通金卡會籍
+                </button>
+            </div>
+
+            <!-- Black Diamond Plan -->
+            <div class="glass-card rounded-3xl p-6 sm:p-8 flex flex-col justify-between">
+                <div>
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="px-3 py-1 rounded-full text-xs font-bold bg-purple-500/20 text-purple-300 border border-purple-400/40">BLACK DIAMOND</span>
+                        <i data-lucide="gem" class="w-6 h-6 text-purple-300"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-1">黑卡無界限量會籍</h3>
+                    <p class="text-xs text-slate-400 mb-5">全球限量 300 席，頂級私人管家與行政酒廊禮遇</p>
+                    <div class="mb-6">
+                        <span class="text-3xl font-bold text-white" data-price="36000">NT$ 36,000</span>
+                        <span class="text-xs text-slate-400"> / 年</span>
+                    </div>
+                    <ul class="space-y-3 text-sm text-slate-300 mb-8">
+                        <li class="flex items-start gap-2.5"><i data-lucide="check-circle-2" class="w-4 h-4 text-gold-400 shrink-0 mt-0.5"></i><span>贈送 <strong>行政海景套房免費住宿券 × 2 晚</strong></span></li>
+                        <li class="flex items-start gap-2.5"><i data-lucide="check-circle-2" class="w-4 h-4 text-gold-400 shrink-0 mt-0.5"></i><span><strong>行政酒廊全年無限次通行</strong>（含全日香檳與晚間雞尾酒）</span></li>
+                        <li class="flex items-start gap-2.5"><i data-lucide="check-circle-2" class="w-4 h-4 text-gold-400 shrink-0 mt-0.5"></i><span>高鐵／機場 <strong>賓士邁巴赫專車來回接送 × 2 趟</strong></span></li>
+                        <li class="flex items-start gap-2.5"><i data-lucide="check-circle-2" class="w-4 h-4 text-gold-400 shrink-0 mt-0.5"></i><span>保證延遲退房至 <strong>16:00</strong> ＋ 開卡 <strong>15,000 點</strong></span></li>
+                    </ul>
+                </div>
+                <button onclick="openMembershipPurchase('black')" class="w-full py-3 rounded-xl bg-navy-800 hover:bg-navy-700 text-gold-300 border border-gold-400/50 font-semibold text-sm transition-all">
+                    申請開通黑卡會籍
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= 餐飲與美饌介紹 ================= -->
+    <section id="dining" class="py-16 md:py-24 px-4 bg-navy-900/50 border-y border-white/5">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <span class="text-gold-400 text-xs font-semibold tracking-[0.25em] uppercase">Gastronomy</span>
+                <h2 class="font-serif text-2xl sm:text-4xl font-bold text-white mt-1 mb-2">星級美饌與高空景觀酒吧</h2>
+                <p class="text-slate-400 text-sm">嚴選產地直送頂級海鮮與日本 A5 和牛，支援線上即時訂位與本季菜單下載</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Dining 1 -->
+                <div class="glass-card rounded-2xl overflow-hidden flex flex-col">
+                    <img src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=900&q=80" alt="HARVEST 自助百匯" class="h-48 w-full object-cover">
+                    <div class="p-6 flex-1 flex flex-col justify-between">
+                        <div>
+                            <span class="text-[11px] text-gold-400 font-semibold uppercase tracking-wider">All-Day Buffet · 1F</span>
+                            <h3 class="text-lg font-bold text-white mt-1 mb-2">HARVEST 海岸自助百匯</h3>
+                            <p class="text-xs text-slate-400 leading-relaxed mb-4">供應現流龍蝦、松葉蟹腳、現切爐烤肋眼牛排與主廚手作法式甜點。</p>
+                        </div>
+                        <div class="flex gap-2">
+                            <button onclick="openDiningModal('HARVEST 海岸自助百匯')" class="flex-1 py-2 rounded-xl gold-gradient text-navy-950 font-bold text-xs">線上訂位</button>
+                            <button onclick="downloadMenuPDF('HARVEST_2026_Menu.pdf')" class="px-3 py-2 rounded-xl bg-navy-800 text-slate-200 border border-white/15 text-xs hover:border-gold-400">下載菜單 PDF</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Dining 2 -->
+                <div class="glass-card rounded-2xl overflow-hidden flex flex-col">
+                    <img src="https://images.unsplash.com/photo-1572116469696-31de0f17cc34?auto=format&fit=crop&w=900&q=80" alt="AURA 星空酒吧" class="h-48 w-full object-cover">
+                    <div class="p-6 flex-1 flex flex-col justify-between">
+                        <div>
+                            <span class="text-[11px] text-gold-400 font-semibold uppercase tracking-wider">Sky Lounge · 28F</span>
+                            <h3 class="text-lg font-bold text-white mt-1 mb-2">AURA 28F 星空高空酒吧</h3>
+                            <p class="text-xs text-slate-400 leading-relaxed mb-4">270 度無遮蔽海岸夜景，世界冠軍調酒師駐點創作海洋主題微醺特調。</p>
+                        </div>
+                        <div class="flex gap-2">
+                            <button onclick="openDiningModal('AURA 28F 星空高空酒吧')" class="flex-1 py-2 rounded-xl gold-gradient text-navy-950 font-bold text-xs">線上訂位</button>
+                            <button onclick="downloadMenuPDF('AURA_Bar_WineList.pdf')" class="px-3 py-2 rounded-xl bg-navy-800 text-slate-200 border border-white/15 text-xs hover:border-gold-400">酒單 PDF</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Dining 3 -->
+                <div class="glass-card rounded-2xl overflow-hidden flex flex-col">
+                    <img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=900&q=80" alt="LE JARDIN 下午茶" class="h-48 w-full object-cover">
+                    <div class="p-6 flex-1 flex flex-col justify-between">
+                        <div>
+                            <span class="text-[11px] text-gold-400 font-semibold uppercase tracking-wider">Afternoon Tea · 2F</span>
+                            <h3 class="text-lg font-bold text-white mt-1 mb-2">LE JARDIN 玻璃花房下午茶</h3>
+                            <p class="text-xs text-slate-400 leading-relaxed mb-4">三層珠寶盒英式午茶搭配法國百年 Mariage Frères 瑪黑兄弟茗茶。</p>
+                        </div>
+                        <div class="flex gap-2">
+                            <button onclick="openDiningModal('LE JARDIN 玻璃花房下午茶')" class="flex-1 py-2 rounded-xl gold-gradient text-navy-950 font-bold text-xs">線上訂位</button>
+                            <button onclick="downloadMenuPDF('LeJardin_HighTea.pdf')" class="px-3 py-2 rounded-xl bg-navy-800 text-slate-200 border border-white/15 text-xs hover:border-gold-400">午茶菜單</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= 交通指南與互動地圖 ================= -->
+    <section id="location" class="py-16 md:py-24 px-4 max-w-7xl mx-auto">
+        <div class="mb-10">
+            <span class="text-gold-400 text-xs font-semibold tracking-[0.25em] uppercase">Location & Access</span>
+            <h2 class="font-serif text-2xl sm:text-4xl font-bold text-white mt-1">交通指南、接駁班次與充電停車</h2>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            <div class="lg:col-span-6 space-y-4">
+                <div class="glass-panel rounded-2xl p-5">
+                    <h3 class="text-base font-bold text-gold-300 flex items-center gap-2 mb-3">
+                        <i data-lucide="bus" class="w-4 h-4"></i> 高鐵／火車站免費尊榮接駁車時刻表
+                    </h3>
+                    <div class="grid grid-cols-2 gap-3 text-xs text-slate-300">
+                        <div class="p-3 rounded-xl bg-navy-900/80 border border-white/10">
+                            <div class="text-gold-400 font-semibold mb-1">高鐵站 ➔ 飯店大廳</div>
+                            <p>10:30 / 13:30 / 15:30 / 18:30</p>
+                        </div>
+                        <div class="p-3 rounded-xl bg-navy-900/80 border border-white/10">
+                            <div class="text-gold-400 font-semibold mb-1">飯店大廳 ➔ 高鐵站</div>
+                            <p>09:30 / 11:30 / 14:30 / 17:30</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-panel rounded-2xl p-5">
+                    <h3 class="text-base font-bold text-gold-300 flex items-center gap-2 mb-2">
+                        <i data-lucide="zap" class="w-4 h-4"></i> 地下停車場與電動車 EV 充電樁資訊
+                    </h3>
+                    <ul class="text-xs text-slate-300 space-y-2 leading-relaxed">
+                        <li>• <strong>入口限高：</strong>B1–B3 平面地下停車場，車道限高 <strong>2.1 公尺</strong>，房客享全天候免費停車與專人代客泊車。</li>
+                        <li>• <strong>EV 充電站：</strong>B1 設有 <strong>12 座專用充電樁</strong>（包含 Tesla Destination Charger 與 J1772 / Type 2 規格）。</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="lg:col-span-6">
+                <div class="glass-panel rounded-2xl overflow-hidden h-72 lg:h-full min-h-[280px] border border-gold-500/20">
+                    <iframe title="Hotel Map" class="w-full h-full border-0 grayscale contrast-125 opacity-90" loading="lazy" src="https://www.openstreetmap.org/export/embed.html?bbox=120.95%2C24.78%2C121.02%2C24.82&amp;layer=mapnik"></iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= 住客評價與常見問答 FAQ ================= -->
+    <section id="faq" class="py-16 md:py-24 px-4 bg-navy-900/50 border-t border-white/5">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-10">
+                <span class="text-gold-400 text-xs font-semibold tracking-[0.25em] uppercase">FAQ</span>
+                <h2 class="font-serif text-2xl sm:text-4xl font-bold text-white mt-1">入住須知與常見問答</h2>
+            </div>
+
+            <div class="space-y-3" id="faq-container">
+                <div class="glass-panel rounded-2xl overflow-hidden">
+                    <button onclick="toggleFaq(this)" class="w-full px-5 py-4 text-left flex items-center justify-between font-semibold text-sm text-white">
+                        <span>Q1：請問飯店最早入住與最晚退房時間為何？可以寄放行李嗎？</span>
+                        <i data-lucide="chevron-down" class="w-4 h-4 text-gold-400 transition-transform"></i>
+                    </button>
+                    <div class="hidden px-5 pb-4 text-xs text-slate-300 leading-relaxed border-t border-white/5 pt-3">
+                        標準入住時間為下午 <strong>15:00</strong> 後，退房時間為上午 <strong>11:00</strong> 前（金卡會員享 14:00 延遲退房，黑卡享 16:00）。禮賓櫃檯提供 24 小時免費行李寄存服務。
+                    </div>
+                </div>
+                <div class="glass-panel rounded-2xl overflow-hidden">
+                    <button onclick="toggleFaq(this)" class="w-full px-5 py-4 text-left flex items-center justify-between font-semibold text-sm text-white">
+                        <span>Q2：兒童入住與加床收費標準為何？</span>
+                        <i data-lucide="chevron-down" class="w-4 h-4 text-gold-400 transition-transform"></i>
+                    </button>
+                    <div class="hidden px-5 pb-4 text-xs text-slate-300 leading-relaxed border-t border-white/5 pt-3">
+                        6 歲（含）以下兒童不佔床免費入住並贈送早餐；7–12 歲兒童加床每晚 NT$ 1,200（含早餐與備品），嬰兒床與奶瓶消毒鍋可於訂房備註免費預約。
+                    </div>
+                </div>
+                <div class="glass-panel rounded-2xl overflow-hidden">
+                    <button onclick="toggleFaq(this)" class="w-full px-5 py-4 text-left flex items-center justify-between font-semibold text-sm text-white">
+                        <span>Q3：是否可以攜帶寵物入住？</span>
+                        <i data-lucide="chevron-down" class="w-4 h-4 text-gold-400 transition-transform"></i>
+                    </button>
+                    <div class="hidden px-5 pb-4 text-xs text-slate-300 leading-relaxed border-t border-white/5 pt-3">
+                        歡迎預訂「毛小孩友善假期（方案 #7）」指定庭園 Villa 房型，提供專屬記憶睡墊、食碗與私人草皮區（導盲犬於全館皆可免費陪同入住）。
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= 頁尾 FOOTER ================= -->
+    <footer class="py-12 px-4 border-t border-white/10 text-center text-xs text-slate-400">
+        <div class="max-w-7xl mx-auto">
+            <div class="font-serif text-lg font-bold text-white tracking-widest mb-2">AURELIA GRAND RESORT</div>
+            <p class="mb-4">訂房專線：+886-3-555-8888 ｜ 禮賓信箱：concierge@aurelia-resort.com</p>
+            <p class="text-slate-500">© 2026 AURELIA Grand Resort. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- ================= 手機專屬底部導覽列 ================= -->
+    <div class="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-navy-950/95 backdrop-blur-xl border-t border-gold-500/25 pb-safe">
+        <div class="grid grid-cols-5 items-center h-16 px-1">
+            <a href="#rooms" class="flex flex-col items-center justify-center gap-1 text-slate-300 active:text-gold-400">
+                <i data-lucide="bed-double" class="w-5 h-5"></i>
+                <span class="text-[10px] font-medium">房型訂房</span>
+            </a>
+            <a href="#offers" class="flex flex-col items-center justify-center gap-1 text-slate-300 active:text-gold-400">
+                <i data-lucide="sparkles" class="w-5 h-5"></i>
+                <span class="text-[10px] font-medium">15大方案</span>
+            </a>
+            <a href="#membership-plans" class="flex flex-col items-center justify-center -mt-4">
+                <div class="w-12 h-12 rounded-2xl gold-gradient text-navy-950 flex items-center justify-center shadow-lg border-2 border-navy-950">
+                    <i data-lucide="crown" class="w-6 h-6"></i>
+                </div>
+                <span class="text-[10px] font-bold text-gold-300 mt-0.5">買會籍</span>
+            </a>
+            <button onclick="openMemberDashboard('chat')" class="relative flex flex-col items-center justify-center gap-1 text-slate-300 active:text-gold-400">
+                <i data-lucide="message-circle" class="w-5 h-5"></i>
+                <span class="w-2 h-2 rounded-full bg-emerald-400 absolute top-1.5 right-5"></span>
+                <span class="text-[10px] font-medium">好友聊天</span>
+            </button>
+            <button onclick="handleAuthNavClick()" class="flex flex-col items-center justify-center gap-1 text-slate-300 active:text-gold-400">
+                <i data-lucide="user-circle" class="w-5 h-5 text-gold-400"></i>
+                <span class="text-[10px] font-medium" id="mobile-nav-user-label">會員中心</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- ================= 右下角 AI 迎賓顧問懸浮鈕 ================= -->
+    <button onclick="toggleAiChat()" class="fixed bottom-20 md:bottom-6 right-4 z-40 w-12 h-12 md:w-14 md:h-14 rounded-full gold-gradient text-navy-950 shadow-2xl flex items-center justify-center hover:scale-105 transition-transform" title="AI 禮賓顧問">
+        <i data-lucide="bot" class="w-6 h-6"></i>
+    </button>
+
+    <!-- AI 禮賓顧問視窗 -->
+    <div id="ai-chat-widget" class="hidden fixed bottom-36 md:bottom-24 right-4 z-50 w-[calc(100vw-2rem)] max-w-sm glass-panel rounded-2xl shadow-2xl overflow-hidden border border-gold-400/40">
+        <div class="p-3.5 gold-gradient text-navy-950 flex items-center justify-between font-bold text-sm">
+            <div class="flex items-center gap-2"><i data-lucide="sparkles" class="w-4 h-4"></i> AURELIA 智能禮賓顧問</div>
+            <button onclick="toggleAiChat()"><i data-lucide="x" class="w-4 h-4"></i></button>
+        </div>
+        <div id="ai-chat-messages" class="p-4 h-60 overflow-y-auto space-y-3 text-xs">
+            <div class="p-3 rounded-xl bg-navy-800/90 text-slate-200 leading-relaxed">
+                您好！我是奧蕾莉亞專屬 AI 管家。請問想查詢高鐵接駁車、尊榮會籍權益，或是推薦適合您的度假方案嗎？
+            </div>
+        </div>
+        <div class="p-2.5 border-t border-white/10 flex gap-1.5 overflow-x-auto no-scrollbar">
+            <button onclick="askAiQuick('接駁車時刻表')" class="px-2.5 py-1 rounded-lg bg-navy-800 text-[11px] text-gold-300 whitespace-nowrap border border-gold-500/20">接駁車班次</button>
+            <button onclick="askAiQuick('推薦會員方案')" class="px-2.5 py-1 rounded-lg bg-navy-800 text-[11px] text-gold-300 whitespace-nowrap border border-gold-500/20">尊榮會籍優惠</button>
+            <button onclick="askAiQuick('入住與退房時間')" class="px-2.5 py-1 rounded-lg bg-navy-800 text-[11px] text-gold-300 whitespace-nowrap border border-gold-500/20">入住時間</button>
+        </div>
+    </div>
+
+    <!-- ================= 登入 / 註冊 MODAL ================= -->
+    <div id="auth-modal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="glass-panel rounded-3xl w-full max-w-md p-6 sm:p-8 relative">
+            <button onclick="closeModal('auth-modal')" class="absolute top-5 right-5 text-slate-400 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button>
+            <div class="text-center mb-6">
+                <span class="text-gold-400 text-xs font-semibold tracking-widest uppercase">AURELIA PRIVILEGE</span>
+                <h3 id="auth-modal-title" class="font-serif text-2xl font-bold text-white mt-1">尊榮會員登入</h3>
+                <p class="text-xs text-slate-400 mt-1">登入即享官網訂房 9 折、好友推薦獎勵與真好友聊天功能</p>
+            </div>
+
+            <form onsubmit="submitAuthForm(event)" class="space-y-4">
+                <div id="auth-name-field" class="hidden">
+                    <label class="block text-xs text-slate-300 mb-1">會員姓名</label>
+                    <input type="text" id="auth-name-input" placeholder="例如：陳雅婷" class="w-full bg-navy-900 border border-white/15 rounded-xl px-4 py-2.5 text-sm text-white focus:border-gold-400 focus:outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs text-slate-300 mb-1">電子信箱 Email</label>
+                    <input type="email" id="auth-email-input" required value="vip@aurelia.com" class="w-full bg-navy-900 border border-white/15 rounded-xl px-4 py-2.5 text-sm text-white focus:border-gold-400 focus:outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs text-slate-300 mb-1">密碼 Password</label>
+                    <div class="relative">
+                        <input type="password" id="auth-pass-input" required value="12345678" class="w-full bg-navy-900 border border-white/15 rounded-xl px-4 py-2.5 text-sm text-white focus:border-gold-400 focus:outline-none">
+                        <button type="button" onclick="togglePasswordVisibility()" class="absolute right-3 top-2.5 text-slate-400 hover:text-gold-400"><i data-lucide="eye" class="w-4 h-4"></i></button>
+                    </div>
+                </div>
+                <button type="submit" id="auth-submit-btn" class="w-full py-3 rounded-xl gold-gradient text-navy-950 font-bold text-sm shadow-lg">立即登入</button>
+            </form>
+
+            <div class="mt-4 pt-4 border-t border-white/10 text-center">
+                <button type="button" onclick="toggleAuthMode()" id="auth-switch-btn" class="text-xs text-gold-300 hover:underline">
+                    還不是會員？立即免費註冊（首訂現折 NT$500）
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= 房型細節多圖燈箱 MODAL ================= -->
+    <div id="gallery-modal" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-3 sm:p-6">
+        <div class="glass-panel rounded-3xl w-full max-w-4xl max-h-[90vh] overflow-y-auto p-5 sm:p-8 relative">
+            <button onclick="closeModal('gallery-modal')" class="absolute top-4 right-4 p-2 rounded-full bg-navy-800 text-white"><i data-lucide="x" class="w-5 h-5"></i></button>
+            <h3 id="gal-title" class="font-serif text-xl sm:text-2xl font-bold text-white mb-1">房型名稱</h3>
+            <p id="gal-meta" class="text-xs text-gold-400 mb-4">坪數與景觀資訊</p>
+            <img id="gal-main-img" src="" alt="Room View" class="w-full h-56 sm:h-80 object-cover rounded-2xl mb-3">
+            <div id="gal-thumbs" class="grid grid-cols-4 gap-2 mb-5"></div>
+            <div class="mb-6">
+                <h4 class="text-xs font-bold text-gold-300 uppercase tracking-wider mb-2">頂級房內備品清單</h4>
+                <div id="gal-amenities" class="flex flex-wrap gap-2"></div>
+            </div>
+            <button id="gal-book-btn" class="w-full py-3 rounded-xl gold-gradient text-navy-950 font-bold text-sm">立即預訂此房型</button>
+        </div>
+    </div>
+
+    <!-- ================= 訂房結帳流程 MODAL ================= -->
+    <div id="checkout-modal" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-3 sm:p-6">
+        <div class="glass-panel rounded-3xl w-full max-w-2xl max-h-[92vh] overflow-y-auto p-5 sm:p-8 relative">
+            <button onclick="closeModal('checkout-modal')" class="absolute top-4 right-4 p-2 rounded-full bg-navy-800 text-white"><i data-lucide="x" class="w-5 h-5"></i></button>
+            
+            <div class="mb-5">
+                <span id="checkout-pkg-badge" class="inline-block px-3 py-1 rounded-full bg-gold-500/20 text-gold-300 text-xs font-semibold mb-2">標準尊榮訂房</span>
+                <h3 id="checkout-room-name" class="font-serif text-xl sm:text-2xl font-bold text-white">無邊際海景豪華套房</h3>
+            </div>
+
+            <!-- Step 1 -->
+            <div id="checkout-step-1" class="space-y-4">
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs text-slate-400 mb-1">入住日期</label>
+                        <input type="date" id="co-checkin" onchange="recalculateCheckoutPricing()" class="w-full bg-navy-900 border border-white/15 rounded-xl px-3 py-2 text-xs text-white">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-slate-400 mb-1">退房日期</label>
+                        <input type="date" id="co-checkout" onchange="recalculateCheckoutPricing()" class="w-full bg-navy-900 border border-white/15 rounded-xl px-3 py-2 text-xs text-white">
+                    </div>
+                </div>
+
+                <!-- 方案專屬動態欄位 -->
+                <div id="package-custom-fields" class="hidden p-4 rounded-2xl bg-gold-500/10 border border-gold-400/30 space-y-3 text-xs"></div>
+
+                <!-- 加購外掛 Add-ons -->
+                <div class="p-4 rounded-2xl bg-navy-900/80 border border-white/10 space-y-2.5">
+                    <div class="text-xs font-bold text-gold-300 mb-1">尊榮禮遇加購與環保回饋</div>
+                    <label class="flex items-center justify-between text-xs text-slate-200 cursor-pointer">
+                        <span class="flex items-center gap-2"><input type="checkbox" id="addon-eco" onchange="recalculateCheckoutPricing()" class="accent-gold-500"> 響應綠色旅宿（自備備品每晚折 NT$300）</span>
+                        <span class="text-emerald-400 font-semibold">-NT$ 300/晚</span>
+                    </label>
+                    <label class="flex items-center justify-between text-xs text-slate-200 cursor-pointer">
+                        <span class="flex items-center gap-2"><input type="checkbox" id="addon-limo" onchange="recalculateCheckoutPricing()" class="accent-gold-500"> 賓士尊榮高鐵/機場專車接送</span>
+                        <span class="text-gold-300 font-semibold">+NT$ 1,800</span>
+                    </label>
+                    <label class="flex items-center justify-between text-xs text-slate-200 cursor-pointer">
+                        <span class="flex items-center gap-2"><input type="checkbox" id="addon-party" onchange="recalculateCheckoutPricing()" class="accent-gold-500"> 客製化慶生/週年氣球與蛋糕佈置</span>
+                        <span class="text-gold-300 font-semibold">+NT$ 2,600</span>
+                    </label>
+                </div>
+
+                <!-- 住客資訊 -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <input type="text" id="co-guest-name" placeholder="住客真實姓名 *" class="bg-navy-900 border border-white/15 rounded-xl px-3.5 py-2.5 text-sm text-white">
+                    <input type="tel" id="co-guest-phone" placeholder="聯絡手機號碼 *" class="bg-navy-900 border border-white/15 rounded-xl px-3.5 py-2.5 text-sm text-white">
+                </div>
+
+                <div class="p-4 rounded-2xl bg-navy-950/90 border border-gold-500/20 flex items-center justify-between">
+                    <div>
+                        <div class="text-xs text-slate-400" id="co-nights-label">共 1 晚 · 含稅與服務費</div>
+                        <div class="text-xl font-bold gold-text-gradient" id="co-total-display">NT$ 0</div>
+                    </div>
+                    <button onclick="goToCheckoutStep2()" class="px-6 py-3 rounded-xl gold-gradient text-navy-950 font-bold text-sm">下一步：選擇付款</button>
+                </div>
+            </div>
+
+            <!-- Step 2 -->
+            <div id="checkout-step-2" class="hidden space-y-4">
+                <div class="text-xs font-bold text-gold-300">選擇付款方式</div>
+                <div class="grid grid-cols-3 gap-2 text-xs">
+                    <label class="p-3 rounded-xl bg-navy-900 border border-gold-400 text-center cursor-pointer font-semibold text-white">
+                        <input type="radio" name="paymethod" checked class="hidden"> 信用卡線上刷卡
+                    </label>
+                    <label class="p-3 rounded-xl bg-navy-900 border border-white/15 text-center cursor-pointer text-slate-300">
+                        <input type="radio" name="paymethod" class="hidden"> LINE Pay
+                    </label>
+                    <label class="p-3 rounded-xl bg-navy-900 border border-white/15 text-center cursor-pointer text-slate-300">
+                        <input type="radio" name="paymethod" class="hidden"> 到店現場付款
+                    </label>
+                </div>
+                <input type="text" value="4311 - 9522 - 8810 - 3920" class="w-full bg-navy-900 border border-white/15 rounded-xl px-4 py-2.5 text-sm text-white font-mono">
+                <div class="flex gap-3">
+                    <button onclick="backToCheckoutStep1()" class="px-4 py-3 rounded-xl bg-navy-800 text-slate-300 text-sm">返回修改</button>
+                    <button onclick="confirmFinalBooking()" id="co-final-pay-btn" class="flex-1 py-3 rounded-xl gold-gradient text-navy-950 font-bold text-sm shadow-lg">確認付款並完成預訂</button>
+                </div>
+            </div>
+
+            <!-- Step 3 (Success) -->
+            <div id="checkout-step-3" class="hidden text-center py-6 space-y-4">
+                <div class="w-16 h-16 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center mx-auto">
+                    <i data-lucide="check-circle" class="w-10 h-10"></i>
+                </div>
+                <h4 class="font-serif text-2xl font-bold text-white">預訂已成功確認！</h4>
+                <div class="p-4 rounded-2xl bg-navy-900/90 border border-white/10 text-xs text-slate-300 space-y-1.5 max-w-sm mx-auto">
+                    <div>訂單編號：<strong id="confirmed-booking-id" class="text-gold-400">#AUR-882910</strong></div>
+                    <div>貴賓姓名：<strong id="confirmed-guest-name" class="text-white">貴賓</strong></div>
+                    <div>預訂房型：<strong id="confirmed-room-title" class="text-white">海景套房</strong></div>
+                </div>
+                <button onclick="closeModal('checkout-modal'); openMemberDashboard('bookings');" class="px-6 py-3 rounded-xl gold-gradient text-navy-950 font-bold text-sm">前往會員中心查看訂單</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= 尊榮會籍購買 MODAL ================= -->
+    <div id="membership-buy-modal" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
+        <div class="glass-panel rounded-3xl w-full max-w-md p-6 sm:p-8 relative">
+            <button onclick="closeModal('membership-buy-modal')" class="absolute top-4 right-4 p-2 rounded-full bg-navy-800 text-white"><i data-lucide="x" class="w-4 h-4"></i></button>
+            <span class="text-gold-400 text-xs font-bold uppercase tracking-wider">VIP SUBSCRIPTION</span>
+            <h3 id="mb-plan-name" class="font-serif text-2xl font-bold text-white mt-1 mb-2">金卡尊榮年度會籍</h3>
+            <p id="mb-plan-desc" class="text-xs text-slate-300 mb-4">立即升等會籍並領取開卡點數與住宿券</p>
+            <div class="p-4 rounded-2xl bg-navy-900/90 border border-gold-500/30 mb-5 flex items-center justify-between">
+                <span class="text-xs text-slate-400">年度會籍費用</span>
+                <span id="mb-plan-price" class="text-xl font-bold gold-text-gradient">NT$ 12,800</span>
+            </div>
+            <div class="space-y-3 mb-5">
+                <input type="text" id="mb-holder-name" placeholder="持卡人真實姓名 *" class="w-full bg-navy-900 border border-white/15 rounded-xl px-3.5 py-2.5 text-sm text-white">
+                <input type="text" value="4532 - 8910 - 4412 - 7701" class="w-full bg-navy-900 border border-white/15 rounded-xl px-3.5 py-2.5 text-sm text-white font-mono">
+            </div>
+            <button onclick="confirmMembershipPurchase()" class="w-full py-3 rounded-xl gold-gradient text-navy-950 font-bold text-sm shadow-lg">確認付款並立即開通會籍</button>
+        </div>
+    </div>
+
+    <!-- ================= 會員中心 DASHBOARD MODAL ================= -->
+    <div id="member-dashboard-modal" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-end md:items-center justify-center p-0 md:p-6">
+        <div class="glass-panel rounded-t-3xl md:rounded-3xl w-full max-w-4xl h-[90vh] md:h-[82vh] flex flex-col overflow-hidden">
+            <!-- Header -->
+            <div class="p-4 sm:p-6 border-b border-white/10 flex items-center justify-between bg-navy-950/60">
+                <div class="flex items-center gap-3">
+                    <div class="w-11 h-11 rounded-2xl gold-gradient text-navy-950 font-bold flex items-center justify-center text-lg" id="dash-avatar">V</div>
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <h3 id="dash-user-name" class="font-bold text-white text-base">尊榮貴賓</h3>
+                            <span id="dash-tier-badge" class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-gold-500/20 text-gold-300 border border-gold-400/40">銀卡會員</span>
+                        </div>
+                        <p class="text-xs text-slate-400">可用住宿點數：<strong id="dash-points" class="text-gold-400">1,200</strong> pts</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button onclick="logoutUser()" class="px-3 py-1.5 rounded-lg bg-rose-500/15 text-rose-300 text-xs border border-rose-500/30">登出</button>
+                    <button onclick="closeModal('member-dashboard-modal')" class="p-2 rounded-full bg-navy-800 text-white"><i data-lucide="x" class="w-5 h-5"></i></button>
+                </div>
+            </div>
+
+            <!-- Horizontal Swipeable Tabs -->
+            <div class="flex items-center gap-2 px-4 py-3 border-b border-white/10 overflow-x-auto no-scrollbar bg-navy-900/60 shrink-0">
+                <button onclick="switchDashboardTab('tier')" data-tab="tier" class="dash-tab-btn px-3.5 py-2 rounded-xl text-xs font-semibold whitespace-nowrap gold-gradient text-navy-950">會員等級進度</button>
+                <button onclick="switchDashboardTab('chat')" data-tab="chat" class="dash-tab-btn px-3.5 py-2 rounded-xl text-xs font-semibold whitespace-nowrap bg-navy-800 text-slate-300">真好友聊天室</button>
+                <button onclick="switchDashboardTab('referral')" data-tab="referral" class="dash-tab-btn px-3.5 py-2 rounded-xl text-xs font-semibold whitespace-nowrap bg-navy-800 text-slate-300">邀請好友折$500</button>
+                <button onclick="switchDashboardTab('bookings')" data-tab="bookings" class="dash-tab-btn px-3.5 py-2 rounded-xl text-xs font-semibold whitespace-nowrap bg-navy-800 text-slate-300">我的訂單</button>
+                <button onclick="switchDashboardTab('wishlist')" data-tab="wishlist" class="dash-tab-btn px-3.5 py-2 rounded-xl text-xs font-semibold whitespace-nowrap bg-navy-800 text-slate-300">心願收藏</button>
+                <button onclick="switchDashboardTab('coupons')" data-tab="coupons" class="dash-tab-btn px-3.5 py-2 rounded-xl text-xs font-semibold whitespace-nowrap bg-navy-800 text-slate-300">專屬優惠券</button>
+            </div>
+
+            <!-- Tab Contents -->
+            <div class="flex-1 overflow-y-auto p-4 sm:p-6">
+                <!-- Tab 1: 會員等級進度 -->
+                <div id="dash-panel-tier" class="dash-panel space-y-5">
+                    <div class="p-5 rounded-2xl bg-navy-900/90 border border-gold-500/30">
+                        <div class="flex items-center justify-between text-xs mb-2">
+                            <span class="text-slate-300">目前累積入住：<strong id="dash-nights-count" class="text-gold-400">2</strong> 晚</span>
+                            <span id="dash-next-tier-hint" class="text-gold-300 font-semibold">再住 1 晚升級「金卡尊榮」</span>
+                        </div>
+                        <div class="w-full h-3 bg-navy-950 rounded-full overflow-hidden mb-3">
+                            <div id="dash-tier-progress" class="h-full gold-gradient transition-all duration-500" style="width: 35%"></div>
+                        </div>
+                        <div class="flex justify-between text-[11px] text-slate-400">
+                            <span>銀卡探索 (0晚)</span>
+                            <span>金卡尊榮 (3晚)</span>
+                            <span>黑卡無界 (8晚)</span>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                        <div class="p-4 rounded-2xl bg-navy-900/70 border border-white/10">
+                            <div class="font-bold text-gold-300 mb-1">✔ 已解鎖權益</div>
+                            <p class="text-slate-300">官網訂房 9 折優惠、免費迎賓飲品、高鐵接駁優先預約權。</p>
+                        </div>
+                        <div class="p-4 rounded-2xl bg-navy-900/70 border border-white/10">
+                            <div class="font-bold text-white mb-1">🔒 下一階解鎖禮遇</div>
+                            <p class="text-slate-400">保證延遲退房至 14:00、免費客房升等一級、雙人 SPA 芳療折扣。</p>
+                        </div>
+                    </div>
+
+                    <button onclick="closeModal('member-dashboard-modal'); document.getElementById('membership-plans').scrollIntoView({behavior:'smooth'});" class="w-full py-3 rounded-xl gold-gradient text-navy-950 font-bold text-xs">
+                        不想等累積？直接購買年度尊榮會籍立即升等 ➔
+                    </button>
+                </div>
+
+                <!-- Tab 2: 真好友聊天室 -->
+                <div id="dash-panel-chat" class="dash-panel hidden space-y-4">
+                    <div class="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/25 text-xs text-emerald-300 flex items-center justify-between gap-2">
+                        <span>僅限與「已完成飯店註冊」的真實會員互傳訊息與分享房型優惠</span>
+                    </div>
+
+                    <!-- Add Verified Friend -->
+                    <div class="flex gap-2">
+                        <input type="text" id="add-friend-input" placeholder="輸入已註冊好友 Email (測試: sophia@aurelia.com 或 kevin@aurelia.com)" class="flex-1 bg-navy-900 border border-white/15 rounded-xl px-3.5 py-2 text-xs text-white">
+                        <button onclick="verifyAndAddFriend()" class="px-4 py-2 rounded-xl gold-gradient text-navy-950 font-bold text-xs whitespace-nowrap">驗證並加好友</button>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-12 gap-4 h-80">
+                        <!-- Friends List -->
+                        <div id="verified-friends-list" class="md:col-span-4 bg-navy-900/90 rounded-2xl p-2.5 border border-white/10 overflow-y-auto space-y-1.5 max-h-32 md:max-h-full">
+                            <!-- JS 渲染已註冊真好友 -->
+                        </div>
+                        <!-- Chat Box -->
+                        <div class="md:col-span-8 bg-navy-900/90 rounded-2xl border border-white/10 flex flex-col overflow-hidden h-56 md:h-full">
+                            <div class="px-4 py-2.5 border-b border-white/10 flex items-center justify-between text-xs">
+                                <span id="active-chat-friend-name" class="font-bold text-white">林思妤 Sophia (黑卡會員)</span>
+                                <button onclick="shareRoomToFriend()" class="px-2.5 py-1 rounded-lg bg-gold-500/20 text-gold-300 text-[11px] border border-gold-400/30">分享套房優惠</button>
+                            </div>
+                            <div id="friend-chat-messages" class="flex-1 p-3 overflow-y-auto space-y-2 text-xs"></div>
+                            <form onsubmit="sendFriendMessage(event)" class="p-2 border-t border-white/10 flex gap-2">
+                                <input type="text" id="friend-msg-input" placeholder="傳送訊息給已驗證好友..." class="flex-1 bg-navy-950 border border-white/15 rounded-xl px-3 py-2 text-xs text-white">
+                                <button type="submit" class="px-4 py-2 rounded-xl gold-gradient text-navy-950 font-bold text-xs">發送</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab 3: 邀請好友裂變機制 -->
+                <div id="dash-panel-referral" class="dash-panel hidden space-y-5">
+                    <div class="p-5 rounded-2xl bg-gradient-to-br from-navy-800 to-navy-950 border border-gold-400/40 text-center">
+                        <h4 class="font-serif text-xl font-bold text-white mb-1">邀請好友入住 · 雙方各享 NT$500 禮遇</h4>
+                        <p class="text-xs text-slate-300 mb-4">好友透過您的專屬連結註冊並完成首筆訂房現折 NT$500，您將立即獲得 500 點住宿金！</p>
+                        <div class="flex items-center gap-2 max-w-md mx-auto bg-navy-950 p-2 rounded-xl border border-white/15">
+                            <input type="text" id="referral-link-input" readonly value="https://aurelia-resort.com/join?ref=AUR-VIP888" class="flex-1 bg-transparent text-xs text-gold-300 px-2 focus:outline-none">
+                            <button onclick="copyReferralLink()" class="px-3.5 py-2 rounded-lg gold-gradient text-navy-950 font-bold text-xs">複製連結</button>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4 text-center">
+                        <div class="p-4 rounded-2xl bg-navy-900/90 border border-white/10">
+                            <div class="text-2xl font-bold text-white">3 位</div>
+                            <div class="text-xs text-slate-400 mt-1">已成功邀請註冊好友</div>
+                        </div>
+                        <div class="p-4 rounded-2xl bg-navy-900/90 border border-white/10">
+                            <div class="text-2xl font-bold gold-text-gradient">+1,500 pts</div>
+                            <div class="text-xs text-slate-400 mt-1">累積獲得推薦住宿金</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab 4: 我的訂單 -->
+                <div id="dash-panel-bookings" class="dash-panel hidden space-y-3" id="dash-bookings-list"></div>
+
+                <!-- Tab 5: 心願收藏 -->
+                <div id="dash-panel-wishlist" class="dash-panel hidden grid grid-cols-1 sm:grid-cols-2 gap-4"></div>
+
+                <!-- Tab 6: 專屬優惠券 -->
+                <div id="dash-panel-coupons" class="dash-panel hidden space-y-3">
+                    <div class="p-4 rounded-2xl bg-navy-900/90 border border-gold-400/30 flex items-center justify-between">
+                        <div>
+                            <div class="text-sm font-bold text-gold-300">AURA1000</div>
+                            <div class="text-xs text-slate-400">行政套房以上滿萬現折 NT$1,000</div>
+                        </div>
+                        <button onclick="copyCoupon('AURA1000')" class="px-3 py-1.5 rounded-lg gold-gradient text-navy-950 font-bold text-xs">複製代碼</button>
+                    </div>
+                    <div class="p-4 rounded-2xl bg-navy-900/90 border border-gold-400/30 flex items-center justify-between">
+                        <div>
+                            <div class="text-sm font-bold text-gold-300">BREAKFASTFREE</div>
+                            <div class="text-xs text-slate-400">兌換 HARVEST 雙人自助早餐禮遇</div>
+                        </div>
+                        <button onclick="copyCoupon('BREAKFASTFREE')" class="px-3 py-1.5 rounded-lg gold-gradient text-navy-950 font-bold text-xs">複製代碼</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= 餐廳訂位 & 電子禮券 MODAL ================= -->
+    <div id="dining-modal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="glass-panel rounded-3xl w-full max-w-md p-6 relative">
+            <button onclick="closeModal('dining-modal')" class="absolute top-4 right-4 text-slate-400"><i data-lucide="x" class="w-5 h-5"></i></button>
+            <h3 id="dining-modal-title" class="font-serif text-xl font-bold text-white mb-4">餐廳線上訂位</h3>
+            <form onsubmit="submitDiningReservation(event)" class="space-y-3">
+                <input type="text" required placeholder="訂位貴賓姓名" class="w-full bg-navy-900 border border-white/15 rounded-xl px-3.5 py-2.5 text-sm text-white">
+                <div class="grid grid-cols-2 gap-2">
+                    <input type="date" required class="bg-navy-900 border border-white/15 rounded-xl px-3 py-2 text-xs text-white">
+                    <select class="bg-navy-900 border border-white/15 rounded-xl px-3 py-2 text-xs text-white">
+                        <option>18:00 晚宴第一輪</option>
+                        <option>19:30 晚宴黃金時段</option>
+                        <option>12:00 午間饗宴</option>
+                    </select>
+                </div>
+                <button type="submit" class="w-full py-3 rounded-xl gold-gradient text-navy-950 font-bold text-sm">確認預約席位</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast 通知 -->
+    <div id="toast" class="fixed top-20 left-1/2 -translate-x-1/2 z-50 hidden px-5 py-2.5 rounded-full bg-navy-900/95 border border-gold-400 text-gold-300 text-xs font-semibold shadow-2xl"></div>
+
+    <script>
+        // ================= 核心資料庫 =================
+        const ROOMS = [
+            {
+                id: 'ocean-deluxe',
+                title: '蔚藍海景豪華客房',
+                size: '18 坪 · 私人觀海陽台 · King Size 名床',
+                priceTWD: 8800,
+                rating: '4.9',
+                image: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=1000&q=80',
+                gallery: [
+                    'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=1000&q=80',
+                    'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=1000&q=80',
+                    'https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=1000&q=80',
+                    'https://images.unsplash.com/photo-1560448204-603b3fc33ddc?auto=format&fit=crop&w=1000&q=80'
+                ],
+                amenities: ['Dyson Supersonic 吹風機', 'Nespresso 膠囊咖啡機', '獨立深浸景觀浴缸', 'Diptyque 沐浴備品', '免費 Mini Bar']
+            },
+            {
+                id: 'executive-suite',
+                title: '270° 行政全景海景套房',
+                size: '32 坪 · 獨立客廳 · 行政酒廊禮遇',
+                priceTWD: 16800,
+                rating: '4.98',
+                image: 'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=1000&q=80',
+                gallery: [
+                    'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=1000&q=80',
+                    'https://images.unsplash.com/photo-1618773928121-c32242e63f39?auto=format&fit=crop&w=1000&q=80',
+                    'https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?auto=format&fit=crop&w=1000&q=80',
+                    'https://images.unsplash.com/photo-1578683010236-d716f9a3f461?auto=format&fit=crop&w=1000&q=80'
+                ],
+                amenities: ['行政酒廊全日通行', '席夢思黑標頂級名床', 'Bvlgari 寶格麗備品', 'Bose 環繞音響', '專屬私人管家服務']
+            },
+            {
+                id: 'pool-villa',
+                title: '皇家無邊際泳池獨棟 Villa',
+                size: '65 坪 · 私人恆溫泳池 · 專屬草皮庭園',
+                priceTWD: 32000,
+                rating: '5.0',
+                image: 'https://images.unsplash.com/photo-1613977257363-707ba9348227?auto=format&fit=crop&w=1000&q=80',
+                gallery: [
+                    'https://images.unsplash.com/photo-1613977257363-707ba9348227?auto=format&fit=crop&w=1000&q=80',
+                    'https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=1000&q=80',
+                    'https://images.unsplash.com/photo-1540541338287-41700207dee6?auto=format&fit=crop&w=1000&q=80',
+                    'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1000&q=80'
+                ],
+                amenities: ['私人海景無邊際泳池', '毛小孩友善專屬庭園', '迎賓法國香檳一瓶', '免費高鐵賓士來回接送', '私人池畔早餐']
+            }
+        ];
+
+        const PACKAGES_15 = [
+            { id: 1, cat: 'dining', badge: '一泊二食', title: '一泊二食頂級饗宴方案', desc: '含主廚 A5 和牛／龍蝦晚宴與次日自助早餐，訂房可直接預約晚宴時段。', discount: 1.15, type: 'dining' },
+            { id: 2, cat: 'resort', badge: '早鳥 8 折', title: '晨鳥提早 30 天預訂特惠', desc: '提前 30 天以上預訂享全房型 8 折優惠並贈迎賓特調。', discount: 0.8, type: 'standard' },
+            { id: 3, cat: 'resort', badge: '連住優惠', title: '連住 3 晚尊享禮遇方案', desc: '連住 3 晚以上每晚享 82 折，加贈免費洗衣與英式下午茶。', discount: 0.82, type: 'standard' },
+            { id: 4, cat: 'resort', badge: '浪漫紀念', title: '浪漫蜜月／週年紀念專案', desc: '贈冰鎮香檳、玫瑰花瓣浴佈置與保證延遲退房至 13:00。', discount: 1.05, type: 'honeymoon' },
+            { id: 5, cat: 'resort', badge: '身心療癒', title: '奢華 60 分鐘 SPA 舒壓專案', desc: '房價內含雙人深層芳療精油按摩，訂房直接鎖定 SPA 時段。', discount: 1.12, type: 'spa' },
+            { id: 6, cat: 'resort', badge: '深度文化', title: '在地茶莊與海岸秘境半日遊', desc: '含專屬休旅車司機導覽與百年茶莊品茗手作體驗。', discount: 1.08, type: 'standard' },
+            { id: 7, cat: 'pet', badge: '毛孩 VIP', title: '毛小孩友善假期專案', desc: '提供寵物專屬記憶睡墊、鮮食餐碗與私人庭園草皮奔跑區。', discount: 1.05, type: 'pet' },
+            { id: 8, cat: 'dining', badge: '野奢 BBQ', title: '星空野奢露營與海陸 BBQ', desc: '私人陽台／庭園享用主廚備料龍蝦牛排炭烤派對。', discount: 1.14, type: 'dining' },
+            { id: 9, cat: 'business', badge: '遠距辦公', title: 'Workation 7 日長住辦公專案', desc: '高速獨立 Wi-Fi、人體工學椅與每日現煮咖啡無限暢飲。', discount: 0.75, type: 'standard' },
+            { id: 10, cat: 'business', badge: '日間休憩', title: 'Daycation 日間 6 小時微度假', desc: '當日 10:00–18:00 彈性時段使用海景客房與無邊際泳池。', discount: 0.55, type: 'dayuse' },
+            { id: 11, cat: 'addon', badge: '綠色旅宿', title: '無痛輕裝環保減碳專案', desc: '自備牙刷備品且續住不換床單，每晚直接折抵 NT$300。', discount: 0.95, type: 'eco' },
+            { id: 12, cat: 'business', badge: '限時搶購', title: '晚鳥即刻出發（今日最後空房）', desc: '當日 18:00 後釋出限量餘房破盤價，倒數計時搶訂中！', discount: 0.72, type: 'flash' },
+            { id: 13, cat: 'addon', badge: '尊榮接駁', title: '賓士專車接送＋高鐵聯票優惠', desc: '預約專人高鐵站舉牌接送，免去轉乘奔波。', discount: 1.0, type: 'limo' },
+            { id: 14, cat: 'addon', badge: '派對驚喜', title: '客製化慶生氣球與蛋糕佈置包', desc: '專人進房佈置空飄氣球、4 吋手作蛋糕與拍立得紀念。', discount: 1.0, type: 'party' },
+            { id: 15, cat: 'addon', badge: '禮贈首選', title: '電子尊榮住宿禮券商城', desc: '購買 NT$10,000 住宿禮券贈 1,000 點，可即時寄送親友祝福。', discount: 1.0, type: 'gift' }
+        ];
+
+        const MEMBERSHIP_PLANS = {
+            silver: { name: '銀卡探索年費會籍', price: 3800, tierLabel: '銀卡會員', bonusPoints: 1500, addNights: 2 },
+            gold: { name: '金卡尊榮年度會籍', price: 12800, tierLabel: '金卡尊榮', bonusPoints: 5000, addNights: 4 },
+            black: { name: '黑卡無界限量會籍', price: 36000, tierLabel: '黑卡無界', bonusPoints: 15000, addNights: 9 }
+        };
+
+        // 系統已註冊真實會員資料庫（用於驗證好友）
+        const REGISTERED_DIRECTORY = [
+            { email: 'sophia@aurelia.com', name: '林思妤 Sophia', tier: '黑卡無界', online: true },
+            { email: 'kevin@aurelia.com', name: '張凱文 Kevin', tier: '金卡尊榮', online: true },
+            { email: 'emily@aurelia.com', name: '王語晴 Emily', tier: '銀卡會員', online: false }
+        ];
+
+        // ================= 狀態管理 =================
+        let state = {
+            currency: 'TWD',
+            rates: { TWD: 1, USD: 0.031, JPY: 4.75 },
+            symbols: { TWD: 'NT$ ', USD: 'US$ ', JPY: '¥ ' },
+            user: null,
+            wishlist: ['executive-suite'],
+            bookings: [
+                { id: 'AUR-774120', room: '270° 行政全景海景套房', dates: '2026-12-24 ~ 2026-12-26', total: 33600, status: '已確認' }
+            ],
+            friends: [
+                { email: 'sophia@aurelia.com', name: '林思妤 Sophia', tier: '黑卡無界', online: true }
+            ],
+            activeFriendEmail: 'sophia@aurelia.com',
+            chatHistory: {
+                'sophia@aurelia.com': [
+                    { sender: 'them', text: '嗨！我下週末也預訂了奧蕾莉亞的行政海景套房，要不要一起去 28F 星空酒吧小酌？' }
+                ]
+            },
+            selectedRoom: ROOMS[0],
+            selectedPackage: null,
+            selectedMembershipKey: 'gold',
+            isRegisterMode: false
+        };
+
+        // ================= 初始化 =================
+        function initApp() {
+            const today = new Date();
+            const tomorrow = new Date(today);
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            const fmt = d => d.toISOString().split('T')[0];
+
+            document.getElementById('search-checkin').value = fmt(today);
+            document.getElementById('search-checkout').value = fmt(tomorrow);
+            document.getElementById('co-checkin').value = fmt(today);
+            document.getElementById('co-checkout').value = fmt(tomorrow);
+
+            renderRooms();
+            renderPackages('all');
+            updateWishlistBadge();
+            startFlashCountdown();
+            lucide.createIcons();
+        }
+
+        function formatMoney(twdAmount) {
+            const val = Math.round(twdAmount * state.rates[state.currency]);
+            return state.symbols[state.currency] + val.toLocaleString();
+        }
+
+        function changeCurrency(curr) {
+            state.currency = curr;
+            renderRooms();
+            document.querySelectorAll('[data-price]').forEach(el => {
+                el.textContent = formatMoney(Number(el.dataset.price));
+            });
+            showToast(`已切換幣別為 ${curr}`);
+        }
+
+        // ================= 渲染房型 =================
+        function renderRooms() {
+            const grid = document.getElementById('rooms-grid');
+            grid.innerHTML = ROOMS.map(room => {
+                const isFav = state.wishlist.includes(room.id);
+                return `
+                <div class="glass-card rounded-3xl overflow-hidden flex flex-col justify-between">
+                    <div>
+                        <div class="relative h-56 overflow-hidden group cursor-pointer" onclick="openGalleryModal('${room.id}')">
+                            <img src="${room.image}" alt="${room.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <div class="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-navy-950/80 text-gold-300 text-xs font-semibold flex items-center gap-1">
+                                <i data-lucide="star" class="w-3.5 h-3.5 fill-gold-400 text-gold-400"></i> ${room.rating}
+                            </div>
+                            <button onclick="event.stopPropagation(); toggleWishlist('${room.id}')" class="absolute top-3 right-3 w-9 h-9 rounded-full bg-navy-950/80 flex items-center justify-center text-white hover:text-rose-400">
+                                <i data-lucide="heart" class="w-4 h-4 ${isFav ? 'fill-rose-500 text-rose-500' : ''}"></i>
+                            </button>
+                            <div class="absolute bottom-3 right-3 px-2.5 py-1 rounded-lg bg-black/70 text-white text-[11px] flex items-center gap-1">
+                                <i data-lucide="images" class="w-3.5 h-3.5 text-gold-400"></i> 查看多角度相簿
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-serif text-xl font-bold text-white mb-1">${room.title}</h3>
+                            <p class="text-xs text-slate-400 mb-4">${room.size}</p>
+                            <div class="flex flex-wrap gap-1.5 mb-5">
+                                ${room.amenities.slice(0, 3).map(a => `<span class="px-2.5 py-1 rounded-lg bg-navy-900/90 border border-white/10 text-[11px] text-slate-300">${a}</span>`).join('')}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="px-6 pb-6 pt-3 border-t border-white/10 flex items-center justify-between">
+                        <div>
+                            <span class="text-[11px] text-slate-400 block">每晚優惠價起</span>
+                            <span class="text-xl font-bold gold-text-gradient">${formatMoney(room.priceTWD)}</span>
+                        </div>
+                        <button onclick="openCheckoutModal('${room.id}', null)" class="px-5 py-2.5 rounded-xl gold-gradient text-navy-950 font-bold text-xs shadow-lg hover:brightness-110">
+                            立即預訂
+                        </button>
+                    </div>
+                </div>`;
+            }).join('');
+            lucide.createIcons();
+        }
+
+        // ================= 渲染 15 大方案 =================
+        function renderPackages(filterCat) {
+            const list = filterCat === 'all' ? PACKAGES_15 : PACKAGES_15.filter(p => p.cat === filterCat);
+            const grid = document.getElementById('packages-grid');
+            grid.innerHTML = list.map(pkg => `
+                <div class="glass-card rounded-2xl p-5 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="px-2.5 py-1 rounded-full bg-gold-500/15 text-gold-300 border border-gold-400/30 text-[11px] font-bold">
+                                方案 #${pkg.id} · ${pkg.badge}
+                            </span>
+                            ${pkg.id === 12 ? `<span id="flash-timer" class="text-[11px] font-mono text-rose-400 font-bold">04:59:59</span>` : ''}
+                        </div>
+                        <h3 class="text-base font-bold text-white mb-1.5">${pkg.title}</h3>
+                        <p class="text-xs text-slate-400 leading-relaxed mb-4">${pkg.desc}</p>
+                    </div>
+                    <button onclick="selectPackageAndBook(${pkg.id})" class="w-full py-2.5 rounded-xl bg-navy-800 hover:bg-gold-500 hover:text-navy-950 text-gold-300 border border-gold-400/30 font-semibold text-xs transition-all">
+                        套用此方案並預訂 ➔
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        function filterPackages(cat, btn) {
+            document.querySelectorAll('.pkg-filter-btn').forEach(b => {
+                b.className = 'pkg-filter-btn px-4 py-2 rounded-full text-xs font-semibold whitespace-nowrap bg-navy-800 text-slate-300 border border-white/10 hover:border-gold-400';
+            });
+            btn.className = 'pkg-filter-btn active px-4 py-2 rounded-full text-xs font-semibold whitespace-nowrap gold-gradient text-navy-950';
+            renderPackages(cat);
+        }
+
+        function startFlashCountdown() {
+            let sec = 4 * 3600 + 59 * 60 + 59;
+            setInterval(() => {
+                sec = sec > 0 ? sec - 1 : 18000;
+                const h = String(Math.floor(sec / 3600)).padStart(2, '0');
+                const m = String(Math.floor((sec % 3600) / 60)).padStart(2, '0');
+                const s = String(sec % 60).padStart(2, '0');
+                const el = document.getElementById('flash-timer');
+                if (el) el.textContent = `倒數 ${h}:${m}:${s}`;
+            }, 1000);
+        }
+
+        function selectPackageAndBook(pkgId) {
+            const pkg = PACKAGES_15.find(p => p.id === pkgId);
+            if (!pkg) return;
+            const roomId = pkg.id === 7 ? 'pool-villa' : 'executive-suite';
+            openCheckoutModal(roomId, pkg);
+        }
+
+        // ================= 燈箱與心願清單 =================
+        function openGalleryModal(roomId) {
+            const room = ROOMS.find(r => r.id === roomId);
+            if (!room) return;
+            document.getElementById('gal-title').textContent = room.title;
+            document.getElementById('gal-meta').textContent = room.size;
+            document.getElementById('gal-main-img').src = room.gallery[0];
+            document.getElementById('gal-thumbs').innerHTML = room.gallery.map(src => `
+                <img src="${src}" onclick="document.getElementById('gal-main-img').src='${src}'" class="h-16 w-full object-cover rounded-xl cursor-pointer border border-white/15 hover:border-gold-400">
+            `).join('');
+            document.getElementById('gal-amenities').innerHTML = room.amenities.map(a => `
+                <span class="px-3 py-1 rounded-full bg-navy-900 border border-gold-500/30 text-xs text-gold-300">✦ ${a}</span>
+            `).join('');
+            document.getElementById('gal-book-btn').onclick = () => {
+                closeModal('gallery-modal');
+                openCheckoutModal(room.id, null);
+            };
+            document.getElementById('gallery-modal').classList.remove('hidden');
+        }
+
+        function toggleWishlist(roomId) {
+            const idx = state.wishlist.indexOf(roomId);
+            if (idx > -1) {
+                state.wishlist.splice(idx, 1);
+                showToast('已從心願清單移除');
+            } else {
+                state.wishlist.push(roomId);
+                showToast('已加入心願收藏清單 ♥');
+            }
+            updateWishlistBadge();
+            renderRooms();
+        }
+
+        function updateWishlistBadge() {
+            const badge = document.getElementById('nav-wishlist-count');
+            if (state.wishlist.length > 0) {
+                badge.textContent = state.wishlist.length;
+                badge.classList.remove('hidden');
+            } else {
+                badge.classList.add('hidden');
+            }
+        }
+
+        // ================= 訂房結帳流程 =================
+        function openCheckoutModal(roomId, pkg) {
+            state.selectedRoom = ROOMS.find(r => r.id === roomId) || ROOMS[0];
+            state.selectedPackage = pkg;
+
+            document.getElementById('checkout-room-name').textContent = state.selectedRoom.title;
+            document.getElementById('checkout-pkg-badge').textContent = pkg ? `方案 #${pkg.id}：${pkg.title}` : '官網標準尊榮訂房';
+            
+            const customBox = document.getElementById('package-custom-fields');
+            customBox.classList.add('hidden');
+            customBox.innerHTML = '';
+
+            if (pkg) {
+                customBox.classList.remove('hidden');
+                if (pkg.type === 'dining') {
+                    customBox.innerHTML = `<div class="font-bold text-gold-300">主廚晚宴時段與主餐偏好</div>
+                        <select class="w-full bg-navy-900 border border-white/15 rounded-xl px-3 py-2 text-white">
+                            <option>18:00 用餐 · 日本 A5 和牛菲力套餐</option>
+                            <option>19:30 用餐 · 波士頓活龍蝦海陸雙饗</option>
+                        </select>`;
+                } else if (pkg.type === 'spa') {
+                    customBox.innerHTML = `<div class="font-bold text-gold-300">雙人 60 分鐘芳療 SPA 預約</div>
+                        <select class="w-full bg-navy-900 border border-white/15 rounded-xl px-3 py-2 text-white">
+                            <option>入住當日 16:30 · 經典大馬士革玫瑰精油</option>
+                            <option>入住當日 20:00 · 喜馬拉雅雪松深層舒壓</option>
+                        </select>`;
+                } else if (pkg.type === 'pet') {
+                    customBox.innerHTML = `<div class="font-bold text-gold-300">毛小孩入住登記</div>
+                        <input type="text" placeholder="請填寫毛孩品種與體重（例：柴犬 11kg）" class="w-full bg-navy-900 border border-white/15 rounded-xl px-3 py-2 text-white">`;
+                } else if (pkg.type === 'dayuse') {
+                    customBox.innerHTML = `<div class="font-bold text-gold-300">日間休憩使用時段</div>
+                        <select class="w-full bg-navy-900 border border-white/15 rounded-xl px-3 py-2 text-white">
+                            <option>10:00 – 16:00 (6小時日間微度假)</option>
+                            <option>12:00 – 18:00 (午後海景休憩時段)</option>
+                        </select>`;
+                } else {
+                    customBox.innerHTML = `<div class="text-gold-300">✔ 已自動套用「${pkg.title}」專屬優惠與禮遇</div>`;
+                }
+            }
+
+            if (state.user) {
+                document.getElementById('co-guest-name').value = state.user.name;
+            }
+
+            document.getElementById('checkout-step-1').classList.remove('hidden');
+            document.getElementById('checkout-step-2').classList.add('hidden');
+            document.getElementById('checkout-step-3').classList.add('hidden');
+            recalculateCheckoutPricing();
+            document.getElementById('checkout-modal').classList.remove('hidden');
+        }
+
+        function recalculateCheckoutPricing() {
+            const d1 = new Date(document.getElementById('co-checkin').value);
+            const d2 = new Date(document.getElementById('co-checkout').value);
+            let nights = Math.round((d2 - d1) / (1000 * 60 * 60 * 24));
+            if (isNaN(nights) || nights < 1) nights = 1;
+
+            const pkgMult = state.selectedPackage ? state.selectedPackage.discount : 1;
+            const memberMult = state.user ? 0.9 : 1;
+            let total = state.selectedRoom.priceTWD * nights * pkgMult * memberMult;
+
+            if (document.getElementById('addon-eco').checked) total -= 300 * nights;
+            if (document.getElementById('addon-limo').checked) total += 1800;
+            if (document.getElementById('addon-party').checked) total += 2600;
+
+            total = Math.max(1000, Math.round(total));
+            document.getElementById('co-nights-label').textContent = `共 ${nights} 晚 ${state.user ? '· 已享會員 9 折' : ''}`;
+            document.getElementById('co-total-display').textContent = formatMoney(total);
+            return { nights, total };
+        }
+
+        function goToCheckoutStep2() {
+            const name = document.getElementById('co-guest-name').value.trim();
+            if (!name) {
+                showToast('請輸入住客真實姓名');
+                return;
+            }
+            document.getElementById('checkout-step-1').classList.add('hidden');
+            document.getElementById('checkout-step-2').classList.remove('hidden');
+        }
+
+        function backToCheckoutStep1() {
+            document.getElementById('checkout-step-2').classList.add('hidden');
+            document.getElementById('checkout-step-1').classList.remove('hidden');
+        }
+
+        function confirmFinalBooking() {
+            const { total } = recalculateCheckoutPricing();
+            const guestName = document.getElementById('co-guest-name').value.trim() || '尊榮貴賓';
+            const bookingId = 'AUR-' + Math.floor(100000 + Math.random() * 900000);
+
+            const idEl = document.getElementById('confirmed-booking-id');
+            const nameEl = document.getElementById('confirmed-guest-name');
+            const roomEl = document.getElementById('confirmed-room-title');
+            if (idEl) idEl.textContent = '#' + bookingId;
+            if (nameEl) nameEl.textContent = guestName;
+            if (roomEl) roomEl.textContent = state.selectedRoom.title;
+
+            state.bookings.unshift({
+                id: bookingId,
+                room: state.selectedRoom.title,
+                dates: `${document.getElementById('co-checkin').value} ~ ${document.getElementById('co-checkout').value}`,
+                total: total,
+                status: '已確認'
+            });
+
+            if (state.user) {
+                state.user.nights += 1;
+                state.user.points += 500;
+            }
+
+            document.getElementById('checkout-step-2').classList.add('hidden');
+            document.getElementById('checkout-step-3').classList.remove('hidden');
+        }
+
+        // ================= 尊榮會員方案購買 =================
+        function openMembershipPurchase(planKey) {
+            state.selectedMembershipKey = planKey;
+            const plan = MEMBERSHIP_PLANS[planKey];
+            document.getElementById('mb-plan-name').textContent = plan.name;
+            document.getElementById('mb-plan-price').textContent = formatMoney(plan.price);
+            if (state.user) {
+                document.getElementById('mb-holder-name').value = state.user.name;
+            }
+            document.getElementById('membership-buy-modal').classList.remove('hidden');
+        }
+
+        function confirmMembershipPurchase() {
+            const holderName = document.getElementById('mb-holder-name').value.trim() || '尊榮貴賓';
+            const plan = MEMBERSHIP_PLANS[state.selectedMembershipKey];
+
+            if (!state.user) {
+                state.user = {
+                    name: holderName,
+                    email: 'vip@aurelia.com',
+                    tier: plan.tierLabel,
+                    points: 1200 + plan.bonusPoints,
+                    nights: plan.addNights
+                };
+            } else {
+                state.user.tier = plan.tierLabel;
+                state.user.points += plan.bonusPoints;
+                state.user.nights += plan.addNights;
+            }
+
+            updateNavUserDisplay();
+            closeModal('membership-buy-modal');
+            showToast(`恭喜開通「${plan.name}」！獲贈 ${plan.bonusPoints} 點`);
+            openMemberDashboard('tier');
+        }
+
+        // ================= 會員登入與儀表板 =================
+        function handleAuthNavClick() {
+            if (state.user) {
+                openMemberDashboard('tier');
+            } else {
+                document.getElementById('auth-modal').classList.remove('hidden');
+            }
+        }
+
+        function toggleAuthMode() {
+            state.isRegisterMode = !state.isRegisterMode;
+            document.getElementById('auth-name-field').classList.toggle('hidden', !state.isRegisterMode);
+            document.getElementById('auth-modal-title').textContent = state.isRegisterMode ? '免費註冊尊榮會員' : '尊榮會員登入';
+            document.getElementById('auth-submit-btn').textContent = state.isRegisterMode ? '完成註冊並領取 $500 禮遇' : '立即登入';
+            document.getElementById('auth-switch-btn').textContent = state.isRegisterMode ? '已有會員帳號？返回登入' : '還不是會員？立即免費註冊（首訂現折 NT$500）';
+        }
+
+        function togglePasswordVisibility() {
+            const inp = document.getElementById('auth-pass-input');
+            inp.type = inp.type === 'password' ? 'text' : 'password';
+        }
+
+        function submitAuthForm(e) {
+            e.preventDefault();
+            const email = document.getElementById('auth-email-input').value.trim();
+            const nameInput = document.getElementById('auth-name-input').value.trim();
+            const displayName = nameInput || email.split('@')[0];
+
+            state.user = {
+                name: displayName,
+                email: email,
+                tier: '銀卡會員',
+                points: state.isRegisterMode ? 1700 : 1200,
+                nights: 2
+            };
+            updateNavUserDisplay();
+            closeModal('auth-modal');
+            showToast(`歡迎回來，${state.user.name}！`);
+        }
+
+        function logoutUser() {
+            state.user = null;
+            updateNavUserDisplay();
+            closeModal('member-dashboard-modal');
+            showToast('已安全登出會員帳號');
+        }
+
+        function updateNavUserDisplay() {
+            const btnText = document.getElementById('auth-nav-text');
+            const mobLabel = document.getElementById('mobile-nav-user-label');
+            if (state.user) {
+                btnText.textContent = state.user.name;
+                if (mobLabel) mobLabel.textContent = state.user.tier;
+            } else {
+                btnText.textContent = '會員登入';
+                if (mobLabel) mobLabel.textContent = '會員中心';
+            }
+        }
+
+        function openMemberDashboard(tabKey) {
+            if (!state.user) {
+                showToast('請先登入會員帳號以使用完整功能');
+                document.getElementById('auth-modal').classList.remove('hidden');
+                return;
+            }
+
+            document.getElementById('dash-avatar').textContent = state.user.name[0].toUpperCase();
+            document.getElementById('dash-user-name').textContent = state.user.name;
+            document.getElementById('dash-tier-badge').textContent = state.user.tier;
+            document.getElementById('dash-points').textContent = state.user.points.toLocaleString();
+            document.getElementById('dash-nights-count').textContent = state.user.nights;
+
+            const pct = Math.min(100, Math.round((state.user.nights / 8) * 100));
+            document.getElementById('dash-tier-progress').style.width = pct + '%';
+            document.getElementById('dash-next-tier-hint').textContent = state.user.nights >= 8
+                ? '您已達成最高「黑卡無界」尊榮等級！'
+                : `再累積 ${8 - state.user.nights} 晚即可晉升黑卡無界`;
+
+            renderDashboardBookings();
+            renderDashboardWishlist();
+            renderVerifiedFriends();
+            switchDashboardTab(tabKey || 'tier');
+            document.getElementById('member-dashboard-modal').classList.remove('hidden');
+        }
+
+        function switchDashboardTab(tabKey) {
+            document.querySelectorAll('.dash-panel').forEach(p => p.classList.add('hidden'));
+            document.getElementById('dash-panel-' + tabKey).classList.remove('hidden');
+
+            document.querySelectorAll('.dash-tab-btn').forEach(btn => {
+                if (btn.dataset.tab === tabKey) {
+                    btn.className = 'dash-tab-btn px-3.5 py-2 rounded-xl text-xs font-semibold whitespace-nowrap gold-gradient text-navy-950';
+                } else {
+                    btn.className = 'dash-tab-btn px-3.5 py-2 rounded-xl text-xs font-semibold whitespace-nowrap bg-navy-800 text-slate-300';
+                }
+            });
+        }
+
+        function renderDashboardBookings() {
+            const box = document.getElementById('dash-panel-bookings');
+            box.innerHTML = state.bookings.map((b, idx) => `
+                <div class="p-4 rounded-2xl bg-navy-900/90 border border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                    <div>
+                        <div class="text-xs text-gold-400 font-mono">#${b.id} · ${b.status}</div>
+                        <div class="text-sm font-bold text-white mt-0.5">${b.room}</div>
+                        <div class="text-xs text-slate-400">${b.dates} · 總額 ${formatMoney(b.total)}</div>
+                    </div>
+                    ${b.status === '已確認' ? `<button onclick="cancelBooking(${idx})" class="px-3 py-1.5 rounded-lg bg-rose-500/15 text-rose-300 text-xs border border-rose-500/30 self-start sm:self-center">取消預訂</button>` : ''}
+                </div>
+            `).join('');
+        }
+
+        function cancelBooking(idx) {
+            state.bookings[idx].status = '已取消退款';
+            renderDashboardBookings();
+            showToast('訂單已取消，款項將於 3 個工作日內退回');
+        }
+
+        function renderDashboardWishlist() {
+            const box = document.getElementById('dash-panel-wishlist');
+            const favRooms = ROOMS.filter(r => state.wishlist.includes(r.id));
+            box.innerHTML = favRooms.length ? favRooms.map(r => `
+                <div class="p-3 rounded-2xl bg-navy-900/90 border border-white/10 flex items-center gap-3">
+                    <img src="${r.image}" class="w-16 h-16 rounded-xl object-cover">
+                    <div class="flex-1">
+                        <div class="text-xs font-bold text-white">${r.title}</div>
+                        <div class="text-xs text-gold-400 mt-0.5">${formatMoney(r.priceTWD)} / 晚</div>
+                        <button onclick="closeModal('member-dashboard-modal'); openCheckoutModal('${r.id}', null);" class="mt-1.5 px-2.5 py-1 rounded-lg gold-gradient text-navy-950 font-bold text-[11px]">立即預訂</button>
+                    </div>
+                </div>
+            `).join('') : '<div class="text-xs text-slate-400">尚未收藏任何房型</div>';
+        }
+
+        // ================= 真好友驗證聊天室 =================
+        function verifyAndAddFriend() {
+            const input = document.getElementById('add-friend-input');
+            const email = input.value.trim().toLowerCase();
+            if (!email) return;
+
+            const found = REGISTERED_DIRECTORY.find(u => u.email === email);
+            if (!found) {
+                showToast('查無此已註冊會員帳號！僅限添加已註冊真好友');
+                return;
+            }
+            if (state.friends.some(f => f.email === found.email)) {
+                showToast('該會員已在您的真好友名單中');
+                return;
+            }
+            state.friends.push(found);
+            state.chatHistory[found.email] = [{ sender: 'them', text: `你好！我是 ${found.name}，很高興在奧蕾莉亞成為好友！` }];
+            input.value = '';
+            renderVerifiedFriends();
+            selectFriendChat(found.email);
+            showToast(`已成功驗證並加入好友：${found.name}`);
+        }
+
+        function renderVerifiedFriends() {
+            const list = document.getElementById('verified-friends-list');
+            list.innerHTML = state.friends.map(f => `
+                <button onclick="selectFriendChat('${f.email}')" class="w-full text-left p-2 rounded-xl flex items-center justify-between text-xs ${f.email === state.activeFriendEmail ? 'bg-gold-500/20 border border-gold-400/40 text-white' : 'hover:bg-navy-800 text-slate-300'}">
+                    <div>
+                        <div class="font-bold flex items-center gap-1.5">
+                            <span class="w-2 h-2 rounded-full ${f.online ? 'bg-emerald-400' : 'bg-slate-500'}"></span>
+                            ${f.name}
+                        </div>
+                        <div class="text-[10px] text-gold-400">${f.tier} · 已認證</div>
+                    </div>
+                </button>
+            `).join('');
+            renderActiveFriendMessages();
+        }
+
+        function selectFriendChat(email) {
+            state.activeFriendEmail = email;
+            const friend = state.friends.find(f => f.email === email);
+            if (friend) {
+                document.getElementById('active-chat-friend-name').textContent = `${friend.name} (${friend.tier})`;
+            }
+            renderVerifiedFriends();
+        }
+
+        function renderActiveFriendMessages() {
+            const box = document.getElementById('friend-chat-messages');
+            const msgs = state.chatHistory[state.activeFriendEmail] || [];
+            box.innerHTML = msgs.map(m => `
+                <div class="flex ${m.sender === 'me' ? 'justify-end' : 'justify-start'}">
+                    <div class="max-w-[80%] px-3 py-2 rounded-2xl ${m.sender === 'me' ? 'gold-gradient text-navy-950 font-medium' : 'bg-navy-800 text-slate-200'}">
+                        ${m.text}
+                    </div>
+                </div>
+            `).join('');
+            box.scrollTop = box.scrollHeight;
+        }
+
+        function sendFriendMessage(e) {
+            e.preventDefault();
+            const inp = document.getElementById('friend-msg-input');
+            const text = inp.value.trim();
+            if (!text) return;
+
+            if (!state.chatHistory[state.activeFriendEmail]) state.chatHistory[state.activeFriendEmail] = [];
+            state.chatHistory[state.activeFriendEmail].push({ sender: 'me', text });
+            inp.value = '';
+            renderActiveFriendMessages();
+
+            setTimeout(() => {
+                state.chatHistory[state.activeFriendEmail].push({
+                    sender: 'them',
+                    text: '收到！我們可以一起使用好友推薦點數折抵這次的海景套房住宿 ✨'
+                });
+                renderActiveFriendMessages();
+            }, 800);
+        }
+
+        function shareRoomToFriend() {
+            if (!state.chatHistory[state.activeFriendEmail]) state.chatHistory[state.activeFriendEmail] = [];
+            state.chatHistory[state.activeFriendEmail].push({
+                sender: 'me',
+                text: '🏨 【推薦房型】270° 行政全景海景套房 · 使用我的專屬邀請碼現折 NT$500！'
+            });
+            renderActiveFriendMessages();
+        }
+
+        function copyReferralLink() {
+            const inp = document.getElementById('referral-link-input');
+            inp.select();
+            navigator.clipboard?.writeText(inp.value);
+            showToast('專屬好友推薦連結已複製！');
+        }
+
+        function copyCoupon(code) {
+            navigator.clipboard?.writeText(code);
+            showToast(`優惠代碼 ${code} 已複製到剪貼簿`);
+        }
+
+        // ================= 其他實用功能 =================
+        function scrollToRoomsWithDates() {
+            document.getElementById('co-checkin').value = document.getElementById('search-checkin').value;
+            document.getElementById('co-checkout').value = document.getElementById('search-checkout').value;
+            document.getElementById('rooms').scrollIntoView({ behavior: 'smooth' });
+            showToast('已更新所選日期即時空房與房價');
+        }
+
+        function openDiningModal(restaurantName) {
+            document.getElementById('dining-modal-title').textContent = restaurantName + ' · 線上訂位';
+            document.getElementById('dining-modal').classList.remove('hidden');
+        }
+
+        function submitDiningReservation(e) {
+            e.preventDefault();
+            closeModal('dining-modal');
+            showToast('餐廳席位已預約成功！簡訊確認函已發送');
+        }
+
+        function downloadMenuPDF(filename) {
+            showToast(`正在下載本季精選菜單：${filename}`);
+        }
+
+        function toggleFaq(btn) {
+            const content = btn.nextElementSibling;
+            content.classList.toggle('hidden');
+        }
+
+        function toggleAiChat() {
+            document.getElementById('ai-chat-widget').classList.toggle('hidden');
+        }
+
+        function askAiQuick(topic) {
+            const box = document.getElementById('ai-chat-messages');
+            box.innerHTML += `<div class="text-right"><span class="inline-block px-3 py-1.5 rounded-xl gold-gradient text-navy-950 font-semibold">${topic}</span></div>`;
+            let reply = '入住時間為 15:00 後，退房時間為 11:00 前，禮賓部提供 24 小時免費行李寄存。';
+            if (topic.includes('接駁')) reply = '高鐵站免費接駁車每日 10:30、13:30、15:30、18:30 由高鐵 3 號出口發車直達飯店大廳。';
+            if (topic.includes('方案')) reply = '最推薦「金卡尊榮年度會籍（NT$12,800）」，直接贈送一晚價值 NT$16,800 的海景套房住宿券並享全年訂房 8 折！';
+            setTimeout(() => {
+                box.innerHTML += `<div class="p-3 rounded-xl bg-navy-800/90 text-slate-200 leading-relaxed">${reply}</div>`;
+                box.scrollTop = box.scrollHeight;
+            }, 350);
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).classList.add('hidden');
+        }
+
+        function showToast(msg) {
+            const t = document.getElementById('toast');
+            t.textContent = msg;
+            t.classList.remove('hidden');
+            clearTimeout(window._toastTimer);
+            window._toastTimer = setTimeout(() => t.classList.add('hidden'), 2800);
+        }
+
+        document.addEventListener('DOMContentLoaded', initApp);
+    </script>
+</body>
+</html>
