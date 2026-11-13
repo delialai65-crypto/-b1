@@ -1,1584 +1,1178 @@
 <!DOCTYPE html>
-<html lang="zh-Hant" class="scroll-smooth">
+<html lang="zh-TW">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>AURELIA GRAND RESORT | 奧蕾莉亞尊榮海景度假酒店</title>
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        serif: ['"Cinzel"', '"Noto Sans TC"', 'serif'],
-                        sans: ['"Plus Jakarta Sans"', '"Noto Sans TC"', 'sans-serif'],
-                    },
-                    colors: {
-                        navy: {
-                            950: '#04070d',
-                            900: '#0a0f1c',
-                            800: '#12192c',
-                            700: '#1c2642',
-                        },
-                        gold: {
-                            300: '#f5d98a',
-                            400: '#e5b95c',
-                            500: '#d4af37',
-                            600: '#b38b22',
-                        }
-                    }
-                }
-            }
-        }
-    </script>
-    <style>
-        html, body {
-            overflow-x: hidden;
-            max-width: 100%;
-            background-color: #04070d;
-            color: #f8fafc;
-            -webkit-tap-highlight-color: transparent;
-        }
-        .glass-panel {
-            background: rgba(18, 25, 44, 0.72);
-            backdrop-filter: blur(18px);
-            -webkit-backdrop-filter: blur(18px);
-            border: 1px solid rgba(212, 175, 55, 0.18);
-        }
-        .glass-card {
-            background: linear-gradient(145deg, rgba(28, 38, 66, 0.45), rgba(10, 15, 28, 0.85));
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        @media (hover: hover) {
-            .glass-card:hover {
-                transform: translateY(-6px);
-                border-color: rgba(212, 175, 55, 0.45);
-                box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.7), 0 0 20px rgba(212, 175, 55, 0.12);
-            }
-        }
-        .gold-gradient {
-            background: linear-gradient(135deg, #f5d98a 0%, #d4af37 50%, #b38b22 100%);
-        }
-        .gold-text-gradient {
-            background: linear-gradient(135deg, #f5d98a 0%, #d4af37 60%, #e5b95c 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .hero-bg {
-            background-image: linear-gradient(to bottom, rgba(4, 7, 13, 0.45) 0%, rgba(4, 7, 13, 0.6) 60%, #04070d 100%),
-                              url('https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=2070&q=85');
-            background-size: cover;
-            background-position: center;
-        }
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-        .pb-safe { padding-bottom: env(safe-area-inset-bottom, 12px); }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>GRAND SLAM 3D｜豪華白金版 3D 棒球大聯盟</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Orbitron:wght@600;800;900&display=swap');
+
+    body {
+      font-family: 'Noto Sans TC', sans-serif;
+      background-color: #07090e;
+      color: #f8fafc;
+      overflow-x: hidden;
+      margin: 0;
+    }
+
+    .font-orbitron {
+      font-family: 'Orbitron', sans-serif;
+    }
+
+    #canvas-container {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+    }
+
+    .glass-panel {
+      background: rgba(11, 15, 25, 0.78);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(234, 179, 8, 0.25);
+    }
+
+    .gold-gradient-text {
+      background: linear-gradient(135deg, #fde047 0%, #eab308 50%, #ca8a04 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .gold-btn {
+      background: linear-gradient(135deg, #facc15 0%, #eab308 50%, #ca8a04 100%);
+      color: #090d16;
+      font-weight: 800;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 20px rgba(234, 179, 8, 0.35);
+    }
+
+    .gold-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 26px rgba(234, 179, 8, 0.55);
+    }
+
+    .gold-btn:active {
+      transform: scale(0.97);
+    }
+
+    @keyframes pulseBanner {
+      0% { transform: scale(0.85); opacity: 0; }
+      20% { transform: scale(1.05); opacity: 1; }
+      80% { transform: scale(1); opacity: 1; }
+      100% { transform: scale(0.95); opacity: 0; }
+    }
+
+    .banner-animate {
+      animation: pulseBanner 2.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+  </style>
 </head>
-<body class="font-sans antialiased selection:bg-gold-500/30 selection:text-gold-300 pb-20 md:pb-0">
+<body class="select-none">
 
-    <!-- ================= 頂部導覽列 ================= -->
-    <nav id="navbar" class="fixed top-0 left-0 right-0 z-40 transition-all duration-300 py-3 md:py-4 bg-navy-950/90 backdrop-blur-md border-b border-white/10">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
-            <!-- Brand -->
-            <a href="#" class="flex items-center gap-2.5 group">
-                <div class="w-9 h-9 md:w-10 md:h-10 rounded-xl gold-gradient flex items-center justify-center text-navy-950 font-serif font-bold text-lg md:text-xl shadow-lg">A</div>
-                <div>
-                    <span class="font-serif text-lg md:text-xl tracking-widest font-bold text-white block leading-none">AURELIA</span>
-                    <span class="text-[9px] md:text-[10px] tracking-[0.22em] text-gold-400 uppercase block mt-0.5">Grand Resort</span>
-                </div>
-            </a>
+  <!-- 3D 渲染畫布 -->
+  <div id="canvas-container"></div>
 
-            <!-- Desktop Menu -->
-            <div class="hidden lg:flex items-center gap-6 text-sm text-slate-300 font-medium">
-                <a href="#rooms" class="hover:text-gold-400 transition-colors">尊榮房型</a>
-                <a href="#offers" class="hover:text-gold-400 transition-colors flex items-center gap-1">
-                    精選方案
-                    <span class="px-1.5 py-0.5 text-[10px] rounded bg-gold-500/20 text-gold-300 border border-gold-500/30">15</span>
-                </a>
-                <a href="#membership-plans" class="hover:text-gold-400 transition-colors flex items-center gap-1 text-gold-300">
-                    <i data-lucide="crown" class="w-3.5 h-3.5"></i>尊榮會籍
-                </a>
-                <a href="#dining" class="hover:text-gold-400 transition-colors">美饌饗宴</a>
-                <a href="#location" class="hover:text-gold-400 transition-colors">交通指南</a>
-                <a href="#faq" class="hover:text-gold-400 transition-colors">常見問答</a>
-            </div>
-
-            <!-- Right Controls -->
-            <div class="flex items-center gap-2 sm:gap-3">
-                <!-- Currency Switch -->
-                <select id="currency-select" onchange="changeCurrency(this.value)" class="bg-navy-800/90 border border-white/15 text-xs text-slate-200 rounded-lg px-2 py-1.5 focus:outline-none focus:border-gold-400">
-                    <option value="TWD">TWD</option>
-                    <option value="USD">USD</option>
-                    <option value="JPY">JPY</option>
-                </select>
-
-                <!-- Wishlist Badge -->
-                <button onclick="openMemberDashboard('wishlist')" class="relative p-2 rounded-xl bg-navy-800/80 border border-white/10 text-slate-300 hover:text-gold-400 transition-colors" title="心願收藏">
-                    <i data-lucide="heart" class="w-4 h-4"></i>
-                    <span id="nav-wishlist-count" class="hidden absolute -top-1 -right-1 w-4 h-4 rounded-full gold-gradient text-navy-950 text-[10px] font-bold flex items-center justify-center">0</span>
-                </button>
-
-                <!-- Friend Chat Shortcut -->
-                <button onclick="openMemberDashboard('chat')" class="relative p-2 rounded-xl bg-navy-800/80 border border-white/10 text-slate-300 hover:text-gold-400 transition-colors" title="真好友聊天室">
-                    <i data-lucide="message-circle" class="w-4 h-4"></i>
-                    <span class="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-emerald-400 border-2 border-navy-950"></span>
-                </button>
-
-                <!-- Auth / Member Trigger -->
-                <button id="auth-nav-btn" onclick="handleAuthNavClick()" class="px-3.5 py-2 rounded-xl gold-gradient text-navy-950 font-semibold text-xs sm:text-sm flex items-center gap-1.5 shadow-lg hover:brightness-110 transition-all">
-                    <i data-lucide="user" class="w-4 h-4"></i>
-                    <span id="auth-nav-text">會員登入</span>
-                </button>
-            </div>
+  <!-- 頂部導覽列 -->
+  <header class="fixed top-0 left-0 right-0 z-40 glass-panel border-b border-yellow-500/20">
+    <div class="max-w-7xl mx-auto px-3 sm:px-6 h-16 flex items-center justify-between gap-2">
+      <!-- Logo -->
+      <div class="flex items-center gap-2 cursor-pointer" onclick="switchView('landing')">
+        <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-yellow-400 to-amber-600 flex items-center justify-center text-slate-950 font-black text-lg shadow-lg">
+          <i class="fa-solid fa-baseball"></i>
         </div>
-    </nav>
-
-    <!-- ================= 主視覺 HERO SECTION ================= -->
-    <header class="hero-bg relative pt-28 pb-16 md:pt-40 md:pb-28 px-4">
-        <div class="max-w-7xl mx-auto text-center">
-            <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-navy-900/80 border border-gold-500/30 text-gold-300 text-xs mb-5">
-                <i data-lucide="sparkles" class="w-3.5 h-3.5 text-gold-400"></i>
-                <span>2026 亞洲頂級海景奢華度假首選 · 會員專享首訂立折 NT$500</span>
-            </div>
-            <h1 class="font-serif text-3xl sm:text-5xl md:text-6xl font-bold text-white tracking-wide leading-tight mb-4">
-                靜享蔚藍海岸<br class="sm:hidden"> <span class="gold-text-gradient">極致私密奢華</span>
-            </h1>
-            <p class="text-slate-300 text-sm sm:text-base md:text-lg max-w-2xl mx-auto mb-8 leading-relaxed">
-                座落於絕美海岸線制高點，270 度無邊際海景套房、米其林星級主廚美饌與專屬私人管家禮遇，為您譜寫難忘的度假篇章。
-            </p>
-
-            <!-- Booking Search Bar -->
-            <div class="max-w-5xl mx-auto glass-panel rounded-2xl p-4 sm:p-5 shadow-2xl text-left">
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
-                    <div>
-                        <label class="block text-[11px] uppercase tracking-wider text-gold-400 font-semibold mb-1">入住日期 Check-in</label>
-                        <input type="date" id="search-checkin" class="w-full bg-navy-900/90 border border-white/15 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-gold-400">
-                    </div>
-                    <div>
-                        <label class="block text-[11px] uppercase tracking-wider text-gold-400 font-semibold mb-1">退房日期 Check-out</label>
-                        <input type="date" id="search-checkout" class="w-full bg-navy-900/90 border border-white/15 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-gold-400">
-                    </div>
-                    <div>
-                        <label class="block text-[11px] uppercase tracking-wider text-gold-400 font-semibold mb-1">入住房客 Guests</label>
-                        <select id="search-guests" class="w-full bg-navy-900/90 border border-white/15 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-gold-400">
-                            <option value="2">2 位成人 · 1 間客房</option>
-                            <option value="3">2 位成人 + 1 位兒童</option>
-                            <option value="4">4 位成人 · 家庭套房</option>
-                            <option value="1">1 位商務貴賓</option>
-                        </select>
-                    </div>
-                    <div class="flex items-end">
-                        <button onclick="scrollToRoomsWithDates()" class="w-full py-2.5 px-5 rounded-xl gold-gradient text-navy-950 font-bold text-sm flex items-center justify-center gap-2 shadow-lg hover:brightness-110 transition-all">
-                            <i data-lucide="search" class="w-4 h-4"></i>
-                            <span>搜尋即時空房</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
+        <div>
+          <span class="font-orbitron font-black text-base sm:text-xl tracking-wider gold-gradient-text block leading-none">GRAND SLAM 3D</span>
+          <span class="text-[10px] text-yellow-400/80 tracking-widest uppercase">Deluxe Platinum</span>
         </div>
-    </header>
+      </div>
 
-    <!-- ================= 尊榮房型展示區 ================= -->
-    <section id="rooms" class="py-16 md:py-24 px-4 max-w-7xl mx-auto">
-        <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
+      <!-- 導覽按鈕 -->
+      <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-300">
+        <button onclick="switchView('landing')" class="hover:text-yellow-400 transition">豪華首頁</button>
+        <button onclick="enterGameMode()" class="hover:text-yellow-400 transition">3D 實戰球場</button>
+        <button onclick="scrollToPricing()" class="hover:text-yellow-400 transition">白金會員方案</button>
+      </nav>
+
+      <!-- 右側功能區：一鍵複製 + 會員登入狀態 -->
+      <div class="flex items-center gap-2">
+        <button onclick="openCopyModal()" class="px-2.5 py-1.5 rounded-lg bg-slate-800/90 hover:bg-slate-700 border border-yellow-500/40 text-yellow-300 text-xs font-bold flex items-center gap-1.5 transition" title="一鍵複製完整程式碼">
+          <i class="fa-solid fa-copy"></i>
+          <span class="hidden sm:inline">複製程式碼</span>
+          <span class="sm:hidden">複製</span>
+        </button>
+
+        <div id="auth-guest-actions" class="flex items-center gap-2">
+          <button onclick="openAuthModal('login')" class="px-3 py-1.5 rounded-lg border border-slate-600 hover:border-yellow-400 text-xs sm:text-sm font-semibold transition">登入</button>
+          <button onclick="openAuthModal('register')" class="gold-btn px-3 py-1.5 rounded-lg text-xs sm:text-sm">免費註冊</button>
+        </div>
+
+        <div id="auth-user-panel" class="hidden flex items-center gap-2 sm:gap-3">
+          <div class="text-right">
+            <div class="flex items-center justify-end gap-1.5">
+              <span id="nav-username" class="text-xs sm:text-sm font-bold text-white">玩家</span>
+              <span id="nav-vip-badge" class="px-1.5 py-0.5 text-[10px] font-black rounded bg-slate-700 text-slate-300">FREE</span>
+            </div>
+            <div class="text-[11px] text-yellow-400/90 font-orbitron">HR: <span id="nav-hr-count">0</span></div>
+          </div>
+          <button onclick="openProfileModal()" class="w-9 h-9 rounded-full bg-gradient-to-tr from-yellow-500 to-amber-300 text-slate-950 font-black text-xs flex items-center justify-center border-2 border-yellow-200 shadow">
+            #<span id="nav-jersey">24</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==================== 視圖 1：豪華白金版首頁 ==================== -->
+  <main id="view-landing" class="relative z-10 pt-20 pb-16 px-4 sm:px-6 max-w-7xl mx-auto transition-opacity duration-300">
+    <!-- Hero 區塊 -->
+    <section class="min-h-[76vh] flex flex-col justify-center items-start max-w-2xl py-8">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full glass-panel text-yellow-400 text-xs font-bold tracking-wider mb-5">
+        <i class="fa-solid fa-crown"></i> 2026 次世代 WEBGL 3D 物理引擎
+      </div>
+      <h1 class="text-4xl sm:text-6xl font-black leading-tight tracking-tight mb-4">
+        制霸大聯盟投手丘<br />
+        <span class="gold-gradient-text">揮出震撼全場的滿貫砲</span>
+      </h1>
+      <p class="text-slate-300 text-base sm:text-lg leading-relaxed mb-8 bg-slate-950/55 p-4 rounded-xl border border-slate-800/80">
+        體驗真實馬格努斯變化球軌跡、Statcast 擊球初速與仰角分析。立即註冊並升級白金會員，解鎖夜間巨蛋燈光秀與黃金烈焰球棒特效！
+      </p>
+
+      <div class="flex flex-wrap items-center gap-4 w-full sm:w-auto">
+        <button onclick="enterGameMode()" class="gold-btn px-7 py-4 rounded-xl text-base sm:text-lg flex items-center justify-center gap-2.5 w-full sm:w-auto">
+          <i class="fa-solid fa-play"></i> 立即進入 3D 球場開打
+        </button>
+        <button onclick="scrollToPricing()" class="px-6 py-4 rounded-xl glass-panel hover:border-yellow-400 text-white font-bold text-base flex items-center justify-center gap-2 w-full sm:w-auto transition">
+          <i class="fa-solid fa-gem text-yellow-400"></i> 升級白金 VIP 方案
+        </button>
+      </div>
+
+      <!-- 數據亮點 -->
+      <div class="grid grid-cols-3 gap-3 sm:gap-6 mt-10 w-full">
+        <div class="glass-panel p-3.5 rounded-xl">
+          <div class="font-orbitron text-xl sm:text-2xl font-black text-yellow-400">60 FPS</div>
+          <div class="text-xs text-slate-400 mt-1">零延遲 3D 物理軌跡</div>
+        </div>
+        <div class="glass-panel p-3.5 rounded-xl">
+          <div class="font-orbitron text-xl sm:text-2xl font-black text-yellow-400">4 種球路</div>
+          <div class="text-xs text-slate-400 mt-1">直球/曲球/滑球/指叉</div>
+        </div>
+        <div class="glass-panel p-3.5 rounded-xl">
+          <div class="font-orbitron text-xl sm:text-2xl font-black text-yellow-400">STATCAST</div>
+          <div class="text-xs text-slate-400 mt-1">即時擊球仰角與初速</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 會員方案與購買區 -->
+    <section id="pricing-section" class="pt-12 pb-10">
+      <div class="text-center max-w-2xl mx-auto mb-10">
+        <h2 class="text-3xl sm:text-4xl font-black mb-3">選擇你的 <span class="gold-gradient-text">白金通行證</span></h2>
+        <p class="text-slate-400 text-sm sm:text-base">隨時升級解鎖豪華夜間巨蛋球場、傳奇黃金烈焰球棒與無限暢打權限</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- 方案 1：免費新秀版 -->
+        <div class="glass-panel rounded-2xl p-6 flex flex-col justify-between border border-slate-700/70">
+          <div>
+            <div class="text-slate-400 font-bold text-sm uppercase tracking-wider">新秀體驗版</div>
+            <div class="mt-2 flex items-baseline gap-1">
+              <span class="font-orbitron text-4xl font-black text-white">NT$ 0</span>
+              <span class="text-slate-400 text-sm">/ 永久免費</span>
+            </div>
+            <ul class="mt-6 space-y-3 text-sm text-slate-300">
+              <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400"></i> 日間標準大聯盟球場</li>
+              <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400"></i> 4 種基礎變化球投打練習</li>
+              <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400"></i> Statcast 基礎擊球數據</li>
+              <li class="flex items-center gap-2 text-slate-500"><i class="fa-solid fa-xmark"></i> 夜間巨蛋燈光秀場景</li>
+              <li class="flex items-center gap-2 text-slate-500"><i class="fa-solid fa-xmark"></i> 黃金烈焰全壘打軌跡特效</li>
+            </ul>
+          </div>
+          <button onclick="enterGameMode()" class="mt-8 w-full py-3 rounded-xl border border-slate-600 hover:border-white font-bold text-sm transition">
+            立即免費開打
+          </button>
+        </div>
+
+        <!-- 方案 2：豪華季票 (熱門) -->
+        <div class="glass-panel rounded-2xl p-6 flex flex-col justify-between border-2 border-yellow-400 relative shadow-2xl shadow-yellow-500/10">
+          <div class="absolute -top-3.5 right-6 bg-gradient-to-r from-yellow-400 to-amber-500 text-slate-950 text-xs font-black px-3 py-1 rounded-full uppercase tracking-wider">
+            最受歡迎 MOST POPULAR
+          </div>
+          <div>
+            <div class="text-yellow-400 font-bold text-sm uppercase tracking-wider">豪華白金季票 VIP</div>
+            <div class="mt-2 flex items-baseline gap-1">
+              <span class="font-orbitron text-4xl font-black gold-gradient-text">NT$ 199</span>
+              <span class="text-slate-400 text-sm">/ 月</span>
+            </div>
+            <ul class="mt-6 space-y-3 text-sm text-slate-200">
+              <li class="flex items-center gap-2"><i class="fa-solid fa-crown text-yellow-400"></i> 解鎖「夜間巨蛋燈光秀」球場</li>
+              <li class="flex items-center gap-2"><i class="fa-solid fa-crown text-yellow-400"></i> 專屬「黃金烈焰球棒」與拖尾特效</li>
+              <li class="flex items-center gap-2"><i class="fa-solid fa-crown text-yellow-400"></i> 個人雲端全壘打戰績紀錄</li>
+              <li class="flex items-center gap-2"><i class="fa-solid fa-crown text-yellow-400"></i> 優先體驗未來多人連線對戰</li>
+            </ul>
+          </div>
+          <button onclick="openCheckoutModal('豪華白金季票 VIP', 199)" class="mt-8 w-full py-3.5 rounded-xl gold-btn text-sm">
+            立即購買開通 VIP
+          </button>
+        </div>
+
+        <!-- 方案 3：終身傳奇版 -->
+        <div class="glass-panel rounded-2xl p-6 flex flex-col justify-between border border-amber-500/40">
+          <div>
+            <div class="text-amber-400 font-bold text-sm uppercase tracking-wider">終身名人堂版</div>
+            <div class="mt-2 flex items-baseline gap-1">
+              <span class="font-orbitron text-4xl font-black text-white">NT$ 990</span>
+              <span class="text-slate-400 text-sm">/ 一次買斷</span>
+            </div>
+            <ul class="mt-6 space-y-3 text-sm text-slate-300">
+              <li class="flex items-center gap-2"><i class="fa-solid fa-check text-yellow-400"></i> 包含豪華白金季票所有特權</li>
+              <li class="flex items-center gap-2"><i class="fa-solid fa-check text-yellow-400"></i> 永久免月費，終身全功能解鎖</li>
+              <li class="flex items-center gap-2"><i class="fa-solid fa-check text-yellow-400"></i> 名人堂專屬金色殿堂徽章</li>
+              <li class="flex items-center gap-2"><i class="fa-solid fa-check text-yellow-400"></i> 贈送 5,000 聯盟金幣</li>
+            </ul>
+          </div>
+          <button onclick="openCheckoutModal('終身名人堂版', 990)" class="mt-8 w-full py-3 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 border border-amber-400 text-amber-300 font-bold text-sm transition">
+            購買終身版
+          </button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ==================== 視圖 2：3D 棒球實戰 HUD 介面 ==================== -->
+  <div id="view-game" class="hidden fixed inset-0 z-20 pointer-events-none">
+    <!-- 左上角：返回與環境切換 -->
+    <div class="absolute top-20 left-3 sm:left-6 flex flex-wrap items-center gap-2 pointer-events-auto">
+      <button onclick="switchView('landing')" class="glass-panel px-3 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-200 hover:text-yellow-400 flex items-center gap-1.5">
+        <i class="fa-solid fa-arrow-left"></i> 返回首頁
+      </button>
+      <button id="btn-toggle-stadium" onclick="toggleStadiumTheme()" class="glass-panel px-3 py-2 rounded-xl text-xs sm:text-sm font-bold text-yellow-300 flex items-center gap-1.5">
+        <i class="fa-solid fa-moon"></i> <span id="stadium-mode-label">日間球場</span>
+      </button>
+      <button id="btn-toggle-bat" onclick="toggleGoldBat()" class="glass-panel px-3 py-2 rounded-xl text-xs sm:text-sm font-bold text-amber-400 flex items-center gap-1.5">
+        <i class="fa-solid fa-fire"></i> <span id="bat-mode-label">標準木棒</span>
+      </button>
+    </div>
+
+    <!-- 右上角：Statcast 擊球數據儀表 -->
+    <div class="absolute top-20 right-3 sm:right-6 glass-panel p-3 sm:p-4 rounded-2xl w-44 sm:w-56 pointer-events-auto">
+      <div class="text-[10px] font-orbitron text-yellow-400 tracking-widest uppercase border-b border-slate-700/80 pb-1 mb-2">
+        STATCAST 數據分析
+      </div>
+      <div class="space-y-1.5 text-xs">
+        <div class="flex justify-between">
+          <span class="text-slate-400">球速 / 球種</span>
+          <span id="hud-pitch-info" class="font-bold text-white">--</span>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-slate-400">擊球初速</span>
+          <span id="hud-exit-velo" class="font-orbitron font-bold text-emerald-400">-- km/h</span>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-slate-400">發射仰角</span>
+          <span id="hud-launch-angle" class="font-orbitron font-bold text-sky-400">-- °</span>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-slate-400">飛行距離</span>
+          <span id="hud-distance" class="font-orbitron font-bold text-yellow-400">-- m</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 中央動態結果大字播報 -->
+    <div id="result-banner-container" class="absolute inset-x-0 top-1/4 flex justify-center pointer-events-none"></div>
+
+    <!-- 底部投打控制面板 -->
+    <div class="absolute bottom-4 inset-x-3 sm:inset-x-6 flex flex-col sm:flex-row items-center justify-between gap-3 pointer-events-auto">
+      <!-- 球種選擇 -->
+      <div class="glass-panel p-2 rounded-2xl flex items-center gap-1.5 overflow-x-auto max-w-full">
+        <button onclick="selectPitchType('fastball')" id="pitch-fastball" class="pitch-btn px-3 py-2 rounded-xl text-xs font-bold bg-yellow-500 text-slate-950">四縫線直球</button>
+        <button onclick="selectPitchType('curve')" id="pitch-curve" class="pitch-btn px-3 py-2 rounded-xl text-xs font-bold text-slate-300 hover:bg-slate-800">12-6 大曲球</button>
+        <button onclick="selectPitchType('slider')" id="pitch-slider" class="pitch-btn px-3 py-2 rounded-xl text-xs font-bold text-slate-300 hover:bg-slate-800">銳利滑球</button>
+        <button onclick="selectPitchType('splitter')" id="pitch-splitter" class="pitch-btn px-3 py-2 rounded-xl text-xs font-bold text-slate-300 hover:bg-slate-800">快速指叉球</button>
+      </div>
+
+      <!-- 投球與揮棒大按鈕 (支援手機觸控與電腦空白鍵) -->
+      <div class="flex items-center gap-3 w-full sm:w-auto justify-center">
+        <button onclick="startPitch()" class="px-6 py-4 rounded-2xl bg-sky-500 hover:bg-sky-400 text-slate-950 font-black text-base shadow-lg shadow-sky-500/30 flex items-center gap-2 flex-1 sm:flex-initial justify-center active:scale-95 transition">
+          <i class="fa-solid fa-baseball"></i> 投球 (P)
+        </button>
+        <button onclick="swingBat()" class="gold-btn px-8 py-4 rounded-2xl text-base flex items-center gap-2 flex-1 sm:flex-initial justify-center">
+          <i class="fa-solid fa-bolt"></i> 揮棒 (SPACE)
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== 彈窗 1：登入 / 註冊 ==================== -->
+  <div id="modal-auth" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="glass-panel rounded-2xl max-w-md w-full p-6 relative border border-yellow-500/40">
+      <button onclick="closeModal('modal-auth')" class="absolute top-4 right-4 text-slate-400 hover:text-white">
+        <i class="fa-solid fa-xmark text-xl"></i>
+      </button>
+
+      <div class="flex gap-4 border-b border-slate-700 pb-3 mb-5">
+        <button id="tab-login" onclick="switchAuthTab('login')" class="font-bold text-base text-yellow-400 border-b-2 border-yellow-400 pb-1">會員登入</button>
+        <button id="tab-register" onclick="switchAuthTab('register')" class="font-bold text-base text-slate-400 pb-1">註冊新帳號</button>
+      </div>
+
+      <form onsubmit="handleAuthSubmit(event)" class="space-y-4">
+        <div id="field-username" class="hidden">
+          <label class="block text-xs text-slate-400 mb-1">球員暱稱</label>
+          <input type="text" id="input-username" placeholder="例如：台灣巨砲" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-white text-sm focus:border-yellow-400 outline-none" />
+        </div>
+        <div>
+          <label class="block text-xs text-slate-400 mb-1">電子信箱 Email</label>
+          <input type="email" id="input-email" required placeholder="player@grandslam.tw" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-white text-sm focus:border-yellow-400 outline-none" />
+        </div>
+        <div>
+          <label class="block text-xs text-slate-400 mb-1">密碼</label>
+          <input type="password" id="input-password" required placeholder="••••••••" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-white text-sm focus:border-yellow-400 outline-none" />
+        </div>
+        <div id="field-jersey" class="hidden">
+          <label class="block text-xs text-slate-400 mb-1">專屬球衣背號 (0-99)</label>
+          <input type="number" id="input-jersey" min="0" max="99" value="24" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-white text-sm focus:border-yellow-400 outline-none" />
+        </div>
+
+        <button type="submit" id="auth-submit-btn" class="w-full py-3 rounded-xl gold-btn text-sm">立即登入</button>
+      </form>
+
+      <div class="mt-4 pt-4 border-t border-slate-800 text-center">
+        <button onclick="quickDemoLogin()" class="w-full py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-yellow-300 text-xs font-bold transition">
+          <i class="fa-solid fa-wand-magic-sparkles mr-1"></i> 一鍵免填寫測試帳號快速登入
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== 彈窗 2：VIP 會員結帳與付款 ==================== -->
+  <div id="modal-checkout" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
+    <div class="glass-panel rounded-2xl max-w-md w-full p-6 relative border border-yellow-500/40 my-auto">
+      <button onclick="closeModal('modal-checkout')" class="absolute top-4 right-4 text-slate-400 hover:text-white">
+        <i class="fa-solid fa-xmark text-xl"></i>
+      </button>
+
+      <div class="flex items-center gap-2 text-yellow-400 font-bold text-sm mb-1">
+        <i class="fa-solid fa-lock"></i> SSL 256-BIT 安全加密結帳
+      </div>
+      <h3 class="text-xl font-black text-white mb-4">升級豪華白金會員</h3>
+
+      <!-- 訂單摘要 -->
+      <div class="bg-slate-900/90 p-4 rounded-xl border border-slate-700/80 mb-4">
+        <div class="flex justify-between items-center text-sm mb-2">
+          <span class="text-slate-400">購買方案</span>
+          <span id="checkout-plan-name" class="font-bold text-yellow-400">豪華白金季票 VIP</span>
+        </div>
+        <div class="flex gap-2 my-3">
+          <input type="text" id="input-coupon" placeholder="輸入優惠碼 VIP888 折 50 元" class="flex-1 px-3 py-1.5 rounded-lg bg-slate-950 border border-slate-700 text-xs text-white uppercase outline-none" />
+          <button type="button" onclick="applyCoupon()" class="px-3 py-1.5 rounded-lg bg-slate-700 hover:bg-slate-600 text-xs font-bold text-white">套用</button>
+        </div>
+        <div class="flex justify-between items-baseline border-t border-slate-800 pt-2">
+          <span class="text-xs text-slate-400">應付總金額</span>
+          <span class="font-orbitron text-2xl font-black text-white">NT$ <span id="checkout-final-price">199</span></span>
+        </div>
+      </div>
+
+      <!-- 付款方式切換 -->
+      <div class="grid grid-cols-3 gap-2 mb-4">
+        <button type="button" onclick="selectPayMethod('card')" id="pay-card" class="pay-method-btn py-2 rounded-xl border-2 border-yellow-400 bg-yellow-500/10 text-xs font-bold text-yellow-300">
+          <i class="fa-regular fa-credit-card block text-base mb-0.5"></i> 信用卡
+        </button>
+        <button type="button" onclick="selectPayMethod('linepay')" id="pay-linepay" class="pay-method-btn py-2 rounded-xl border border-slate-700 text-xs font-bold text-slate-400">
+          <i class="fa-brands fa-line block text-base mb-0.5 text-emerald-400"></i> LINE Pay
+        </button>
+        <button type="button" onclick="selectPayMethod('applepay')" id="pay-applepay" class="pay-method-btn py-2 rounded-xl border border-slate-700 text-xs font-bold text-slate-400">
+          <i class="fa-brands fa-apple-pay block text-base mb-0.5 text-white"></i> Apple Pay
+        </button>
+      </div>
+
+      <!-- 信用卡輸入區 -->
+      <form onsubmit="processPayment(event)" class="space-y-3">
+        <div id="card-input-fields" class="space-y-3">
+          <div>
+            <label class="block text-[11px] text-slate-400 mb-1">信用卡卡號</label>
+            <input type="text" id="input-card-num" maxlength="19" placeholder="4532 •••• •••• 8888" value="4532 8810 2934 8888" class="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-700 font-orbitron text-xs text-white outline-none" />
+          </div>
+          <div class="grid grid-cols-2 gap-3">
             <div>
-                <span class="text-gold-400 text-xs font-semibold tracking-[0.25em] uppercase">Rooms & Suites</span>
-                <h2 class="font-serif text-2xl sm:text-4xl font-bold text-white mt-1">精選海景客房與私人 Villa</h2>
+              <label class="block text-[11px] text-slate-400 mb-1">有效期限 (MM/YY)</label>
+              <input type="text" placeholder="08/29" value="08/29" class="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-700 font-orbitron text-xs text-white outline-none" />
             </div>
-            <div class="flex flex-wrap items-center gap-2 text-xs text-slate-400">
-                <span class="px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">● 平日享 85 折禮遇</span>
-                <span class="px-2.5 py-1 rounded-full bg-gold-500/10 text-gold-300 border border-gold-500/20">★ 登入會員再享 9 折</span>
+            <div>
+              <label class="block text-[11px] text-slate-400 mb-1">安全碼 CVC</label>
+              <input type="text" maxlength="3" placeholder="888" value="888" class="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-700 font-orbitron text-xs text-white outline-none" />
             </div>
+          </div>
         </div>
 
-        <div id="rooms-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-            <!-- JS 動態渲染房型 -->
-        </div>
-    </section>
-
-    <!-- ================= 15 大特色方案專區 ================= -->
-    <section id="offers" class="py-16 md:py-24 px-4 bg-navy-900/50 border-y border-white/5">
-        <div class="max-w-7xl mx-auto">
-            <div class="text-center max-w-3xl mx-auto mb-10">
-                <span class="text-gold-400 text-xs font-semibold tracking-[0.25em] uppercase">Curated Packages</span>
-                <h2 class="font-serif text-2xl sm:text-4xl font-bold text-white mt-1 mb-3">15 大專屬住房與體驗方案</h2>
-                <p class="text-slate-400 text-sm">點擊任一方案將自動套用專屬禮遇代碼與客製化訂房選項</p>
-            </div>
-
-            <!-- Filter Tabs -->
-            <div class="flex items-center justify-start sm:justify-center gap-2 overflow-x-auto no-scrollbar pb-3 mb-8">
-                <button onclick="filterPackages('all', this)" class="pkg-filter-btn active px-4 py-2 rounded-full text-xs font-semibold whitespace-nowrap gold-gradient text-navy-950">全部方案 (15)</button>
-                <button onclick="filterPackages('resort', this)" class="pkg-filter-btn px-4 py-2 rounded-full text-xs font-semibold whitespace-nowrap bg-navy-800 text-slate-300 border border-white/10 hover:border-gold-400">休閒度假 (5)</button>
-                <button onclick="filterPackages('dining', this)" class="pkg-filter-btn px-4 py-2 rounded-full text-xs font-semibold whitespace-nowrap bg-navy-800 text-slate-300 border border-white/10 hover:border-gold-400">美食饗宴 (2)</button>
-                <button onclick="filterPackages('business', this)" class="pkg-filter-btn px-4 py-2 rounded-full text-xs font-semibold whitespace-nowrap bg-navy-800 text-slate-300 border border-white/10 hover:border-gold-400">商務長住與休憩 (3)</button>
-                <button onclick="filterPackages('pet', this)" class="pkg-filter-btn px-4 py-2 rounded-full text-xs font-semibold whitespace-nowrap bg-navy-800 text-slate-300 border border-white/10 hover:border-gold-400">毛孩專區 (1)</button>
-                <button onclick="filterPackages('addon', this)" class="pkg-filter-btn px-4 py-2 rounded-full text-xs font-semibold whitespace-nowrap bg-navy-800 text-slate-300 border border-white/10 hover:border-gold-400">加值與禮券 (4)</button>
-            </div>
-
-            <!-- Packages Grid -->
-            <div id="packages-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-                <!-- JS 動態渲染 15 種方案 -->
-            </div>
-        </div>
-    </section>
-
-    <!-- ================= 尊榮會員方案購買專區 ================= -->
-    <section id="membership-plans" class="py-16 md:py-24 px-4 max-w-7xl mx-auto">
-        <div class="text-center max-w-3xl mx-auto mb-12">
-            <span class="text-gold-400 text-xs font-semibold tracking-[0.25em] uppercase">VIP Membership Club</span>
-            <h2 class="font-serif text-2xl sm:text-4xl font-bold text-white mt-1 mb-3">尊榮會籍與年度通行方案購買</h2>
-            <p class="text-slate-400 text-sm">立即開通年度尊榮會籍，享全年訂房最高 75 折、免費海景套房住宿券、行政酒廊通行與開卡點數回饋</p>
+        <div id="mobile-pay-hint" class="hidden p-3 rounded-xl bg-slate-900 text-center text-xs text-slate-300 border border-slate-700">
+          點擊下方按鈕將立即完成行動支付授權並開通 VIP 權限。
         </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8">
-            <!-- Silver Plan -->
-            <div class="glass-card rounded-3xl p-6 sm:p-8 flex flex-col justify-between">
-                <div>
-                    <div class="flex items-center justify-between mb-4">
-                        <span class="px-3 py-1 rounded-full text-xs font-bold bg-slate-700/60 text-slate-200 border border-slate-500/40">SILVER EXPLORER</span>
-                        <i data-lucide="award" class="w-6 h-6 text-slate-300"></i>
-                    </div>
-                    <h3 class="text-xl font-bold text-white mb-1">銀卡探索年費會籍</h3>
-                    <p class="text-xs text-slate-400 mb-5">適合一年 1–2 次輕奢度假的探索旅人</p>
-                    <div class="mb-6">
-                        <span class="text-3xl font-bold text-white" data-price="3800">NT$ 3,800</span>
-                        <span class="text-xs text-slate-400"> / 年</span>
-                    </div>
-                    <ul class="space-y-3 text-sm text-slate-300 mb-8">
-                        <li class="flex items-start gap-2.5"><i data-lucide="check-circle-2" class="w-4 h-4 text-gold-400 shrink-0 mt-0.5"></i><span>全年官網訂房享 <strong>88 折</strong> 專屬優惠</span></li>
-                        <li class="flex items-start gap-2.5"><i data-lucide="check-circle-2" class="w-4 h-4 text-gold-400 shrink-0 mt-0.5"></i><span>贈送 <strong>HARVEST 雙人自助早餐券 × 2 張</strong></span></li>
-                        <li class="flex items-start gap-2.5"><i data-lucide="check-circle-2" class="w-4 h-4 text-gold-400 shrink-0 mt-0.5"></i><span>開卡立即獲贈 <strong>1,500 點</strong> 住宿折抵金</span></li>
-                        <li class="flex items-start gap-2.5"><i data-lucide="check-circle-2" class="w-4 h-4 text-gold-400 shrink-0 mt-0.5"></i><span>視房況享延遲退房至 13:00</span></li>
-                    </ul>
-                </div>
-                <button onclick="openMembershipPurchase('silver')" class="w-full py-3 rounded-xl bg-navy-800 hover:bg-navy-700 text-white border border-gold-500/40 font-semibold text-sm transition-all">
-                    立即開通銀卡會籍
-                </button>
-            </div>
-
-            <!-- Gold Plan (Popular) -->
-            <div class="glass-card rounded-3xl p-6 sm:p-8 flex flex-col justify-between border-2 border-gold-400/70 relative shadow-2xl">
-                <div class="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full gold-gradient text-navy-950 text-xs font-bold tracking-wider shadow-lg">
-                    最受歡迎 · 超值回本首選
-                </div>
-                <div>
-                    <div class="flex items-center justify-between mb-4">
-                        <span class="px-3 py-1 rounded-full text-xs font-bold bg-gold-500/20 text-gold-300 border border-gold-400/40">ELITE GOLD</span>
-                        <i data-lucide="crown" class="w-6 h-6 text-gold-400"></i>
-                    </div>
-                    <h3 class="text-xl font-bold text-white mb-1">金卡尊榮年度會籍</h3>
-                    <p class="text-xs text-slate-400 mb-5">贈一晚海景套房住宿券，開卡即刻回本</p>
-                    <div class="mb-6">
-                        <span class="text-3xl font-bold gold-text-gradient" data-price="12800">NT$ 12,800</span>
-                        <span class="text-xs text-slate-400"> / 年</span>
-                    </div>
-                    <ul class="space-y-3 text-sm text-slate-200 mb-8">
-                        <li class="flex items-start gap-2.5"><i data-lucide="check-circle-2" class="w-4 h-4 text-gold-400 shrink-0 mt-0.5"></i><span>贈送 <strong>豪華海景套房免費住宿券 × 1 晚</strong>（價值 NT$16,800）</span></li>
-                        <li class="flex items-start gap-2.5"><i data-lucide="check-circle-2" class="w-4 h-4 text-gold-400 shrink-0 mt-0.5"></i><span>全年官網訂房享 <strong>8 折</strong> 與房型免費升等一級</span></li>
-                        <li class="flex items-start gap-2.5"><i data-lucide="check-circle-2" class="w-4 h-4 text-gold-400 shrink-0 mt-0.5"></i><span>保證延遲退房至 <strong>14:00</strong> ＋ 雙人芳療 SPA 體驗券</span></li>
-                        <li class="flex items-start gap-2.5"><i data-lucide="check-circle-2" class="w-4 h-4 text-gold-400 shrink-0 mt-0.5"></i><span>開卡立即獲贈 <strong>5,000 點</strong> 住宿折抵金</span></li>
-                    </ul>
-                </div>
-                <button onclick="openMembershipPurchase('gold')" class="w-full py-3.5 rounded-xl gold-gradient text-navy-950 font-bold text-sm shadow-lg hover:brightness-110 transition-all">
-                    立即開通金卡會籍
-                </button>
-            </div>
-
-            <!-- Black Diamond Plan -->
-            <div class="glass-card rounded-3xl p-6 sm:p-8 flex flex-col justify-between">
-                <div>
-                    <div class="flex items-center justify-between mb-4">
-                        <span class="px-3 py-1 rounded-full text-xs font-bold bg-purple-500/20 text-purple-300 border border-purple-400/40">BLACK DIAMOND</span>
-                        <i data-lucide="gem" class="w-6 h-6 text-purple-300"></i>
-                    </div>
-                    <h3 class="text-xl font-bold text-white mb-1">黑卡無界限量會籍</h3>
-                    <p class="text-xs text-slate-400 mb-5">全球限量 300 席，頂級私人管家與行政酒廊禮遇</p>
-                    <div class="mb-6">
-                        <span class="text-3xl font-bold text-white" data-price="36000">NT$ 36,000</span>
-                        <span class="text-xs text-slate-400"> / 年</span>
-                    </div>
-                    <ul class="space-y-3 text-sm text-slate-300 mb-8">
-                        <li class="flex items-start gap-2.5"><i data-lucide="check-circle-2" class="w-4 h-4 text-gold-400 shrink-0 mt-0.5"></i><span>贈送 <strong>行政海景套房免費住宿券 × 2 晚</strong></span></li>
-                        <li class="flex items-start gap-2.5"><i data-lucide="check-circle-2" class="w-4 h-4 text-gold-400 shrink-0 mt-0.5"></i><span><strong>行政酒廊全年無限次通行</strong>（含全日香檳與晚間雞尾酒）</span></li>
-                        <li class="flex items-start gap-2.5"><i data-lucide="check-circle-2" class="w-4 h-4 text-gold-400 shrink-0 mt-0.5"></i><span>高鐵／機場 <strong>賓士邁巴赫專車來回接送 × 2 趟</strong></span></li>
-                        <li class="flex items-start gap-2.5"><i data-lucide="check-circle-2" class="w-4 h-4 text-gold-400 shrink-0 mt-0.5"></i><span>保證延遲退房至 <strong>16:00</strong> ＋ 開卡 <strong>15,000 點</strong></span></li>
-                    </ul>
-                </div>
-                <button onclick="openMembershipPurchase('black')" class="w-full py-3 rounded-xl bg-navy-800 hover:bg-navy-700 text-gold-300 border border-gold-400/50 font-semibold text-sm transition-all">
-                    申請開通黑卡會籍
-                </button>
-            </div>
-        </div>
-    </section>
-
-    <!-- ================= 餐飲與美饌介紹 ================= -->
-    <section id="dining" class="py-16 md:py-24 px-4 bg-navy-900/50 border-y border-white/5">
-        <div class="max-w-7xl mx-auto">
-            <div class="text-center max-w-2xl mx-auto mb-12">
-                <span class="text-gold-400 text-xs font-semibold tracking-[0.25em] uppercase">Gastronomy</span>
-                <h2 class="font-serif text-2xl sm:text-4xl font-bold text-white mt-1 mb-2">星級美饌與高空景觀酒吧</h2>
-                <p class="text-slate-400 text-sm">嚴選產地直送頂級海鮮與日本 A5 和牛，支援線上即時訂位與本季菜單下載</p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <!-- Dining 1 -->
-                <div class="glass-card rounded-2xl overflow-hidden flex flex-col">
-                    <img src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=900&q=80" alt="HARVEST 自助百匯" class="h-48 w-full object-cover">
-                    <div class="p-6 flex-1 flex flex-col justify-between">
-                        <div>
-                            <span class="text-[11px] text-gold-400 font-semibold uppercase tracking-wider">All-Day Buffet · 1F</span>
-                            <h3 class="text-lg font-bold text-white mt-1 mb-2">HARVEST 海岸自助百匯</h3>
-                            <p class="text-xs text-slate-400 leading-relaxed mb-4">供應現流龍蝦、松葉蟹腳、現切爐烤肋眼牛排與主廚手作法式甜點。</p>
-                        </div>
-                        <div class="flex gap-2">
-                            <button onclick="openDiningModal('HARVEST 海岸自助百匯')" class="flex-1 py-2 rounded-xl gold-gradient text-navy-950 font-bold text-xs">線上訂位</button>
-                            <button onclick="downloadMenuPDF('HARVEST_2026_Menu.pdf')" class="px-3 py-2 rounded-xl bg-navy-800 text-slate-200 border border-white/15 text-xs hover:border-gold-400">下載菜單 PDF</button>
-                        </div>
-                    </div>
-                </div>
-                <!-- Dining 2 -->
-                <div class="glass-card rounded-2xl overflow-hidden flex flex-col">
-                    <img src="https://images.unsplash.com/photo-1572116469696-31de0f17cc34?auto=format&fit=crop&w=900&q=80" alt="AURA 星空酒吧" class="h-48 w-full object-cover">
-                    <div class="p-6 flex-1 flex flex-col justify-between">
-                        <div>
-                            <span class="text-[11px] text-gold-400 font-semibold uppercase tracking-wider">Sky Lounge · 28F</span>
-                            <h3 class="text-lg font-bold text-white mt-1 mb-2">AURA 28F 星空高空酒吧</h3>
-                            <p class="text-xs text-slate-400 leading-relaxed mb-4">270 度無遮蔽海岸夜景，世界冠軍調酒師駐點創作海洋主題微醺特調。</p>
-                        </div>
-                        <div class="flex gap-2">
-                            <button onclick="openDiningModal('AURA 28F 星空高空酒吧')" class="flex-1 py-2 rounded-xl gold-gradient text-navy-950 font-bold text-xs">線上訂位</button>
-                            <button onclick="downloadMenuPDF('AURA_Bar_WineList.pdf')" class="px-3 py-2 rounded-xl bg-navy-800 text-slate-200 border border-white/15 text-xs hover:border-gold-400">酒單 PDF</button>
-                        </div>
-                    </div>
-                </div>
-                <!-- Dining 3 -->
-                <div class="glass-card rounded-2xl overflow-hidden flex flex-col">
-                    <img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=900&q=80" alt="LE JARDIN 下午茶" class="h-48 w-full object-cover">
-                    <div class="p-6 flex-1 flex flex-col justify-between">
-                        <div>
-                            <span class="text-[11px] text-gold-400 font-semibold uppercase tracking-wider">Afternoon Tea · 2F</span>
-                            <h3 class="text-lg font-bold text-white mt-1 mb-2">LE JARDIN 玻璃花房下午茶</h3>
-                            <p class="text-xs text-slate-400 leading-relaxed mb-4">三層珠寶盒英式午茶搭配法國百年 Mariage Frères 瑪黑兄弟茗茶。</p>
-                        </div>
-                        <div class="flex gap-2">
-                            <button onclick="openDiningModal('LE JARDIN 玻璃花房下午茶')" class="flex-1 py-2 rounded-xl gold-gradient text-navy-950 font-bold text-xs">線上訂位</button>
-                            <button onclick="downloadMenuPDF('LeJardin_HighTea.pdf')" class="px-3 py-2 rounded-xl bg-navy-800 text-slate-200 border border-white/15 text-xs hover:border-gold-400">午茶菜單</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ================= 交通指南與互動地圖 ================= -->
-    <section id="location" class="py-16 md:py-24 px-4 max-w-7xl mx-auto">
-        <div class="mb-10">
-            <span class="text-gold-400 text-xs font-semibold tracking-[0.25em] uppercase">Location & Access</span>
-            <h2 class="font-serif text-2xl sm:text-4xl font-bold text-white mt-1">交通指南、接駁班次與充電停車</h2>
-        </div>
-
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-            <div class="lg:col-span-6 space-y-4">
-                <div class="glass-panel rounded-2xl p-5">
-                    <h3 class="text-base font-bold text-gold-300 flex items-center gap-2 mb-3">
-                        <i data-lucide="bus" class="w-4 h-4"></i> 高鐵／火車站免費尊榮接駁車時刻表
-                    </h3>
-                    <div class="grid grid-cols-2 gap-3 text-xs text-slate-300">
-                        <div class="p-3 rounded-xl bg-navy-900/80 border border-white/10">
-                            <div class="text-gold-400 font-semibold mb-1">高鐵站 ➔ 飯店大廳</div>
-                            <p>10:30 / 13:30 / 15:30 / 18:30</p>
-                        </div>
-                        <div class="p-3 rounded-xl bg-navy-900/80 border border-white/10">
-                            <div class="text-gold-400 font-semibold mb-1">飯店大廳 ➔ 高鐵站</div>
-                            <p>09:30 / 11:30 / 14:30 / 17:30</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="glass-panel rounded-2xl p-5">
-                    <h3 class="text-base font-bold text-gold-300 flex items-center gap-2 mb-2">
-                        <i data-lucide="zap" class="w-4 h-4"></i> 地下停車場與電動車 EV 充電樁資訊
-                    </h3>
-                    <ul class="text-xs text-slate-300 space-y-2 leading-relaxed">
-                        <li>• <strong>入口限高：</strong>B1–B3 平面地下停車場，車道限高 <strong>2.1 公尺</strong>，房客享全天候免費停車與專人代客泊車。</li>
-                        <li>• <strong>EV 充電站：</strong>B1 設有 <strong>12 座專用充電樁</strong>（包含 Tesla Destination Charger 與 J1772 / Type 2 規格）。</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="lg:col-span-6">
-                <div class="glass-panel rounded-2xl overflow-hidden h-72 lg:h-full min-h-[280px] border border-gold-500/20">
-                    <iframe title="Hotel Map" class="w-full h-full border-0 grayscale contrast-125 opacity-90" loading="lazy" src="https://www.openstreetmap.org/export/embed.html?bbox=120.95%2C24.78%2C121.02%2C24.82&amp;layer=mapnik"></iframe>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ================= 住客評價與常見問答 FAQ ================= -->
-    <section id="faq" class="py-16 md:py-24 px-4 bg-navy-900/50 border-t border-white/5">
-        <div class="max-w-4xl mx-auto">
-            <div class="text-center mb-10">
-                <span class="text-gold-400 text-xs font-semibold tracking-[0.25em] uppercase">FAQ</span>
-                <h2 class="font-serif text-2xl sm:text-4xl font-bold text-white mt-1">入住須知與常見問答</h2>
-            </div>
-
-            <div class="space-y-3" id="faq-container">
-                <div class="glass-panel rounded-2xl overflow-hidden">
-                    <button onclick="toggleFaq(this)" class="w-full px-5 py-4 text-left flex items-center justify-between font-semibold text-sm text-white">
-                        <span>Q1：請問飯店最早入住與最晚退房時間為何？可以寄放行李嗎？</span>
-                        <i data-lucide="chevron-down" class="w-4 h-4 text-gold-400 transition-transform"></i>
-                    </button>
-                    <div class="hidden px-5 pb-4 text-xs text-slate-300 leading-relaxed border-t border-white/5 pt-3">
-                        標準入住時間為下午 <strong>15:00</strong> 後，退房時間為上午 <strong>11:00</strong> 前（金卡會員享 14:00 延遲退房，黑卡享 16:00）。禮賓櫃檯提供 24 小時免費行李寄存服務。
-                    </div>
-                </div>
-                <div class="glass-panel rounded-2xl overflow-hidden">
-                    <button onclick="toggleFaq(this)" class="w-full px-5 py-4 text-left flex items-center justify-between font-semibold text-sm text-white">
-                        <span>Q2：兒童入住與加床收費標準為何？</span>
-                        <i data-lucide="chevron-down" class="w-4 h-4 text-gold-400 transition-transform"></i>
-                    </button>
-                    <div class="hidden px-5 pb-4 text-xs text-slate-300 leading-relaxed border-t border-white/5 pt-3">
-                        6 歲（含）以下兒童不佔床免費入住並贈送早餐；7–12 歲兒童加床每晚 NT$ 1,200（含早餐與備品），嬰兒床與奶瓶消毒鍋可於訂房備註免費預約。
-                    </div>
-                </div>
-                <div class="glass-panel rounded-2xl overflow-hidden">
-                    <button onclick="toggleFaq(this)" class="w-full px-5 py-4 text-left flex items-center justify-between font-semibold text-sm text-white">
-                        <span>Q3：是否可以攜帶寵物入住？</span>
-                        <i data-lucide="chevron-down" class="w-4 h-4 text-gold-400 transition-transform"></i>
-                    </button>
-                    <div class="hidden px-5 pb-4 text-xs text-slate-300 leading-relaxed border-t border-white/5 pt-3">
-                        歡迎預訂「毛小孩友善假期（方案 #7）」指定庭園 Villa 房型，提供專屬記憶睡墊、食碗與私人草皮區（導盲犬於全館皆可免費陪同入住）。
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ================= 頁尾 FOOTER ================= -->
-    <footer class="py-12 px-4 border-t border-white/10 text-center text-xs text-slate-400">
-        <div class="max-w-7xl mx-auto">
-            <div class="font-serif text-lg font-bold text-white tracking-widest mb-2">AURELIA GRAND RESORT</div>
-            <p class="mb-4">訂房專線：+886-3-555-8888 ｜ 禮賓信箱：concierge@aurelia-resort.com</p>
-            <p class="text-slate-500">© 2026 AURELIA Grand Resort. All Rights Reserved.</p>
-        </div>
-    </footer>
-
-    <!-- ================= 手機專屬底部導覽列 ================= -->
-    <div class="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-navy-950/95 backdrop-blur-xl border-t border-gold-500/25 pb-safe">
-        <div class="grid grid-cols-5 items-center h-16 px-1">
-            <a href="#rooms" class="flex flex-col items-center justify-center gap-1 text-slate-300 active:text-gold-400">
-                <i data-lucide="bed-double" class="w-5 h-5"></i>
-                <span class="text-[10px] font-medium">房型訂房</span>
-            </a>
-            <a href="#offers" class="flex flex-col items-center justify-center gap-1 text-slate-300 active:text-gold-400">
-                <i data-lucide="sparkles" class="w-5 h-5"></i>
-                <span class="text-[10px] font-medium">15大方案</span>
-            </a>
-            <a href="#membership-plans" class="flex flex-col items-center justify-center -mt-4">
-                <div class="w-12 h-12 rounded-2xl gold-gradient text-navy-950 flex items-center justify-center shadow-lg border-2 border-navy-950">
-                    <i data-lucide="crown" class="w-6 h-6"></i>
-                </div>
-                <span class="text-[10px] font-bold text-gold-300 mt-0.5">買會籍</span>
-            </a>
-            <button onclick="openMemberDashboard('chat')" class="relative flex flex-col items-center justify-center gap-1 text-slate-300 active:text-gold-400">
-                <i data-lucide="message-circle" class="w-5 h-5"></i>
-                <span class="w-2 h-2 rounded-full bg-emerald-400 absolute top-1.5 right-5"></span>
-                <span class="text-[10px] font-medium">好友聊天</span>
-            </button>
-            <button onclick="handleAuthNavClick()" class="flex flex-col items-center justify-center gap-1 text-slate-300 active:text-gold-400">
-                <i data-lucide="user-circle" class="w-5 h-5 text-gold-400"></i>
-                <span class="text-[10px] font-medium" id="mobile-nav-user-label">會員中心</span>
-            </button>
-        </div>
+        <button type="submit" id="btn-submit-payment" class="w-full py-3.5 rounded-xl gold-btn text-sm mt-2">
+          確認付款並立即開通 VIP
+        </button>
+      </form>
     </div>
+  </div>
 
-    <!-- ================= 右下角 AI 迎賓顧問懸浮鈕 ================= -->
-    <button onclick="toggleAiChat()" class="fixed bottom-20 md:bottom-6 right-4 z-40 w-12 h-12 md:w-14 md:h-14 rounded-full gold-gradient text-navy-950 shadow-2xl flex items-center justify-center hover:scale-105 transition-transform" title="AI 禮賓顧問">
-        <i data-lucide="bot" class="w-6 h-6"></i>
-    </button>
+  <!-- ==================== 彈窗 3：會員個人檔案 ==================== -->
+  <div id="modal-profile" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="glass-panel rounded-2xl max-w-sm w-full p-6 relative border border-yellow-500/40 text-center">
+      <button onclick="closeModal('modal-profile')" class="absolute top-4 right-4 text-slate-400 hover:text-white">
+        <i class="fa-solid fa-xmark text-xl"></i>
+      </button>
+      <div class="w-16 h-16 mx-auto rounded-full bg-gradient-to-tr from-yellow-500 to-amber-300 text-slate-950 font-orbitron font-black text-2xl flex items-center justify-center mb-3">
+        #<span id="profile-jersey">24</span>
+      </div>
+      <h3 id="profile-name" class="text-xl font-black text-white">玩家</h3>
+      <div id="profile-status-badge" class="inline-block mt-1 px-3 py-0.5 rounded-full text-xs font-bold bg-slate-800 text-slate-300">免費新秀會員</div>
 
-    <!-- AI 禮賓顧問視窗 -->
-    <div id="ai-chat-widget" class="hidden fixed bottom-36 md:bottom-24 right-4 z-50 w-[calc(100vw-2rem)] max-w-sm glass-panel rounded-2xl shadow-2xl overflow-hidden border border-gold-400/40">
-        <div class="p-3.5 gold-gradient text-navy-950 flex items-center justify-between font-bold text-sm">
-            <div class="flex items-center gap-2"><i data-lucide="sparkles" class="w-4 h-4"></i> AURELIA 智能禮賓顧問</div>
-            <button onclick="toggleAiChat()"><i data-lucide="x" class="w-4 h-4"></i></button>
+      <div class="grid grid-cols-2 gap-3 my-5">
+        <div class="bg-slate-900/90 p-3 rounded-xl border border-slate-800">
+          <div class="text-xs text-slate-400">累積全壘打</div>
+          <div id="profile-hr" class="font-orbitron text-2xl font-black text-yellow-400 mt-1">0</div>
         </div>
-        <div id="ai-chat-messages" class="p-4 h-60 overflow-y-auto space-y-3 text-xs">
-            <div class="p-3 rounded-xl bg-navy-800/90 text-slate-200 leading-relaxed">
-                您好！我是奧蕾莉亞專屬 AI 管家。請問想查詢高鐵接駁車、尊榮會籍權益，或是推薦適合您的度假方案嗎？
-            </div>
+        <div class="bg-slate-900/90 p-3 rounded-xl border border-slate-800">
+          <div class="text-xs text-slate-400">最遠飛行距離</div>
+          <div id="profile-max-dist" class="font-orbitron text-2xl font-black text-emerald-400 mt-1">0 m</div>
         </div>
-        <div class="p-2.5 border-t border-white/10 flex gap-1.5 overflow-x-auto no-scrollbar">
-            <button onclick="askAiQuick('接駁車時刻表')" class="px-2.5 py-1 rounded-lg bg-navy-800 text-[11px] text-gold-300 whitespace-nowrap border border-gold-500/20">接駁車班次</button>
-            <button onclick="askAiQuick('推薦會員方案')" class="px-2.5 py-1 rounded-lg bg-navy-800 text-[11px] text-gold-300 whitespace-nowrap border border-gold-500/20">尊榮會籍優惠</button>
-            <button onclick="askAiQuick('入住與退房時間')" class="px-2.5 py-1 rounded-lg bg-navy-800 text-[11px] text-gold-300 whitespace-nowrap border border-gold-500/20">入住時間</button>
-        </div>
+      </div>
+
+      <button onclick="logoutUser()" class="w-full py-2.5 rounded-xl border border-rose-500/50 text-rose-400 hover:bg-rose-500/10 text-xs font-bold transition">
+        登出帳號
+      </button>
     </div>
+  </div>
 
-    <!-- ================= 登入 / 註冊 MODAL ================= -->
-    <div id="auth-modal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-        <div class="glass-panel rounded-3xl w-full max-w-md p-6 sm:p-8 relative">
-            <button onclick="closeModal('auth-modal')" class="absolute top-5 right-5 text-slate-400 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button>
-            <div class="text-center mb-6">
-                <span class="text-gold-400 text-xs font-semibold tracking-widest uppercase">AURELIA PRIVILEGE</span>
-                <h3 id="auth-modal-title" class="font-serif text-2xl font-bold text-white mt-1">尊榮會員登入</h3>
-                <p class="text-xs text-slate-400 mt-1">登入即享官網訂房 9 折、好友推薦獎勵與真好友聊天功能</p>
-            </div>
-
-            <form onsubmit="submitAuthForm(event)" class="space-y-4">
-                <div id="auth-name-field" class="hidden">
-                    <label class="block text-xs text-slate-300 mb-1">會員姓名</label>
-                    <input type="text" id="auth-name-input" placeholder="例如：陳雅婷" class="w-full bg-navy-900 border border-white/15 rounded-xl px-4 py-2.5 text-sm text-white focus:border-gold-400 focus:outline-none">
-                </div>
-                <div>
-                    <label class="block text-xs text-slate-300 mb-1">電子信箱 Email</label>
-                    <input type="email" id="auth-email-input" required value="vip@aurelia.com" class="w-full bg-navy-900 border border-white/15 rounded-xl px-4 py-2.5 text-sm text-white focus:border-gold-400 focus:outline-none">
-                </div>
-                <div>
-                    <label class="block text-xs text-slate-300 mb-1">密碼 Password</label>
-                    <div class="relative">
-                        <input type="password" id="auth-pass-input" required value="12345678" class="w-full bg-navy-900 border border-white/15 rounded-xl px-4 py-2.5 text-sm text-white focus:border-gold-400 focus:outline-none">
-                        <button type="button" onclick="togglePasswordVisibility()" class="absolute right-3 top-2.5 text-slate-400 hover:text-gold-400"><i data-lucide="eye" class="w-4 h-4"></i></button>
-                    </div>
-                </div>
-                <button type="submit" id="auth-submit-btn" class="w-full py-3 rounded-xl gold-gradient text-navy-950 font-bold text-sm shadow-lg">立即登入</button>
-            </form>
-
-            <div class="mt-4 pt-4 border-t border-white/10 text-center">
-                <button type="button" onclick="toggleAuthMode()" id="auth-switch-btn" class="text-xs text-gold-300 hover:underline">
-                    還不是會員？立即免費註冊（首訂現折 NT$500）
-                </button>
-            </div>
-        </div>
+  <!-- ==================== 彈窗 4：手機一鍵複製完整程式碼 ==================== -->
+  <div id="modal-copy" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="glass-panel rounded-2xl max-w-lg w-full p-5 relative border border-yellow-500/40">
+      <button onclick="closeModal('modal-copy')" class="absolute top-4 right-4 text-slate-400 hover:text-white">
+        <i class="fa-solid fa-xmark text-xl"></i>
+      </button>
+      <h3 class="text-lg font-black text-yellow-400 mb-1"><i class="fa-solid fa-code mr-1.5"></i> 複製完整單頁程式碼</h3>
+      <p class="text-xs text-slate-400 mb-3">點擊下方按鈕即可將完整 HTML 程式碼複製到手機剪貼簿：</p>
+      <textarea id="source-code-textarea" readonly class="w-full h-48 p-3 rounded-xl bg-slate-950 border border-slate-700 text-[11px] font-mono text-emerald-300 select-all outline-none mb-3"></textarea>
+      <button onclick="copyFullSourceCode()" id="btn-copy-confirm" class="w-full py-3 rounded-xl gold-btn text-sm">
+        <i class="fa-solid fa-copy mr-1"></i> 一鍵複製全部程式碼
+      </button>
     </div>
+  </div>
 
-    <!-- ================= 房型細節多圖燈箱 MODAL ================= -->
-    <div id="gallery-modal" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-3 sm:p-6">
-        <div class="glass-panel rounded-3xl w-full max-w-4xl max-h-[90vh] overflow-y-auto p-5 sm:p-8 relative">
-            <button onclick="closeModal('gallery-modal')" class="absolute top-4 right-4 p-2 rounded-full bg-navy-800 text-white"><i data-lucide="x" class="w-5 h-5"></i></button>
-            <h3 id="gal-title" class="font-serif text-xl sm:text-2xl font-bold text-white mb-1">房型名稱</h3>
-            <p id="gal-meta" class="text-xs text-gold-400 mb-4">坪數與景觀資訊</p>
-            <img id="gal-main-img" src="" alt="Room View" class="w-full h-56 sm:h-80 object-cover rounded-2xl mb-3">
-            <div id="gal-thumbs" class="grid grid-cols-4 gap-2 mb-5"></div>
-            <div class="mb-6">
-                <h4 class="text-xs font-bold text-gold-300 uppercase tracking-wider mb-2">頂級房內備品清單</h4>
-                <div id="gal-amenities" class="flex flex-wrap gap-2"></div>
-            </div>
-            <button id="gal-book-btn" class="w-full py-3 rounded-xl gold-gradient text-navy-950 font-bold text-sm">立即預訂此房型</button>
-        </div>
-    </div>
+  <script>
+    // ==================== 1. 會員狀態與商業邏輯 ====================
+    let userState = {
+      isLoggedIn: false,
+      username: '訪客球員',
+      email: '',
+      jersey: 24,
+      isVIP: false,
+      planName: '新秀體驗版',
+      hrCount: 0,
+      maxDist: 0
+    };
 
-    <!-- ================= 訂房結帳流程 MODAL ================= -->
-    <div id="checkout-modal" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-3 sm:p-6">
-        <div class="glass-panel rounded-3xl w-full max-w-2xl max-h-[92vh] overflow-y-auto p-5 sm:p-8 relative">
-            <button onclick="closeModal('checkout-modal')" class="absolute top-4 right-4 p-2 rounded-full bg-navy-800 text-white"><i data-lucide="x" class="w-5 h-5"></i></button>
-            
-            <div class="mb-5">
-                <span id="checkout-pkg-badge" class="inline-block px-3 py-1 rounded-full bg-gold-500/20 text-gold-300 text-xs font-semibold mb-2">標準尊榮訂房</span>
-                <h3 id="checkout-room-name" class="font-serif text-xl sm:text-2xl font-bold text-white">無邊際海景豪華套房</h3>
-            </div>
+    let currentAuthTab = 'login';
+    let checkoutBasePrice = 199;
+    let checkoutCurrentPlan = '豪華白金季票 VIP';
 
-            <!-- Step 1 -->
-            <div id="checkout-step-1" class="space-y-4">
-                <div class="grid grid-cols-2 gap-3">
-                    <div>
-                        <label class="block text-xs text-slate-400 mb-1">入住日期</label>
-                        <input type="date" id="co-checkin" onchange="recalculateCheckoutPricing()" class="w-full bg-navy-900 border border-white/15 rounded-xl px-3 py-2 text-xs text-white">
-                    </div>
-                    <div>
-                        <label class="block text-xs text-slate-400 mb-1">退房日期</label>
-                        <input type="date" id="co-checkout" onchange="recalculateCheckoutPricing()" class="w-full bg-navy-900 border border-white/15 rounded-xl px-3 py-2 text-xs text-white">
-                    </div>
-                </div>
-
-                <!-- 方案專屬動態欄位 -->
-                <div id="package-custom-fields" class="hidden p-4 rounded-2xl bg-gold-500/10 border border-gold-400/30 space-y-3 text-xs"></div>
-
-                <!-- 加購外掛 Add-ons -->
-                <div class="p-4 rounded-2xl bg-navy-900/80 border border-white/10 space-y-2.5">
-                    <div class="text-xs font-bold text-gold-300 mb-1">尊榮禮遇加購與環保回饋</div>
-                    <label class="flex items-center justify-between text-xs text-slate-200 cursor-pointer">
-                        <span class="flex items-center gap-2"><input type="checkbox" id="addon-eco" onchange="recalculateCheckoutPricing()" class="accent-gold-500"> 響應綠色旅宿（自備備品每晚折 NT$300）</span>
-                        <span class="text-emerald-400 font-semibold">-NT$ 300/晚</span>
-                    </label>
-                    <label class="flex items-center justify-between text-xs text-slate-200 cursor-pointer">
-                        <span class="flex items-center gap-2"><input type="checkbox" id="addon-limo" onchange="recalculateCheckoutPricing()" class="accent-gold-500"> 賓士尊榮高鐵/機場專車接送</span>
-                        <span class="text-gold-300 font-semibold">+NT$ 1,800</span>
-                    </label>
-                    <label class="flex items-center justify-between text-xs text-slate-200 cursor-pointer">
-                        <span class="flex items-center gap-2"><input type="checkbox" id="addon-party" onchange="recalculateCheckoutPricing()" class="accent-gold-500"> 客製化慶生/週年氣球與蛋糕佈置</span>
-                        <span class="text-gold-300 font-semibold">+NT$ 2,600</span>
-                    </label>
-                </div>
-
-                <!-- 住客資訊 -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <input type="text" id="co-guest-name" placeholder="住客真實姓名 *" class="bg-navy-900 border border-white/15 rounded-xl px-3.5 py-2.5 text-sm text-white">
-                    <input type="tel" id="co-guest-phone" placeholder="聯絡手機號碼 *" class="bg-navy-900 border border-white/15 rounded-xl px-3.5 py-2.5 text-sm text-white">
-                </div>
-
-                <div class="p-4 rounded-2xl bg-navy-950/90 border border-gold-500/20 flex items-center justify-between">
-                    <div>
-                        <div class="text-xs text-slate-400" id="co-nights-label">共 1 晚 · 含稅與服務費</div>
-                        <div class="text-xl font-bold gold-text-gradient" id="co-total-display">NT$ 0</div>
-                    </div>
-                    <button onclick="goToCheckoutStep2()" class="px-6 py-3 rounded-xl gold-gradient text-navy-950 font-bold text-sm">下一步：選擇付款</button>
-                </div>
-            </div>
-
-            <!-- Step 2 -->
-            <div id="checkout-step-2" class="hidden space-y-4">
-                <div class="text-xs font-bold text-gold-300">選擇付款方式</div>
-                <div class="grid grid-cols-3 gap-2 text-xs">
-                    <label class="p-3 rounded-xl bg-navy-900 border border-gold-400 text-center cursor-pointer font-semibold text-white">
-                        <input type="radio" name="paymethod" checked class="hidden"> 信用卡線上刷卡
-                    </label>
-                    <label class="p-3 rounded-xl bg-navy-900 border border-white/15 text-center cursor-pointer text-slate-300">
-                        <input type="radio" name="paymethod" class="hidden"> LINE Pay
-                    </label>
-                    <label class="p-3 rounded-xl bg-navy-900 border border-white/15 text-center cursor-pointer text-slate-300">
-                        <input type="radio" name="paymethod" class="hidden"> 到店現場付款
-                    </label>
-                </div>
-                <input type="text" value="4311 - 9522 - 8810 - 3920" class="w-full bg-navy-900 border border-white/15 rounded-xl px-4 py-2.5 text-sm text-white font-mono">
-                <div class="flex gap-3">
-                    <button onclick="backToCheckoutStep1()" class="px-4 py-3 rounded-xl bg-navy-800 text-slate-300 text-sm">返回修改</button>
-                    <button onclick="confirmFinalBooking()" id="co-final-pay-btn" class="flex-1 py-3 rounded-xl gold-gradient text-navy-950 font-bold text-sm shadow-lg">確認付款並完成預訂</button>
-                </div>
-            </div>
-
-            <!-- Step 3 (Success) -->
-            <div id="checkout-step-3" class="hidden text-center py-6 space-y-4">
-                <div class="w-16 h-16 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center mx-auto">
-                    <i data-lucide="check-circle" class="w-10 h-10"></i>
-                </div>
-                <h4 class="font-serif text-2xl font-bold text-white">預訂已成功確認！</h4>
-                <div class="p-4 rounded-2xl bg-navy-900/90 border border-white/10 text-xs text-slate-300 space-y-1.5 max-w-sm mx-auto">
-                    <div>訂單編號：<strong id="confirmed-booking-id" class="text-gold-400">#AUR-882910</strong></div>
-                    <div>貴賓姓名：<strong id="confirmed-guest-name" class="text-white">貴賓</strong></div>
-                    <div>預訂房型：<strong id="confirmed-room-title" class="text-white">海景套房</strong></div>
-                </div>
-                <button onclick="closeModal('checkout-modal'); openMemberDashboard('bookings');" class="px-6 py-3 rounded-xl gold-gradient text-navy-950 font-bold text-sm">前往會員中心查看訂單</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- ================= 尊榮會籍購買 MODAL ================= -->
-    <div id="membership-buy-modal" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
-        <div class="glass-panel rounded-3xl w-full max-w-md p-6 sm:p-8 relative">
-            <button onclick="closeModal('membership-buy-modal')" class="absolute top-4 right-4 p-2 rounded-full bg-navy-800 text-white"><i data-lucide="x" class="w-4 h-4"></i></button>
-            <span class="text-gold-400 text-xs font-bold uppercase tracking-wider">VIP SUBSCRIPTION</span>
-            <h3 id="mb-plan-name" class="font-serif text-2xl font-bold text-white mt-1 mb-2">金卡尊榮年度會籍</h3>
-            <p id="mb-plan-desc" class="text-xs text-slate-300 mb-4">立即升等會籍並領取開卡點數與住宿券</p>
-            <div class="p-4 rounded-2xl bg-navy-900/90 border border-gold-500/30 mb-5 flex items-center justify-between">
-                <span class="text-xs text-slate-400">年度會籍費用</span>
-                <span id="mb-plan-price" class="text-xl font-bold gold-text-gradient">NT$ 12,800</span>
-            </div>
-            <div class="space-y-3 mb-5">
-                <input type="text" id="mb-holder-name" placeholder="持卡人真實姓名 *" class="w-full bg-navy-900 border border-white/15 rounded-xl px-3.5 py-2.5 text-sm text-white">
-                <input type="text" value="4532 - 8910 - 4412 - 7701" class="w-full bg-navy-900 border border-white/15 rounded-xl px-3.5 py-2.5 text-sm text-white font-mono">
-            </div>
-            <button onclick="confirmMembershipPurchase()" class="w-full py-3 rounded-xl gold-gradient text-navy-950 font-bold text-sm shadow-lg">確認付款並立即開通會籍</button>
-        </div>
-    </div>
-
-    <!-- ================= 會員中心 DASHBOARD MODAL ================= -->
-    <div id="member-dashboard-modal" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-end md:items-center justify-center p-0 md:p-6">
-        <div class="glass-panel rounded-t-3xl md:rounded-3xl w-full max-w-4xl h-[90vh] md:h-[82vh] flex flex-col overflow-hidden">
-            <!-- Header -->
-            <div class="p-4 sm:p-6 border-b border-white/10 flex items-center justify-between bg-navy-950/60">
-                <div class="flex items-center gap-3">
-                    <div class="w-11 h-11 rounded-2xl gold-gradient text-navy-950 font-bold flex items-center justify-center text-lg" id="dash-avatar">V</div>
-                    <div>
-                        <div class="flex items-center gap-2">
-                            <h3 id="dash-user-name" class="font-bold text-white text-base">尊榮貴賓</h3>
-                            <span id="dash-tier-badge" class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-gold-500/20 text-gold-300 border border-gold-400/40">銀卡會員</span>
-                        </div>
-                        <p class="text-xs text-slate-400">可用住宿點數：<strong id="dash-points" class="text-gold-400">1,200</strong> pts</p>
-                    </div>
-                </div>
-                <div class="flex items-center gap-2">
-                    <button onclick="logoutUser()" class="px-3 py-1.5 rounded-lg bg-rose-500/15 text-rose-300 text-xs border border-rose-500/30">登出</button>
-                    <button onclick="closeModal('member-dashboard-modal')" class="p-2 rounded-full bg-navy-800 text-white"><i data-lucide="x" class="w-5 h-5"></i></button>
-                </div>
-            </div>
-
-            <!-- Horizontal Swipeable Tabs -->
-            <div class="flex items-center gap-2 px-4 py-3 border-b border-white/10 overflow-x-auto no-scrollbar bg-navy-900/60 shrink-0">
-                <button onclick="switchDashboardTab('tier')" data-tab="tier" class="dash-tab-btn px-3.5 py-2 rounded-xl text-xs font-semibold whitespace-nowrap gold-gradient text-navy-950">會員等級進度</button>
-                <button onclick="switchDashboardTab('chat')" data-tab="chat" class="dash-tab-btn px-3.5 py-2 rounded-xl text-xs font-semibold whitespace-nowrap bg-navy-800 text-slate-300">真好友聊天室</button>
-                <button onclick="switchDashboardTab('referral')" data-tab="referral" class="dash-tab-btn px-3.5 py-2 rounded-xl text-xs font-semibold whitespace-nowrap bg-navy-800 text-slate-300">邀請好友折$500</button>
-                <button onclick="switchDashboardTab('bookings')" data-tab="bookings" class="dash-tab-btn px-3.5 py-2 rounded-xl text-xs font-semibold whitespace-nowrap bg-navy-800 text-slate-300">我的訂單</button>
-                <button onclick="switchDashboardTab('wishlist')" data-tab="wishlist" class="dash-tab-btn px-3.5 py-2 rounded-xl text-xs font-semibold whitespace-nowrap bg-navy-800 text-slate-300">心願收藏</button>
-                <button onclick="switchDashboardTab('coupons')" data-tab="coupons" class="dash-tab-btn px-3.5 py-2 rounded-xl text-xs font-semibold whitespace-nowrap bg-navy-800 text-slate-300">專屬優惠券</button>
-            </div>
-
-            <!-- Tab Contents -->
-            <div class="flex-1 overflow-y-auto p-4 sm:p-6">
-                <!-- Tab 1: 會員等級進度 -->
-                <div id="dash-panel-tier" class="dash-panel space-y-5">
-                    <div class="p-5 rounded-2xl bg-navy-900/90 border border-gold-500/30">
-                        <div class="flex items-center justify-between text-xs mb-2">
-                            <span class="text-slate-300">目前累積入住：<strong id="dash-nights-count" class="text-gold-400">2</strong> 晚</span>
-                            <span id="dash-next-tier-hint" class="text-gold-300 font-semibold">再住 1 晚升級「金卡尊榮」</span>
-                        </div>
-                        <div class="w-full h-3 bg-navy-950 rounded-full overflow-hidden mb-3">
-                            <div id="dash-tier-progress" class="h-full gold-gradient transition-all duration-500" style="width: 35%"></div>
-                        </div>
-                        <div class="flex justify-between text-[11px] text-slate-400">
-                            <span>銀卡探索 (0晚)</span>
-                            <span>金卡尊榮 (3晚)</span>
-                            <span>黑卡無界 (8晚)</span>
-                        </div>
-                    </div>
-
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-                        <div class="p-4 rounded-2xl bg-navy-900/70 border border-white/10">
-                            <div class="font-bold text-gold-300 mb-1">✔ 已解鎖權益</div>
-                            <p class="text-slate-300">官網訂房 9 折優惠、免費迎賓飲品、高鐵接駁優先預約權。</p>
-                        </div>
-                        <div class="p-4 rounded-2xl bg-navy-900/70 border border-white/10">
-                            <div class="font-bold text-white mb-1">🔒 下一階解鎖禮遇</div>
-                            <p class="text-slate-400">保證延遲退房至 14:00、免費客房升等一級、雙人 SPA 芳療折扣。</p>
-                        </div>
-                    </div>
-
-                    <button onclick="closeModal('member-dashboard-modal'); document.getElementById('membership-plans').scrollIntoView({behavior:'smooth'});" class="w-full py-3 rounded-xl gold-gradient text-navy-950 font-bold text-xs">
-                        不想等累積？直接購買年度尊榮會籍立即升等 ➔
-                    </button>
-                </div>
-
-                <!-- Tab 2: 真好友聊天室 -->
-                <div id="dash-panel-chat" class="dash-panel hidden space-y-4">
-                    <div class="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/25 text-xs text-emerald-300 flex items-center justify-between gap-2">
-                        <span>僅限與「已完成飯店註冊」的真實會員互傳訊息與分享房型優惠</span>
-                    </div>
-
-                    <!-- Add Verified Friend -->
-                    <div class="flex gap-2">
-                        <input type="text" id="add-friend-input" placeholder="輸入已註冊好友 Email (測試: sophia@aurelia.com 或 kevin@aurelia.com)" class="flex-1 bg-navy-900 border border-white/15 rounded-xl px-3.5 py-2 text-xs text-white">
-                        <button onclick="verifyAndAddFriend()" class="px-4 py-2 rounded-xl gold-gradient text-navy-950 font-bold text-xs whitespace-nowrap">驗證並加好友</button>
-                    </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-12 gap-4 h-80">
-                        <!-- Friends List -->
-                        <div id="verified-friends-list" class="md:col-span-4 bg-navy-900/90 rounded-2xl p-2.5 border border-white/10 overflow-y-auto space-y-1.5 max-h-32 md:max-h-full">
-                            <!-- JS 渲染已註冊真好友 -->
-                        </div>
-                        <!-- Chat Box -->
-                        <div class="md:col-span-8 bg-navy-900/90 rounded-2xl border border-white/10 flex flex-col overflow-hidden h-56 md:h-full">
-                            <div class="px-4 py-2.5 border-b border-white/10 flex items-center justify-between text-xs">
-                                <span id="active-chat-friend-name" class="font-bold text-white">林思妤 Sophia (黑卡會員)</span>
-                                <button onclick="shareRoomToFriend()" class="px-2.5 py-1 rounded-lg bg-gold-500/20 text-gold-300 text-[11px] border border-gold-400/30">分享套房優惠</button>
-                            </div>
-                            <div id="friend-chat-messages" class="flex-1 p-3 overflow-y-auto space-y-2 text-xs"></div>
-                            <form onsubmit="sendFriendMessage(event)" class="p-2 border-t border-white/10 flex gap-2">
-                                <input type="text" id="friend-msg-input" placeholder="傳送訊息給已驗證好友..." class="flex-1 bg-navy-950 border border-white/15 rounded-xl px-3 py-2 text-xs text-white">
-                                <button type="submit" class="px-4 py-2 rounded-xl gold-gradient text-navy-950 font-bold text-xs">發送</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Tab 3: 邀請好友裂變機制 -->
-                <div id="dash-panel-referral" class="dash-panel hidden space-y-5">
-                    <div class="p-5 rounded-2xl bg-gradient-to-br from-navy-800 to-navy-950 border border-gold-400/40 text-center">
-                        <h4 class="font-serif text-xl font-bold text-white mb-1">邀請好友入住 · 雙方各享 NT$500 禮遇</h4>
-                        <p class="text-xs text-slate-300 mb-4">好友透過您的專屬連結註冊並完成首筆訂房現折 NT$500，您將立即獲得 500 點住宿金！</p>
-                        <div class="flex items-center gap-2 max-w-md mx-auto bg-navy-950 p-2 rounded-xl border border-white/15">
-                            <input type="text" id="referral-link-input" readonly value="https://aurelia-resort.com/join?ref=AUR-VIP888" class="flex-1 bg-transparent text-xs text-gold-300 px-2 focus:outline-none">
-                            <button onclick="copyReferralLink()" class="px-3.5 py-2 rounded-lg gold-gradient text-navy-950 font-bold text-xs">複製連結</button>
-                        </div>
-                    </div>
-                    <div class="grid grid-cols-2 gap-4 text-center">
-                        <div class="p-4 rounded-2xl bg-navy-900/90 border border-white/10">
-                            <div class="text-2xl font-bold text-white">3 位</div>
-                            <div class="text-xs text-slate-400 mt-1">已成功邀請註冊好友</div>
-                        </div>
-                        <div class="p-4 rounded-2xl bg-navy-900/90 border border-white/10">
-                            <div class="text-2xl font-bold gold-text-gradient">+1,500 pts</div>
-                            <div class="text-xs text-slate-400 mt-1">累積獲得推薦住宿金</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Tab 4: 我的訂單 -->
-                <div id="dash-panel-bookings" class="dash-panel hidden space-y-3" id="dash-bookings-list"></div>
-
-                <!-- Tab 5: 心願收藏 -->
-                <div id="dash-panel-wishlist" class="dash-panel hidden grid grid-cols-1 sm:grid-cols-2 gap-4"></div>
-
-                <!-- Tab 6: 專屬優惠券 -->
-                <div id="dash-panel-coupons" class="dash-panel hidden space-y-3">
-                    <div class="p-4 rounded-2xl bg-navy-900/90 border border-gold-400/30 flex items-center justify-between">
-                        <div>
-                            <div class="text-sm font-bold text-gold-300">AURA1000</div>
-                            <div class="text-xs text-slate-400">行政套房以上滿萬現折 NT$1,000</div>
-                        </div>
-                        <button onclick="copyCoupon('AURA1000')" class="px-3 py-1.5 rounded-lg gold-gradient text-navy-950 font-bold text-xs">複製代碼</button>
-                    </div>
-                    <div class="p-4 rounded-2xl bg-navy-900/90 border border-gold-400/30 flex items-center justify-between">
-                        <div>
-                            <div class="text-sm font-bold text-gold-300">BREAKFASTFREE</div>
-                            <div class="text-xs text-slate-400">兌換 HARVEST 雙人自助早餐禮遇</div>
-                        </div>
-                        <button onclick="copyCoupon('BREAKFASTFREE')" class="px-3 py-1.5 rounded-lg gold-gradient text-navy-950 font-bold text-xs">複製代碼</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- ================= 餐廳訂位 & 電子禮券 MODAL ================= -->
-    <div id="dining-modal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-        <div class="glass-panel rounded-3xl w-full max-w-md p-6 relative">
-            <button onclick="closeModal('dining-modal')" class="absolute top-4 right-4 text-slate-400"><i data-lucide="x" class="w-5 h-5"></i></button>
-            <h3 id="dining-modal-title" class="font-serif text-xl font-bold text-white mb-4">餐廳線上訂位</h3>
-            <form onsubmit="submitDiningReservation(event)" class="space-y-3">
-                <input type="text" required placeholder="訂位貴賓姓名" class="w-full bg-navy-900 border border-white/15 rounded-xl px-3.5 py-2.5 text-sm text-white">
-                <div class="grid grid-cols-2 gap-2">
-                    <input type="date" required class="bg-navy-900 border border-white/15 rounded-xl px-3 py-2 text-xs text-white">
-                    <select class="bg-navy-900 border border-white/15 rounded-xl px-3 py-2 text-xs text-white">
-                        <option>18:00 晚宴第一輪</option>
-                        <option>19:30 晚宴黃金時段</option>
-                        <option>12:00 午間饗宴</option>
-                    </select>
-                </div>
-                <button type="submit" class="w-full py-3 rounded-xl gold-gradient text-navy-950 font-bold text-sm">確認預約席位</button>
-            </form>
-        </div>
-    </div>
-
-    <!-- Toast 通知 -->
-    <div id="toast" class="fixed top-20 left-1/2 -translate-x-1/2 z-50 hidden px-5 py-2.5 rounded-full bg-navy-900/95 border border-gold-400 text-gold-300 text-xs font-semibold shadow-2xl"></div>
-
-    <script>
-        // ================= 核心資料庫 =================
-        const ROOMS = [
-            {
-                id: 'ocean-deluxe',
-                title: '蔚藍海景豪華客房',
-                size: '18 坪 · 私人觀海陽台 · King Size 名床',
-                priceTWD: 8800,
-                rating: '4.9',
-                image: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=1000&q=80',
-                gallery: [
-                    'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1560448204-603b3fc33ddc?auto=format&fit=crop&w=1000&q=80'
-                ],
-                amenities: ['Dyson Supersonic 吹風機', 'Nespresso 膠囊咖啡機', '獨立深浸景觀浴缸', 'Diptyque 沐浴備品', '免費 Mini Bar']
-            },
-            {
-                id: 'executive-suite',
-                title: '270° 行政全景海景套房',
-                size: '32 坪 · 獨立客廳 · 行政酒廊禮遇',
-                priceTWD: 16800,
-                rating: '4.98',
-                image: 'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=1000&q=80',
-                gallery: [
-                    'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1618773928121-c32242e63f39?auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1578683010236-d716f9a3f461?auto=format&fit=crop&w=1000&q=80'
-                ],
-                amenities: ['行政酒廊全日通行', '席夢思黑標頂級名床', 'Bvlgari 寶格麗備品', 'Bose 環繞音響', '專屬私人管家服務']
-            },
-            {
-                id: 'pool-villa',
-                title: '皇家無邊際泳池獨棟 Villa',
-                size: '65 坪 · 私人恆溫泳池 · 專屬草皮庭園',
-                priceTWD: 32000,
-                rating: '5.0',
-                image: 'https://images.unsplash.com/photo-1613977257363-707ba9348227?auto=format&fit=crop&w=1000&q=80',
-                gallery: [
-                    'https://images.unsplash.com/photo-1613977257363-707ba9348227?auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1540541338287-41700207dee6?auto=format&fit=crop&w=1000&q=80',
-                    'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1000&q=80'
-                ],
-                amenities: ['私人海景無邊際泳池', '毛小孩友善專屬庭園', '迎賓法國香檳一瓶', '免費高鐵賓士來回接送', '私人池畔早餐']
-            }
-        ];
-
-        const PACKAGES_15 = [
-            { id: 1, cat: 'dining', badge: '一泊二食', title: '一泊二食頂級饗宴方案', desc: '含主廚 A5 和牛／龍蝦晚宴與次日自助早餐，訂房可直接預約晚宴時段。', discount: 1.15, type: 'dining' },
-            { id: 2, cat: 'resort', badge: '早鳥 8 折', title: '晨鳥提早 30 天預訂特惠', desc: '提前 30 天以上預訂享全房型 8 折優惠並贈迎賓特調。', discount: 0.8, type: 'standard' },
-            { id: 3, cat: 'resort', badge: '連住優惠', title: '連住 3 晚尊享禮遇方案', desc: '連住 3 晚以上每晚享 82 折，加贈免費洗衣與英式下午茶。', discount: 0.82, type: 'standard' },
-            { id: 4, cat: 'resort', badge: '浪漫紀念', title: '浪漫蜜月／週年紀念專案', desc: '贈冰鎮香檳、玫瑰花瓣浴佈置與保證延遲退房至 13:00。', discount: 1.05, type: 'honeymoon' },
-            { id: 5, cat: 'resort', badge: '身心療癒', title: '奢華 60 分鐘 SPA 舒壓專案', desc: '房價內含雙人深層芳療精油按摩，訂房直接鎖定 SPA 時段。', discount: 1.12, type: 'spa' },
-            { id: 6, cat: 'resort', badge: '深度文化', title: '在地茶莊與海岸秘境半日遊', desc: '含專屬休旅車司機導覽與百年茶莊品茗手作體驗。', discount: 1.08, type: 'standard' },
-            { id: 7, cat: 'pet', badge: '毛孩 VIP', title: '毛小孩友善假期專案', desc: '提供寵物專屬記憶睡墊、鮮食餐碗與私人庭園草皮奔跑區。', discount: 1.05, type: 'pet' },
-            { id: 8, cat: 'dining', badge: '野奢 BBQ', title: '星空野奢露營與海陸 BBQ', desc: '私人陽台／庭園享用主廚備料龍蝦牛排炭烤派對。', discount: 1.14, type: 'dining' },
-            { id: 9, cat: 'business', badge: '遠距辦公', title: 'Workation 7 日長住辦公專案', desc: '高速獨立 Wi-Fi、人體工學椅與每日現煮咖啡無限暢飲。', discount: 0.75, type: 'standard' },
-            { id: 10, cat: 'business', badge: '日間休憩', title: 'Daycation 日間 6 小時微度假', desc: '當日 10:00–18:00 彈性時段使用海景客房與無邊際泳池。', discount: 0.55, type: 'dayuse' },
-            { id: 11, cat: 'addon', badge: '綠色旅宿', title: '無痛輕裝環保減碳專案', desc: '自備牙刷備品且續住不換床單，每晚直接折抵 NT$300。', discount: 0.95, type: 'eco' },
-            { id: 12, cat: 'business', badge: '限時搶購', title: '晚鳥即刻出發（今日最後空房）', desc: '當日 18:00 後釋出限量餘房破盤價，倒數計時搶訂中！', discount: 0.72, type: 'flash' },
-            { id: 13, cat: 'addon', badge: '尊榮接駁', title: '賓士專車接送＋高鐵聯票優惠', desc: '預約專人高鐵站舉牌接送，免去轉乘奔波。', discount: 1.0, type: 'limo' },
-            { id: 14, cat: 'addon', badge: '派對驚喜', title: '客製化慶生氣球與蛋糕佈置包', desc: '專人進房佈置空飄氣球、4 吋手作蛋糕與拍立得紀念。', discount: 1.0, type: 'party' },
-            { id: 15, cat: 'addon', badge: '禮贈首選', title: '電子尊榮住宿禮券商城', desc: '購買 NT$10,000 住宿禮券贈 1,000 點，可即時寄送親友祝福。', discount: 1.0, type: 'gift' }
-        ];
-
-        const MEMBERSHIP_PLANS = {
-            silver: { name: '銀卡探索年費會籍', price: 3800, tierLabel: '銀卡會員', bonusPoints: 1500, addNights: 2 },
-            gold: { name: '金卡尊榮年度會籍', price: 12800, tierLabel: '金卡尊榮', bonusPoints: 5000, addNights: 4 },
-            black: { name: '黑卡無界限量會籍', price: 36000, tierLabel: '黑卡無界', bonusPoints: 15000, addNights: 9 }
-        };
-
-        // 系統已註冊真實會員資料庫（用於驗證好友）
-        const REGISTERED_DIRECTORY = [
-            { email: 'sophia@aurelia.com', name: '林思妤 Sophia', tier: '黑卡無界', online: true },
-            { email: 'kevin@aurelia.com', name: '張凱文 Kevin', tier: '金卡尊榮', online: true },
-            { email: 'emily@aurelia.com', name: '王語晴 Emily', tier: '銀卡會員', online: false }
-        ];
-
-        // ================= 狀態管理 =================
-        let state = {
-            currency: 'TWD',
-            rates: { TWD: 1, USD: 0.031, JPY: 4.75 },
-            symbols: { TWD: 'NT$ ', USD: 'US$ ', JPY: '¥ ' },
-            user: null,
-            wishlist: ['executive-suite'],
-            bookings: [
-                { id: 'AUR-774120', room: '270° 行政全景海景套房', dates: '2026-12-24 ~ 2026-12-26', total: 33600, status: '已確認' }
-            ],
-            friends: [
-                { email: 'sophia@aurelia.com', name: '林思妤 Sophia', tier: '黑卡無界', online: true }
-            ],
-            activeFriendEmail: 'sophia@aurelia.com',
-            chatHistory: {
-                'sophia@aurelia.com': [
-                    { sender: 'them', text: '嗨！我下週末也預訂了奧蕾莉亞的行政海景套房，要不要一起去 28F 星空酒吧小酌？' }
-                ]
-            },
-            selectedRoom: ROOMS[0],
-            selectedPackage: null,
-            selectedMembershipKey: 'gold',
-            isRegisterMode: false
-        };
-
-        // ================= 初始化 =================
-        function initApp() {
-            const today = new Date();
-            const tomorrow = new Date(today);
-            tomorrow.setDate(tomorrow.getDate() + 1);
-            const fmt = d => d.toISOString().split('T')[0];
-
-            document.getElementById('search-checkin').value = fmt(today);
-            document.getElementById('search-checkout').value = fmt(tomorrow);
-            document.getElementById('co-checkin').value = fmt(today);
-            document.getElementById('co-checkout').value = fmt(tomorrow);
-
-            renderRooms();
-            renderPackages('all');
-            updateWishlistBadge();
-            startFlashCountdown();
-            lucide.createIcons();
+    function updateAuthUI() {
+      const guestPanel = document.getElementById('auth-guest-actions');
+      const userPanel = document.getElementById('auth-user-panel');
+      if (userState.isLoggedIn) {
+        guestPanel.classList.add('hidden');
+        userPanel.classList.remove('hidden');
+        document.getElementById('nav-username').textContent = userState.username;
+        document.getElementById('nav-jersey').textContent = userState.jersey;
+        document.getElementById('nav-hr-count').textContent = userState.hrCount;
+        const badge = document.getElementById('nav-vip-badge');
+        if (userState.isVIP) {
+          badge.textContent = 'VIP 白金';
+          badge.className = 'px-1.5 py-0.5 text-[10px] font-black rounded bg-gradient-to-r from-yellow-400 to-amber-500 text-slate-950';
+        } else {
+          badge.textContent = 'FREE';
+          badge.className = 'px-1.5 py-0.5 text-[10px] font-black rounded bg-slate-700 text-slate-300';
         }
+      } else {
+        guestPanel.classList.remove('hidden');
+        userPanel.classList.add('hidden');
+      }
+    }
 
-        function formatMoney(twdAmount) {
-            const val = Math.round(twdAmount * state.rates[state.currency]);
-            return state.symbols[state.currency] + val.toLocaleString();
+    function openAuthModal(tab) {
+      switchAuthTab(tab);
+      document.getElementById('modal-auth').classList.remove('hidden');
+    }
+
+    function switchAuthTab(tab) {
+      currentAuthTab = tab;
+      const isReg = tab === 'register';
+      document.getElementById('tab-login').className = !isReg ? 'font-bold text-base text-yellow-400 border-b-2 border-yellow-400 pb-1' : 'font-bold text-base text-slate-400 pb-1';
+      document.getElementById('tab-register').className = isReg ? 'font-bold text-base text-yellow-400 border-b-2 border-yellow-400 pb-1' : 'font-bold text-base text-slate-400 pb-1';
+      document.getElementById('field-username').classList.toggle('hidden', !isReg);
+      document.getElementById('field-jersey').classList.toggle('hidden', !isReg);
+      document.getElementById('auth-submit-btn').textContent = isReg ? '建立帳號並登入' : '立即登入';
+    }
+
+    function handleAuthSubmit(e) {
+      e.preventDefault();
+      const email = document.getElementById('input-email').value;
+      const username = document.getElementById('input-username').value || email.split('@')[0];
+      const jersey = document.getElementById('input-jersey').value || 24;
+      userState.isLoggedIn = true;
+      userState.email = email;
+      userState.username = username;
+      userState.jersey = jersey;
+      updateAuthUI();
+      closeModal('modal-auth');
+      showBanner(`歡迎回來，#${jersey} ${username}！`, 'text-yellow-400');
+    }
+
+    function quickDemoLogin() {
+      userState.isLoggedIn = true;
+      userState.username = '台灣巨砲 #52';
+      userState.email = 'mvp@grandslam.tw';
+      userState.jersey = 52;
+      updateAuthUI();
+      closeModal('modal-auth');
+      showBanner('測試帳號登入成功！', 'text-emerald-400');
+    }
+
+    function logoutUser() {
+      userState.isLoggedIn = false;
+      userState.isVIP = false;
+      updateAuthUI();
+      closeModal('modal-profile');
+      switchView('landing');
+    }
+
+    function openProfileModal() {
+      document.getElementById('profile-jersey').textContent = userState.jersey;
+      document.getElementById('profile-name').textContent = userState.username;
+      document.getElementById('profile-hr').textContent = userState.hrCount;
+      document.getElementById('profile-max-dist').textContent = userState.maxDist + ' m';
+      const statusBadge = document.getElementById('profile-status-badge');
+      if (userState.isVIP) {
+        statusBadge.textContent = `👑 ${userState.planName}`;
+        statusBadge.className = 'inline-block mt-1 px-3 py-0.5 rounded-full text-xs font-black bg-yellow-400 text-slate-950';
+      } else {
+        statusBadge.textContent = '新秀體驗版 (FREE)';
+        statusBadge.className = 'inline-block mt-1 px-3 py-0.5 rounded-full text-xs font-bold bg-slate-800 text-slate-300';
+      }
+      document.getElementById('modal-profile').classList.remove('hidden');
+    }
+
+    // 結帳與付款
+    function openCheckoutModal(planName, price) {
+      if (!userState.isLoggedIn) {
+        openAuthModal('register');
+        return;
+      }
+      checkoutCurrentPlan = planName;
+      checkoutBasePrice = price;
+      document.getElementById('checkout-plan-name').textContent = planName;
+      document.getElementById('checkout-final-price').textContent = price;
+      document.getElementById('input-coupon').value = '';
+      document.getElementById('modal-checkout').classList.remove('hidden');
+    }
+
+    function applyCoupon() {
+      const code = document.getElementById('input-coupon').value.trim().toUpperCase();
+      if (code === 'VIP888') {
+        const discounted = Math.max(49, checkoutBasePrice - 50);
+        document.getElementById('checkout-final-price').textContent = discounted;
+        showBanner('優惠碼 VIP888 已折抵 NT$50！', 'text-emerald-400');
+      } else {
+        showBanner('無效的優惠碼（請試試 VIP888）', 'text-rose-400');
+      }
+    }
+
+    function selectPayMethod(method) {
+      ['card', 'linepay', 'applepay'].forEach(m => {
+        const btn = document.getElementById('pay-' + m);
+        btn.className = m === method
+          ? 'pay-method-btn py-2 rounded-xl border-2 border-yellow-400 bg-yellow-500/10 text-xs font-bold text-yellow-300'
+          : 'pay-method-btn py-2 rounded-xl border border-slate-700 text-xs font-bold text-slate-400';
+      });
+      document.getElementById('card-input-fields').classList.toggle('hidden', method !== 'card');
+      document.getElementById('mobile-pay-hint').classList.toggle('hidden', method === 'card');
+    }
+
+    function processPayment(e) {
+      e.preventDefault();
+      const btn = document.getElementById('btn-submit-payment');
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> 金流授權處理中...';
+
+      setTimeout(() => {
+        btn.disabled = false;
+        btn.innerHTML = '確認付款並立即開通 VIP';
+        userState.isVIP = true;
+        userState.planName = checkoutCurrentPlan;
+        updateAuthUI();
+        closeModal('modal-checkout');
+        enterGameMode();
+        applyVIPPerks();
+        showBanner('🎉 付款成功！已解鎖夜間巨蛋與黃金烈焰球棒！', 'text-yellow-300');
+      }, 1100);
+    }
+
+    function closeModal(id) {
+      document.getElementById(id).classList.add('hidden');
+    }
+
+    function scrollToPricing() {
+      switchView('landing');
+      setTimeout(() => {
+        document.getElementById('pricing-section').scrollIntoView({ behavior: 'smooth' });
+      }, 50);
+    }
+
+    // 手機一鍵複製完整程式碼
+    function openCopyModal() {
+      const fullHTML = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+      document.getElementById('source-code-textarea').value = fullHTML;
+      document.getElementById('modal-copy').classList.remove('hidden');
+    }
+
+    function copyFullSourceCode() {
+      const textarea = document.getElementById('source-code-textarea');
+      textarea.select();
+      textarea.setSelectionRange(0, 999999);
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(textarea.value).then(() => {
+          showBanner('✅ 完整程式碼已複製到剪貼簿！', 'text-emerald-400');
+          closeModal('modal-copy');
+        }).catch(() => {
+          document.execCommand('copy');
+          showBanner('✅ 程式碼已複製！', 'text-emerald-400');
+        });
+      } else {
+        document.execCommand('copy');
+        showBanner('✅ 程式碼已複製！', 'text-emerald-400');
+      }
+    }
+
+    // ==================== 2. Three.js 3D 棒球物理引擎 ====================
+    let scene, camera, renderer, dirLight, ambientLight;
+    let ballGroup, ballMesh, ballGlowSprite, trailLine, trailPoints = [];
+    let targetRing, pitcherGroup, batPivot, batMesh, flameParticles = [];
+    let isNightDome = false;
+    let isGoldBat = false;
+    let gameMode = 'landing'; // 'landing' | 'batting'
+
+    // 投球與打擊物理狀態
+    let pitchState = 'idle'; // 'idle' | 'windup' | 'pitching' | 'hit' | 'resetting'
+    let selectedPitch = 'fastball';
+    let pitchTimer = 0;
+    let pitchDuration = 0.95;
+    let pitchStartPos = new THREE.Vector3(0, 1.85, -18.44);
+    let pitchEndPos = new THREE.Vector3(0, 0.95, 0);
+    let pitchCurveOffset = new THREE.Vector3(0, 0, 0);
+
+    let hitVelocity = new THREE.Vector3();
+    let swingTimer = 0;
+    let isSwinging = false;
+    let hasSwungThisPitch = false;
+
+    function init3D() {
+      const container = document.getElementById('canvas-container');
+      scene = new THREE.Scene();
+      scene.background = new THREE.Color(0x0b162c);
+      scene.fog = new THREE.FogExp2(0x0b162c, 0.0055);
+
+      camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 400);
+      camera.position.set(18, 12, 22);
+      camera.lookAt(0, 1.5, -10);
+
+      renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: 'high-performance' });
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.shadowMap.enabled = true;
+      container.appendChild(renderer.domElement);
+
+      // 燈光
+      ambientLight = new THREE.AmbientLight(0xffffff, 0.75);
+      scene.add(ambientLight);
+
+      dirLight = new THREE.DirectionalLight(0xfff5e4, 1.25);
+      dirLight.position.set(25, 45, 20);
+      dirLight.castShadow = true;
+      scene.add(dirLight);
+
+      buildStadium();
+      buildPitcherAndBatter();
+      buildHighVisibilityBall();
+
+      window.addEventListener('resize', onWindowResize);
+      window.addEventListener('keydown', (e) => {
+        if (gameMode !== 'batting') return;
+        if (e.code === 'Space') {
+          e.preventDefault();
+          if (pitchState === 'idle') startPitch();
+          else swingBat();
+        } else if (e.code === 'KeyP') {
+          startPitch();
         }
+      });
 
-        function changeCurrency(curr) {
-            state.currency = curr;
-            renderRooms();
-            document.querySelectorAll('[data-price]').forEach(el => {
-                el.textContent = formatMoney(Number(el.dataset.price));
-            });
-            showToast(`已切換幣別為 ${curr}`);
+      requestAnimationFrame(animateLoop);
+    }
+
+    function buildStadium() {
+      // 外野草皮
+      const grassGeo = new THREE.CircleGeometry(125, 64);
+      const grassMat = new THREE.MeshStandardMaterial({ color: 0x166534, roughness: 0.85 });
+      const grass = new THREE.Mesh(grassGeo, grassMat);
+      grass.rotation.x = -Math.PI / 2;
+      grass.receiveShadow = true;
+      scene.add(grass);
+
+      // 內野紅土
+      const infieldGeo = new THREE.CircleGeometry(29, 48);
+      const dirtMat = new THREE.MeshStandardMaterial({ color: 0x92400e, roughness: 0.9 });
+      const infield = new THREE.Mesh(infieldGeo, dirtMat);
+      infield.rotation.x = -Math.PI / 2;
+      infield.position.set(0, 0.01, -13.5);
+      infield.receiveShadow = true;
+      scene.add(infield);
+
+      // 本壘板
+      const plateGeo = new THREE.BoxGeometry(0.45, 0.04, 0.45);
+      const whiteMat = new THREE.MeshBasicMaterial({ color: 0xffffff });
+      const homePlate = new THREE.Mesh(plateGeo, whiteMat);
+      homePlate.position.set(0, 0.02, 0);
+      scene.add(homePlate);
+
+      // 投手丘
+      const moundGeo = new THREE.CylinderGeometry(1.8, 2.4, 0.28, 32);
+      const mound = new THREE.Mesh(moundGeo, dirtMat);
+      mound.position.set(0, 0.14, -18.44);
+      scene.add(mound);
+
+      // 全壘打牆
+      const wallGeo = new THREE.CylinderGeometry(105, 105, 4.2, 64, 1, true, Math.PI * 0.72, Math.PI * 0.56);
+      const wallMat = new THREE.MeshStandardMaterial({ color: 0x1e3a8a, side: THREE.DoubleSide });
+      const wall = new THREE.Mesh(wallGeo, wallMat);
+      wall.position.set(0, 2.1, -5);
+      scene.add(wall);
+
+      // 全壘打牆黃色頂線
+      const topLineGeo = new THREE.TorusGeometry(105, 0.22, 8, 64, Math.PI * 0.56);
+      const yellowLineMat = new THREE.MeshBasicMaterial({ color: 0xfacc15 });
+      const topLine = new THREE.Mesh(topLineGeo, yellowLineMat);
+      topLine.rotation.x = Math.PI / 2;
+      topLine.rotation.z = Math.PI * 0.72;
+      topLine.position.set(0, 4.25, -5);
+      scene.add(topLine);
+
+      // 無遮擋極細好球帶外框 (完全透明中央，絕不阻擋視線)
+      const szGeo = new THREE.EdgesGeometry(new THREE.BoxGeometry(0.56, 0.72, 0.05));
+      const szMat = new THREE.LineBasicMaterial({ color: 0xfacc15, transparent: true, opacity: 0.75 });
+      const strikeZoneWire = new THREE.LineSegments(szGeo, szMat);
+      strikeZoneWire.position.set(0, 0.95, 0);
+      scene.add(strikeZoneWire);
+
+      // 動態進壘預瞄空心細圈
+      const ringGeo = new THREE.RingGeometry(0.28, 0.34, 32);
+      const ringMat = new THREE.MeshBasicMaterial({ color: 0xef4444, side: THREE.DoubleSide, transparent: true, opacity: 0.85 });
+      targetRing = new THREE.Mesh(ringGeo, ringMat);
+      targetRing.position.set(0, 0.95, 0.02);
+      targetRing.visible = false;
+      scene.add(targetRing);
+    }
+
+    function buildPitcherAndBatter() {
+      // 簡潔 3D 投手模型
+      pitcherGroup = new THREE.Group();
+      const bodyMat = new THREE.MeshStandardMaterial({ color: 0xf8fafc });
+      const capMat = new THREE.MeshStandardMaterial({ color: 0x1d4ed8 });
+
+      const torso = new THREE.Mesh(new THREE.CylinderGeometry(0.28, 0.24, 1.0, 16), bodyMat);
+      torso.position.y = 1.1;
+      pitcherGroup.add(torso);
+
+      const head = new THREE.Mesh(new THREE.SphereGeometry(0.22, 16, 16), new THREE.MeshStandardMaterial({ color: 0xfed7aa }));
+      head.position.y = 1.8;
+      pitcherGroup.add(head);
+
+      const cap = new THREE.Mesh(new THREE.SphereGeometry(0.23, 16, 12, 0, Math.PI * 2, 0, Math.PI / 2), capMat);
+      cap.position.y = 1.83;
+      pitcherGroup.add(cap);
+
+      pitcherGroup.position.set(0, 0.28, -18.44);
+      scene.add(pitcherGroup);
+
+      // 球棒與揮棒支點
+      batPivot = new THREE.Group();
+      batPivot.position.set(-0.65, 1.05, 0.25);
+      batPivot.rotation.y = -0.9;
+
+      const batGeo = new THREE.CylinderGeometry(0.055, 0.03, 1.05, 16);
+      const batMat = new THREE.MeshStandardMaterial({ color: 0xd97706, roughness: 0.35, metalness: 0.2 });
+      batMesh = new THREE.Mesh(batGeo, batMat);
+      batMesh.rotation.z = -Math.PI / 2.3;
+      batMesh.position.set(0.45, 0.1, 0);
+      batPivot.add(batMesh);
+      scene.add(batPivot);
+    }
+
+    function createBaseballTexture() {
+      const canvas = document.createElement('canvas');
+      canvas.width = 256;
+      canvas.height = 256;
+      const ctx = canvas.getContext('2d');
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, 256, 256);
+
+      // 高對比鮮紅縫線
+      ctx.strokeStyle = '#ef4444';
+      ctx.lineWidth = 8;
+      ctx.setLineDash([12, 8]);
+      ctx.beginPath();
+      ctx.arc(60, 128, 95, -0.9, 0.9);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.arc(196, 128, 95, Math.PI - 0.9, Math.PI + 0.9);
+      ctx.stroke();
+
+      return new THREE.CanvasTexture(canvas);
+    }
+
+    function buildHighVisibilityBall() {
+      ballGroup = new THREE.Group();
+
+      // 高對比放大棒球本體
+      const ballGeo = new THREE.SphereGeometry(0.26, 24, 24);
+      const ballMat = new THREE.MeshBasicMaterial({ map: createBaseballTexture() });
+      ballMesh = new THREE.Mesh(ballGeo, ballMat);
+      ballGroup.add(ballMesh);
+
+      // 金色外發光光暈 Sprite（確保任何距離都無比清晰）
+      const glowCanvas = document.createElement('canvas');
+      glowCanvas.width = 128;
+      glowCanvas.height = 128;
+      const gCtx = glowCanvas.getContext('2d');
+      const grad = gCtx.createRadialGradient(64, 64, 10, 64, 64, 62);
+      grad.addColorStop(0, 'rgba(255, 255, 200, 0.95)');
+      grad.addColorStop(0.4, 'rgba(250, 204, 21, 0.55)');
+      grad.addColorStop(1, 'rgba(250, 204, 21, 0)');
+      gCtx.fillStyle = grad;
+      gCtx.fillRect(0, 0, 128, 128);
+
+      const glowTex = new THREE.CanvasTexture(glowCanvas);
+      const spriteMat = new THREE.SpriteMaterial({ map: glowTex, transparent: true, blending: THREE.AdditiveBlending });
+      ballGlowSprite = new THREE.Sprite(spriteMat);
+      ballGlowSprite.scale.set(1.35, 1.35, 1);
+      ballGroup.add(ballGlowSprite);
+
+      ballGroup.position.copy(pitchStartPos);
+      scene.add(ballGroup);
+
+      // 連續 3D 飛行軌跡線
+      const trailGeo = new THREE.BufferGeometry();
+      const trailMat = new THREE.LineBasicMaterial({ color: 0xfde047, transparent: true, opacity: 0.85 });
+      trailLine = new THREE.Line(trailGeo, trailMat);
+      scene.add(trailLine);
+    }
+
+    // ==================== 3. 遊戲模式與視角切換 ====================
+    function switchView(viewName) {
+      document.getElementById('view-landing').classList.toggle('hidden', viewName !== 'landing');
+      document.getElementById('view-game').classList.toggle('hidden', viewName !== 'batting');
+      gameMode = viewName === 'batting' ? 'batting' : 'landing';
+
+      if (gameMode === 'batting') {
+        camera.position.set(0.32, 2.32, 6.2);
+        camera.lookAt(0, 1.15, -12);
+        resetPitch();
+      }
+    }
+
+    function enterGameMode() {
+      switchView('batting');
+      showBanner('點擊「投球」或按空白鍵開始對決！', 'text-yellow-300');
+    }
+
+    function selectPitchType(type) {
+      selectedPitch = type;
+      document.querySelectorAll('.pitch-btn').forEach(btn => {
+        btn.className = 'pitch-btn px-3 py-2 rounded-xl text-xs font-bold text-slate-300 hover:bg-slate-800';
+      });
+      document.getElementById('pitch-' + type).className = 'pitch-btn px-3 py-2 rounded-xl text-xs font-bold bg-yellow-500 text-slate-950';
+    }
+
+    function startPitch() {
+      if (pitchState !== 'idle') return;
+      pitchState = 'windup';
+      pitchTimer = 0;
+      hasSwungThisPitch = false;
+      trailPoints = [];
+      updateTrail();
+
+      // 設定球種物理參數
+      const spreadX = (Math.random() - 0.5) * 0.28;
+      const spreadY = 0.82 + Math.random() * 0.28;
+      pitchEndPos.set(spreadX, spreadY, 0);
+
+      let speedKmh = 154;
+      let pitchLabel = '四縫線直球';
+      if (selectedPitch === 'fastball') {
+        pitchDuration = 0.88;
+        pitchCurveOffset.set(0, 0.15, 0);
+        speedKmh = 156;
+        pitchLabel = '四縫線直球';
+      } else if (selectedPitch === 'curve') {
+        pitchDuration = 1.08;
+        pitchCurveOffset.set(0.18, 0.85, 0);
+        speedKmh = 128;
+        pitchLabel = '12-6 大曲球';
+      } else if (selectedPitch === 'slider') {
+        pitchDuration = 0.96;
+        pitchCurveOffset.set(-0.65, 0.22, 0);
+        speedKmh = 141;
+        pitchLabel = '銳利滑球';
+      } else if (selectedPitch === 'splitter') {
+        pitchDuration = 0.94;
+        pitchCurveOffset.set(0, 0.45, 0);
+        speedKmh = 145;
+        pitchLabel = '快速指叉球';
+      }
+
+      document.getElementById('hud-pitch-info').textContent = `${speedKmh} km/h ${pitchLabel}`;
+
+      // 顯示預瞄圈
+      targetRing.position.set(pitchEndPos.x, pitchEndPos.y, 0.02);
+      targetRing.scale.set(2.4, 2.4, 1);
+      targetRing.material.color.setHex(0xef4444);
+      targetRing.visible = true;
+
+      setTimeout(() => {
+        if (pitchState === 'windup') {
+          pitchState = 'pitching';
+          pitchTimer = 0;
         }
+      }, 320);
+    }
 
-        // ================= 渲染房型 =================
-        function renderRooms() {
-            const grid = document.getElementById('rooms-grid');
-            grid.innerHTML = ROOMS.map(room => {
-                const isFav = state.wishlist.includes(room.id);
-                return `
-                <div class="glass-card rounded-3xl overflow-hidden flex flex-col justify-between">
-                    <div>
-                        <div class="relative h-56 overflow-hidden group cursor-pointer" onclick="openGalleryModal('${room.id}')">
-                            <img src="${room.image}" alt="${room.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                            <div class="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-navy-950/80 text-gold-300 text-xs font-semibold flex items-center gap-1">
-                                <i data-lucide="star" class="w-3.5 h-3.5 fill-gold-400 text-gold-400"></i> ${room.rating}
-                            </div>
-                            <button onclick="event.stopPropagation(); toggleWishlist('${room.id}')" class="absolute top-3 right-3 w-9 h-9 rounded-full bg-navy-950/80 flex items-center justify-center text-white hover:text-rose-400">
-                                <i data-lucide="heart" class="w-4 h-4 ${isFav ? 'fill-rose-500 text-rose-500' : ''}"></i>
-                            </button>
-                            <div class="absolute bottom-3 right-3 px-2.5 py-1 rounded-lg bg-black/70 text-white text-[11px] flex items-center gap-1">
-                                <i data-lucide="images" class="w-3.5 h-3.5 text-gold-400"></i> 查看多角度相簿
-                            </div>
-                        </div>
-                        <div class="p-6">
-                            <h3 class="font-serif text-xl font-bold text-white mb-1">${room.title}</h3>
-                            <p class="text-xs text-slate-400 mb-4">${room.size}</p>
-                            <div class="flex flex-wrap gap-1.5 mb-5">
-                                ${room.amenities.slice(0, 3).map(a => `<span class="px-2.5 py-1 rounded-lg bg-navy-900/90 border border-white/10 text-[11px] text-slate-300">${a}</span>`).join('')}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="px-6 pb-6 pt-3 border-t border-white/10 flex items-center justify-between">
-                        <div>
-                            <span class="text-[11px] text-slate-400 block">每晚優惠價起</span>
-                            <span class="text-xl font-bold gold-text-gradient">${formatMoney(room.priceTWD)}</span>
-                        </div>
-                        <button onclick="openCheckoutModal('${room.id}', null)" class="px-5 py-2.5 rounded-xl gold-gradient text-navy-950 font-bold text-xs shadow-lg hover:brightness-110">
-                            立即預訂
-                        </button>
-                    </div>
-                </div>`;
-            }).join('');
-            lucide.createIcons();
+    function swingBat() {
+      if (isSwinging) return;
+      isSwinging = true;
+      swingTimer = 0;
+
+      if (pitchState === 'pitching' && !hasSwungThisPitch) {
+        hasSwungThisPitch = true;
+        // 進度 t 接近 0.86 ~ 1.04 為有效擊球區間
+        const t = pitchTimer / pitchDuration;
+        const timingError = Math.abs(t - 0.94);
+
+        if (timingError <= 0.13) {
+          // 成功擊中球！
+          pitchState = 'hit';
+          targetRing.visible = false;
+
+          const quality = 1 - (timingError / 0.13); // 0 ~ 1
+          const exitVelo = Math.round(132 + quality * 48 + (isGoldBat ? 12 : 0));
+          const launchAngle = Math.round(14 + quality * 22 + (Math.random() - 0.4) * 8);
+          const sprayAngle = (t - 0.94) * 3.2;
+
+          const speedUnits = exitVelo * 0.26;
+          const radAngle = (launchAngle * Math.PI) / 180;
+          hitVelocity.set(
+            Math.sin(sprayAngle) * speedUnits * 0.75,
+            Math.sin(radAngle) * speedUnits,
+            -Math.cos(radAngle) * speedUnits
+          );
+
+          const estDistance = Math.round((exitVelo * exitVelo * Math.sin(2 * radAngle)) / 9.8 * 0.115);
+          document.getElementById('hud-exit-velo').textContent = `${exitVelo} km/h`;
+          document.getElementById('hud-launch-angle').textContent = `${launchAngle} °`;
+          document.getElementById('hud-distance').textContent = `${estDistance} m`;
+
+          if (estDistance >= 105 && launchAngle >= 18) {
+            showBanner(`🔥 全壘打 HOME RUN！${estDistance} 公尺！`, 'text-yellow-300');
+            userState.hrCount += 1;
+            if (estDistance > userState.maxDist) userState.maxDist = estDistance;
+            updateAuthUI();
+          } else if (quality > 0.5) {
+            showBanner(`💥 強勁安打！飛行 ${estDistance} 公尺`, 'text-emerald-400');
+          } else {
+            showBanner(`⚾ 滾地/飛球出局 (${estDistance} m)`, 'text-slate-300');
+          }
+        } else {
+          showBanner('揮棒落空！時機太早或太晚', 'text-rose-400');
         }
+      }
+    }
 
-        // ================= 渲染 15 大方案 =================
-        function renderPackages(filterCat) {
-            const list = filterCat === 'all' ? PACKAGES_15 : PACKAGES_15.filter(p => p.cat === filterCat);
-            const grid = document.getElementById('packages-grid');
-            grid.innerHTML = list.map(pkg => `
-                <div class="glass-card rounded-2xl p-5 flex flex-col justify-between">
-                    <div>
-                        <div class="flex items-center justify-between mb-3">
-                            <span class="px-2.5 py-1 rounded-full bg-gold-500/15 text-gold-300 border border-gold-400/30 text-[11px] font-bold">
-                                方案 #${pkg.id} · ${pkg.badge}
-                            </span>
-                            ${pkg.id === 12 ? `<span id="flash-timer" class="text-[11px] font-mono text-rose-400 font-bold">04:59:59</span>` : ''}
-                        </div>
-                        <h3 class="text-base font-bold text-white mb-1.5">${pkg.title}</h3>
-                        <p class="text-xs text-slate-400 leading-relaxed mb-4">${pkg.desc}</p>
-                    </div>
-                    <button onclick="selectPackageAndBook(${pkg.id})" class="w-full py-2.5 rounded-xl bg-navy-800 hover:bg-gold-500 hover:text-navy-950 text-gold-300 border border-gold-400/30 font-semibold text-xs transition-all">
-                        套用此方案並預訂 ➔
-                    </button>
-                </div>
-            `).join('');
+    function resetPitch() {
+      pitchState = 'idle';
+      pitchTimer = 0;
+      targetRing.visible = false;
+      ballGroup.position.copy(pitchStartPos);
+      trailPoints = [];
+      updateTrail();
+      if (gameMode === 'batting') {
+        camera.position.set(0.32, 2.32, 6.2);
+        camera.lookAt(0, 1.15, -12);
+      }
+    }
+
+    function updateTrail() {
+      trailLine.geometry.setFromPoints(trailPoints);
+    }
+
+    // VIP 專屬功能切換
+    function toggleStadiumTheme() {
+      if (!userState.isVIP && !isNightDome) {
+        showBanner('👑 夜間巨蛋為白金 VIP 專屬場景！', 'text-yellow-400');
+        openCheckoutModal('豪華白金季票 VIP', 199);
+        return;
+      }
+      isNightDome = !isNightDome;
+      if (isNightDome) {
+        scene.background = new THREE.Color(0x03050a);
+        scene.fog.color.setHex(0x03050a);
+        ambientLight.intensity = 0.45;
+        dirLight.color.setHex(0x93c5fd);
+        document.getElementById('stadium-mode-label').textContent = '夜間巨蛋 VIP';
+      } else {
+        scene.background = new THREE.Color(0x0b162c);
+        scene.fog.color.setHex(0x0b162c);
+        ambientLight.intensity = 0.75;
+        dirLight.color.setHex(0xfff5e4);
+        document.getElementById('stadium-mode-label').textContent = '日間球場';
+      }
+    }
+
+    function toggleGoldBat() {
+      if (!userState.isVIP && !isGoldBat) {
+        showBanner('👑 黃金烈焰球棒為白金 VIP 專屬裝備！', 'text-yellow-400');
+        openCheckoutModal('豪華白金季票 VIP', 199);
+        return;
+      }
+      isGoldBat = !isGoldBat;
+      batMesh.material.color.setHex(isGoldBat ? 0xfacc15 : 0xd97706);
+      batMesh.material.emissive.setHex(isGoldBat ? 0xb45309 : 0x000000);
+      document.getElementById('bat-mode-label').textContent = isGoldBat ? '黃金烈焰棒 VIP' : '標準木棒';
+    }
+
+    function applyVIPPerks() {
+      if (!isNightDome) toggleStadiumTheme();
+      if (!isGoldBat) toggleGoldBat();
+    }
+
+    function showBanner(text, colorClass) {
+      const container = document.getElementById('result-banner-container');
+      container.innerHTML = `<div class="banner-animate glass-panel px-6 py-3 rounded-2xl border border-yellow-400/50 text-xl sm:text-3xl font-black ${colorClass} shadow-2xl">${text}</div>`;
+    }
+
+    function onWindowResize() {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    }
+
+    // ==================== 4. 主動畫迴圈 ====================
+    let lastTime = performance.now();
+    function animateLoop(now) {
+      requestAnimationFrame(animateLoop);
+      const dt = Math.min((now - lastTime) / 1000, 0.05);
+      lastTime = now;
+
+      // 球體自轉
+      ballMesh.rotation.x += 14 * dt;
+      ballMesh.rotation.z += 6 * dt;
+
+      // 首頁電影級自動環繞運鏡
+      if (gameMode === 'landing') {
+        const angle = now * 0.00022;
+        camera.position.x = Math.sin(angle) * 24;
+        camera.position.z = Math.cos(angle) * 24 - 6;
+        camera.position.y = 10 + Math.sin(angle * 2) * 2;
+        camera.lookAt(0, 1.5, -12);
+      }
+
+      // 投手抬腿動作
+      if (pitchState === 'windup') {
+        pitcherGroup.position.y = 0.28 + Math.sin(now * 0.02) * 0.15;
+      } else {
+        pitcherGroup.position.y = 0.28;
+      }
+
+      // 揮棒動畫
+      if (isSwinging) {
+        swingTimer += dt;
+        const progress = swingTimer / 0.35;
+        if (progress <= 0.5) {
+          batPivot.rotation.y = -0.9 + (progress * 2) * 2.6;
+        } else if (progress <= 1.0) {
+          batPivot.rotation.y = 1.7 - ((progress - 0.5) * 2) * 2.6;
+        } else {
+          batPivot.rotation.y = -0.9;
+          isSwinging = false;
         }
+      }
 
-        function filterPackages(cat, btn) {
-            document.querySelectorAll('.pkg-filter-btn').forEach(b => {
-                b.className = 'pkg-filter-btn px-4 py-2 rounded-full text-xs font-semibold whitespace-nowrap bg-navy-800 text-slate-300 border border-white/10 hover:border-gold-400';
-            });
-            btn.className = 'pkg-filter-btn active px-4 py-2 rounded-full text-xs font-semibold whitespace-nowrap gold-gradient text-navy-950';
-            renderPackages(cat);
+      // 投球飛行軌跡更新
+      if (pitchState === 'pitching') {
+        pitchTimer += dt;
+        const t = pitchTimer / pitchDuration;
+
+        if (t <= 1.15) {
+          const pos = new THREE.Vector3().lerpVectors(pitchStartPos, pitchEndPos, t);
+          const arc = Math.sin(Math.min(t, 1) * Math.PI);
+          pos.x += pitchCurveOffset.x * arc;
+          pos.y += pitchCurveOffset.y * arc;
+          ballGroup.position.copy(pos);
+
+          trailPoints.push(pos.clone());
+          if (trailPoints.length > 28) trailPoints.shift();
+          updateTrail();
+
+          // 更新進壘預瞄光圈縮放與變色
+          const scale = Math.max(0.7, 2.4 - t * 1.6);
+          targetRing.scale.set(scale, scale, 1);
+          if (t >= 0.82 && t <= 1.05) {
+            targetRing.material.color.setHex(0x22c55e); // 最佳揮棒時機轉亮綠
+          } else {
+            targetRing.material.color.setHex(0xef4444);
+          }
+        } else {
+          if (!hasSwungThisPitch) {
+            showBanner('好球進壘！STRIKE！', 'text-sky-400');
+          }
+          pitchState = 'resetting';
+          setTimeout(resetPitch, 900);
         }
+      }
 
-        function startFlashCountdown() {
-            let sec = 4 * 3600 + 59 * 60 + 59;
-            setInterval(() => {
-                sec = sec > 0 ? sec - 1 : 18000;
-                const h = String(Math.floor(sec / 3600)).padStart(2, '0');
-                const m = String(Math.floor((sec % 3600) / 60)).padStart(2, '0');
-                const s = String(sec % 60).padStart(2, '0');
-                const el = document.getElementById('flash-timer');
-                if (el) el.textContent = `倒數 ${h}:${m}:${s}`;
-            }, 1000);
+      // 擊出後飛行物理與追蹤鏡頭
+      if (pitchState === 'hit') {
+        hitVelocity.y -= 9.8 * 1.45 * dt; // 重力
+        ballGroup.position.addScaledVector(hitVelocity, dt);
+
+        trailPoints.push(ballGroup.position.clone());
+        if (trailPoints.length > 55) trailPoints.shift();
+        updateTrail();
+
+        // 鏡頭平滑跟隨飛球
+        camera.position.lerp(new THREE.Vector3(ballGroup.position.x * 0.25, Math.max(2.5, ballGroup.position.y * 0.45 + 2.2), 7.5), 4 * dt);
+        camera.lookAt(ballGroup.position);
+
+        if (ballGroup.position.y <= 0.25 || ballGroup.position.z < -130) {
+          pitchState = 'resetting';
+          setTimeout(resetPitch, 1400);
         }
+      }
 
-        function selectPackageAndBook(pkgId) {
-            const pkg = PACKAGES_15.find(p => p.id === pkgId);
-            if (!pkg) return;
-            const roomId = pkg.id === 7 ? 'pool-villa' : 'executive-suite';
-            openCheckoutModal(roomId, pkg);
-        }
+      renderer.render(scene, camera);
+    }
 
-        // ================= 燈箱與心願清單 =================
-        function openGalleryModal(roomId) {
-            const room = ROOMS.find(r => r.id === roomId);
-            if (!room) return;
-            document.getElementById('gal-title').textContent = room.title;
-            document.getElementById('gal-meta').textContent = room.size;
-            document.getElementById('gal-main-img').src = room.gallery[0];
-            document.getElementById('gal-thumbs').innerHTML = room.gallery.map(src => `
-                <img src="${src}" onclick="document.getElementById('gal-main-img').src='${src}'" class="h-16 w-full object-cover rounded-xl cursor-pointer border border-white/15 hover:border-gold-400">
-            `).join('');
-            document.getElementById('gal-amenities').innerHTML = room.amenities.map(a => `
-                <span class="px-3 py-1 rounded-full bg-navy-900 border border-gold-500/30 text-xs text-gold-300">✦ ${a}</span>
-            `).join('');
-            document.getElementById('gal-book-btn').onclick = () => {
-                closeModal('gallery-modal');
-                openCheckoutModal(room.id, null);
-            };
-            document.getElementById('gallery-modal').classList.remove('hidden');
-        }
-
-        function toggleWishlist(roomId) {
-            const idx = state.wishlist.indexOf(roomId);
-            if (idx > -1) {
-                state.wishlist.splice(idx, 1);
-                showToast('已從心願清單移除');
-            } else {
-                state.wishlist.push(roomId);
-                showToast('已加入心願收藏清單 ♥');
-            }
-            updateWishlistBadge();
-            renderRooms();
-        }
-
-        function updateWishlistBadge() {
-            const badge = document.getElementById('nav-wishlist-count');
-            if (state.wishlist.length > 0) {
-                badge.textContent = state.wishlist.length;
-                badge.classList.remove('hidden');
-            } else {
-                badge.classList.add('hidden');
-            }
-        }
-
-        // ================= 訂房結帳流程 =================
-        function openCheckoutModal(roomId, pkg) {
-            state.selectedRoom = ROOMS.find(r => r.id === roomId) || ROOMS[0];
-            state.selectedPackage = pkg;
-
-            document.getElementById('checkout-room-name').textContent = state.selectedRoom.title;
-            document.getElementById('checkout-pkg-badge').textContent = pkg ? `方案 #${pkg.id}：${pkg.title}` : '官網標準尊榮訂房';
-            
-            const customBox = document.getElementById('package-custom-fields');
-            customBox.classList.add('hidden');
-            customBox.innerHTML = '';
-
-            if (pkg) {
-                customBox.classList.remove('hidden');
-                if (pkg.type === 'dining') {
-                    customBox.innerHTML = `<div class="font-bold text-gold-300">主廚晚宴時段與主餐偏好</div>
-                        <select class="w-full bg-navy-900 border border-white/15 rounded-xl px-3 py-2 text-white">
-                            <option>18:00 用餐 · 日本 A5 和牛菲力套餐</option>
-                            <option>19:30 用餐 · 波士頓活龍蝦海陸雙饗</option>
-                        </select>`;
-                } else if (pkg.type === 'spa') {
-                    customBox.innerHTML = `<div class="font-bold text-gold-300">雙人 60 分鐘芳療 SPA 預約</div>
-                        <select class="w-full bg-navy-900 border border-white/15 rounded-xl px-3 py-2 text-white">
-                            <option>入住當日 16:30 · 經典大馬士革玫瑰精油</option>
-                            <option>入住當日 20:00 · 喜馬拉雅雪松深層舒壓</option>
-                        </select>`;
-                } else if (pkg.type === 'pet') {
-                    customBox.innerHTML = `<div class="font-bold text-gold-300">毛小孩入住登記</div>
-                        <input type="text" placeholder="請填寫毛孩品種與體重（例：柴犬 11kg）" class="w-full bg-navy-900 border border-white/15 rounded-xl px-3 py-2 text-white">`;
-                } else if (pkg.type === 'dayuse') {
-                    customBox.innerHTML = `<div class="font-bold text-gold-300">日間休憩使用時段</div>
-                        <select class="w-full bg-navy-900 border border-white/15 rounded-xl px-3 py-2 text-white">
-                            <option>10:00 – 16:00 (6小時日間微度假)</option>
-                            <option>12:00 – 18:00 (午後海景休憩時段)</option>
-                        </select>`;
-                } else {
-                    customBox.innerHTML = `<div class="text-gold-300">✔ 已自動套用「${pkg.title}」專屬優惠與禮遇</div>`;
-                }
-            }
-
-            if (state.user) {
-                document.getElementById('co-guest-name').value = state.user.name;
-            }
-
-            document.getElementById('checkout-step-1').classList.remove('hidden');
-            document.getElementById('checkout-step-2').classList.add('hidden');
-            document.getElementById('checkout-step-3').classList.add('hidden');
-            recalculateCheckoutPricing();
-            document.getElementById('checkout-modal').classList.remove('hidden');
-        }
-
-        function recalculateCheckoutPricing() {
-            const d1 = new Date(document.getElementById('co-checkin').value);
-            const d2 = new Date(document.getElementById('co-checkout').value);
-            let nights = Math.round((d2 - d1) / (1000 * 60 * 60 * 24));
-            if (isNaN(nights) || nights < 1) nights = 1;
-
-            const pkgMult = state.selectedPackage ? state.selectedPackage.discount : 1;
-            const memberMult = state.user ? 0.9 : 1;
-            let total = state.selectedRoom.priceTWD * nights * pkgMult * memberMult;
-
-            if (document.getElementById('addon-eco').checked) total -= 300 * nights;
-            if (document.getElementById('addon-limo').checked) total += 1800;
-            if (document.getElementById('addon-party').checked) total += 2600;
-
-            total = Math.max(1000, Math.round(total));
-            document.getElementById('co-nights-label').textContent = `共 ${nights} 晚 ${state.user ? '· 已享會員 9 折' : ''}`;
-            document.getElementById('co-total-display').textContent = formatMoney(total);
-            return { nights, total };
-        }
-
-        function goToCheckoutStep2() {
-            const name = document.getElementById('co-guest-name').value.trim();
-            if (!name) {
-                showToast('請輸入住客真實姓名');
-                return;
-            }
-            document.getElementById('checkout-step-1').classList.add('hidden');
-            document.getElementById('checkout-step-2').classList.remove('hidden');
-        }
-
-        function backToCheckoutStep1() {
-            document.getElementById('checkout-step-2').classList.add('hidden');
-            document.getElementById('checkout-step-1').classList.remove('hidden');
-        }
-
-        function confirmFinalBooking() {
-            const { total } = recalculateCheckoutPricing();
-            const guestName = document.getElementById('co-guest-name').value.trim() || '尊榮貴賓';
-            const bookingId = 'AUR-' + Math.floor(100000 + Math.random() * 900000);
-
-            const idEl = document.getElementById('confirmed-booking-id');
-            const nameEl = document.getElementById('confirmed-guest-name');
-            const roomEl = document.getElementById('confirmed-room-title');
-            if (idEl) idEl.textContent = '#' + bookingId;
-            if (nameEl) nameEl.textContent = guestName;
-            if (roomEl) roomEl.textContent = state.selectedRoom.title;
-
-            state.bookings.unshift({
-                id: bookingId,
-                room: state.selectedRoom.title,
-                dates: `${document.getElementById('co-checkin').value} ~ ${document.getElementById('co-checkout').value}`,
-                total: total,
-                status: '已確認'
-            });
-
-            if (state.user) {
-                state.user.nights += 1;
-                state.user.points += 500;
-            }
-
-            document.getElementById('checkout-step-2').classList.add('hidden');
-            document.getElementById('checkout-step-3').classList.remove('hidden');
-        }
-
-        // ================= 尊榮會員方案購買 =================
-        function openMembershipPurchase(planKey) {
-            state.selectedMembershipKey = planKey;
-            const plan = MEMBERSHIP_PLANS[planKey];
-            document.getElementById('mb-plan-name').textContent = plan.name;
-            document.getElementById('mb-plan-price').textContent = formatMoney(plan.price);
-            if (state.user) {
-                document.getElementById('mb-holder-name').value = state.user.name;
-            }
-            document.getElementById('membership-buy-modal').classList.remove('hidden');
-        }
-
-        function confirmMembershipPurchase() {
-            const holderName = document.getElementById('mb-holder-name').value.trim() || '尊榮貴賓';
-            const plan = MEMBERSHIP_PLANS[state.selectedMembershipKey];
-
-            if (!state.user) {
-                state.user = {
-                    name: holderName,
-                    email: 'vip@aurelia.com',
-                    tier: plan.tierLabel,
-                    points: 1200 + plan.bonusPoints,
-                    nights: plan.addNights
-                };
-            } else {
-                state.user.tier = plan.tierLabel;
-                state.user.points += plan.bonusPoints;
-                state.user.nights += plan.addNights;
-            }
-
-            updateNavUserDisplay();
-            closeModal('membership-buy-modal');
-            showToast(`恭喜開通「${plan.name}」！獲贈 ${plan.bonusPoints} 點`);
-            openMemberDashboard('tier');
-        }
-
-        // ================= 會員登入與儀表板 =================
-        function handleAuthNavClick() {
-            if (state.user) {
-                openMemberDashboard('tier');
-            } else {
-                document.getElementById('auth-modal').classList.remove('hidden');
-            }
-        }
-
-        function toggleAuthMode() {
-            state.isRegisterMode = !state.isRegisterMode;
-            document.getElementById('auth-name-field').classList.toggle('hidden', !state.isRegisterMode);
-            document.getElementById('auth-modal-title').textContent = state.isRegisterMode ? '免費註冊尊榮會員' : '尊榮會員登入';
-            document.getElementById('auth-submit-btn').textContent = state.isRegisterMode ? '完成註冊並領取 $500 禮遇' : '立即登入';
-            document.getElementById('auth-switch-btn').textContent = state.isRegisterMode ? '已有會員帳號？返回登入' : '還不是會員？立即免費註冊（首訂現折 NT$500）';
-        }
-
-        function togglePasswordVisibility() {
-            const inp = document.getElementById('auth-pass-input');
-            inp.type = inp.type === 'password' ? 'text' : 'password';
-        }
-
-        function submitAuthForm(e) {
-            e.preventDefault();
-            const email = document.getElementById('auth-email-input').value.trim();
-            const nameInput = document.getElementById('auth-name-input').value.trim();
-            const displayName = nameInput || email.split('@')[0];
-
-            state.user = {
-                name: displayName,
-                email: email,
-                tier: '銀卡會員',
-                points: state.isRegisterMode ? 1700 : 1200,
-                nights: 2
-            };
-            updateNavUserDisplay();
-            closeModal('auth-modal');
-            showToast(`歡迎回來，${state.user.name}！`);
-        }
-
-        function logoutUser() {
-            state.user = null;
-            updateNavUserDisplay();
-            closeModal('member-dashboard-modal');
-            showToast('已安全登出會員帳號');
-        }
-
-        function updateNavUserDisplay() {
-            const btnText = document.getElementById('auth-nav-text');
-            const mobLabel = document.getElementById('mobile-nav-user-label');
-            if (state.user) {
-                btnText.textContent = state.user.name;
-                if (mobLabel) mobLabel.textContent = state.user.tier;
-            } else {
-                btnText.textContent = '會員登入';
-                if (mobLabel) mobLabel.textContent = '會員中心';
-            }
-        }
-
-        function openMemberDashboard(tabKey) {
-            if (!state.user) {
-                showToast('請先登入會員帳號以使用完整功能');
-                document.getElementById('auth-modal').classList.remove('hidden');
-                return;
-            }
-
-            document.getElementById('dash-avatar').textContent = state.user.name[0].toUpperCase();
-            document.getElementById('dash-user-name').textContent = state.user.name;
-            document.getElementById('dash-tier-badge').textContent = state.user.tier;
-            document.getElementById('dash-points').textContent = state.user.points.toLocaleString();
-            document.getElementById('dash-nights-count').textContent = state.user.nights;
-
-            const pct = Math.min(100, Math.round((state.user.nights / 8) * 100));
-            document.getElementById('dash-tier-progress').style.width = pct + '%';
-            document.getElementById('dash-next-tier-hint').textContent = state.user.nights >= 8
-                ? '您已達成最高「黑卡無界」尊榮等級！'
-                : `再累積 ${8 - state.user.nights} 晚即可晉升黑卡無界`;
-
-            renderDashboardBookings();
-            renderDashboardWishlist();
-            renderVerifiedFriends();
-            switchDashboardTab(tabKey || 'tier');
-            document.getElementById('member-dashboard-modal').classList.remove('hidden');
-        }
-
-        function switchDashboardTab(tabKey) {
-            document.querySelectorAll('.dash-panel').forEach(p => p.classList.add('hidden'));
-            document.getElementById('dash-panel-' + tabKey).classList.remove('hidden');
-
-            document.querySelectorAll('.dash-tab-btn').forEach(btn => {
-                if (btn.dataset.tab === tabKey) {
-                    btn.className = 'dash-tab-btn px-3.5 py-2 rounded-xl text-xs font-semibold whitespace-nowrap gold-gradient text-navy-950';
-                } else {
-                    btn.className = 'dash-tab-btn px-3.5 py-2 rounded-xl text-xs font-semibold whitespace-nowrap bg-navy-800 text-slate-300';
-                }
-            });
-        }
-
-        function renderDashboardBookings() {
-            const box = document.getElementById('dash-panel-bookings');
-            box.innerHTML = state.bookings.map((b, idx) => `
-                <div class="p-4 rounded-2xl bg-navy-900/90 border border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                    <div>
-                        <div class="text-xs text-gold-400 font-mono">#${b.id} · ${b.status}</div>
-                        <div class="text-sm font-bold text-white mt-0.5">${b.room}</div>
-                        <div class="text-xs text-slate-400">${b.dates} · 總額 ${formatMoney(b.total)}</div>
-                    </div>
-                    ${b.status === '已確認' ? `<button onclick="cancelBooking(${idx})" class="px-3 py-1.5 rounded-lg bg-rose-500/15 text-rose-300 text-xs border border-rose-500/30 self-start sm:self-center">取消預訂</button>` : ''}
-                </div>
-            `).join('');
-        }
-
-        function cancelBooking(idx) {
-            state.bookings[idx].status = '已取消退款';
-            renderDashboardBookings();
-            showToast('訂單已取消，款項將於 3 個工作日內退回');
-        }
-
-        function renderDashboardWishlist() {
-            const box = document.getElementById('dash-panel-wishlist');
-            const favRooms = ROOMS.filter(r => state.wishlist.includes(r.id));
-            box.innerHTML = favRooms.length ? favRooms.map(r => `
-                <div class="p-3 rounded-2xl bg-navy-900/90 border border-white/10 flex items-center gap-3">
-                    <img src="${r.image}" class="w-16 h-16 rounded-xl object-cover">
-                    <div class="flex-1">
-                        <div class="text-xs font-bold text-white">${r.title}</div>
-                        <div class="text-xs text-gold-400 mt-0.5">${formatMoney(r.priceTWD)} / 晚</div>
-                        <button onclick="closeModal('member-dashboard-modal'); openCheckoutModal('${r.id}', null);" class="mt-1.5 px-2.5 py-1 rounded-lg gold-gradient text-navy-950 font-bold text-[11px]">立即預訂</button>
-                    </div>
-                </div>
-            `).join('') : '<div class="text-xs text-slate-400">尚未收藏任何房型</div>';
-        }
-
-        // ================= 真好友驗證聊天室 =================
-        function verifyAndAddFriend() {
-            const input = document.getElementById('add-friend-input');
-            const email = input.value.trim().toLowerCase();
-            if (!email) return;
-
-            const found = REGISTERED_DIRECTORY.find(u => u.email === email);
-            if (!found) {
-                showToast('查無此已註冊會員帳號！僅限添加已註冊真好友');
-                return;
-            }
-            if (state.friends.some(f => f.email === found.email)) {
-                showToast('該會員已在您的真好友名單中');
-                return;
-            }
-            state.friends.push(found);
-            state.chatHistory[found.email] = [{ sender: 'them', text: `你好！我是 ${found.name}，很高興在奧蕾莉亞成為好友！` }];
-            input.value = '';
-            renderVerifiedFriends();
-            selectFriendChat(found.email);
-            showToast(`已成功驗證並加入好友：${found.name}`);
-        }
-
-        function renderVerifiedFriends() {
-            const list = document.getElementById('verified-friends-list');
-            list.innerHTML = state.friends.map(f => `
-                <button onclick="selectFriendChat('${f.email}')" class="w-full text-left p-2 rounded-xl flex items-center justify-between text-xs ${f.email === state.activeFriendEmail ? 'bg-gold-500/20 border border-gold-400/40 text-white' : 'hover:bg-navy-800 text-slate-300'}">
-                    <div>
-                        <div class="font-bold flex items-center gap-1.5">
-                            <span class="w-2 h-2 rounded-full ${f.online ? 'bg-emerald-400' : 'bg-slate-500'}"></span>
-                            ${f.name}
-                        </div>
-                        <div class="text-[10px] text-gold-400">${f.tier} · 已認證</div>
-                    </div>
-                </button>
-            `).join('');
-            renderActiveFriendMessages();
-        }
-
-        function selectFriendChat(email) {
-            state.activeFriendEmail = email;
-            const friend = state.friends.find(f => f.email === email);
-            if (friend) {
-                document.getElementById('active-chat-friend-name').textContent = `${friend.name} (${friend.tier})`;
-            }
-            renderVerifiedFriends();
-        }
-
-        function renderActiveFriendMessages() {
-            const box = document.getElementById('friend-chat-messages');
-            const msgs = state.chatHistory[state.activeFriendEmail] || [];
-            box.innerHTML = msgs.map(m => `
-                <div class="flex ${m.sender === 'me' ? 'justify-end' : 'justify-start'}">
-                    <div class="max-w-[80%] px-3 py-2 rounded-2xl ${m.sender === 'me' ? 'gold-gradient text-navy-950 font-medium' : 'bg-navy-800 text-slate-200'}">
-                        ${m.text}
-                    </div>
-                </div>
-            `).join('');
-            box.scrollTop = box.scrollHeight;
-        }
-
-        function sendFriendMessage(e) {
-            e.preventDefault();
-            const inp = document.getElementById('friend-msg-input');
-            const text = inp.value.trim();
-            if (!text) return;
-
-            if (!state.chatHistory[state.activeFriendEmail]) state.chatHistory[state.activeFriendEmail] = [];
-            state.chatHistory[state.activeFriendEmail].push({ sender: 'me', text });
-            inp.value = '';
-            renderActiveFriendMessages();
-
-            setTimeout(() => {
-                state.chatHistory[state.activeFriendEmail].push({
-                    sender: 'them',
-                    text: '收到！我們可以一起使用好友推薦點數折抵這次的海景套房住宿 ✨'
-                });
-                renderActiveFriendMessages();
-            }, 800);
-        }
-
-        function shareRoomToFriend() {
-            if (!state.chatHistory[state.activeFriendEmail]) state.chatHistory[state.activeFriendEmail] = [];
-            state.chatHistory[state.activeFriendEmail].push({
-                sender: 'me',
-                text: '🏨 【推薦房型】270° 行政全景海景套房 · 使用我的專屬邀請碼現折 NT$500！'
-            });
-            renderActiveFriendMessages();
-        }
-
-        function copyReferralLink() {
-            const inp = document.getElementById('referral-link-input');
-            inp.select();
-            navigator.clipboard?.writeText(inp.value);
-            showToast('專屬好友推薦連結已複製！');
-        }
-
-        function copyCoupon(code) {
-            navigator.clipboard?.writeText(code);
-            showToast(`優惠代碼 ${code} 已複製到剪貼簿`);
-        }
-
-        // ================= 其他實用功能 =================
-        function scrollToRoomsWithDates() {
-            document.getElementById('co-checkin').value = document.getElementById('search-checkin').value;
-            document.getElementById('co-checkout').value = document.getElementById('search-checkout').value;
-            document.getElementById('rooms').scrollIntoView({ behavior: 'smooth' });
-            showToast('已更新所選日期即時空房與房價');
-        }
-
-        function openDiningModal(restaurantName) {
-            document.getElementById('dining-modal-title').textContent = restaurantName + ' · 線上訂位';
-            document.getElementById('dining-modal').classList.remove('hidden');
-        }
-
-        function submitDiningReservation(e) {
-            e.preventDefault();
-            closeModal('dining-modal');
-            showToast('餐廳席位已預約成功！簡訊確認函已發送');
-        }
-
-        function downloadMenuPDF(filename) {
-            showToast(`正在下載本季精選菜單：${filename}`);
-        }
-
-        function toggleFaq(btn) {
-            const content = btn.nextElementSibling;
-            content.classList.toggle('hidden');
-        }
-
-        function toggleAiChat() {
-            document.getElementById('ai-chat-widget').classList.toggle('hidden');
-        }
-
-        function askAiQuick(topic) {
-            const box = document.getElementById('ai-chat-messages');
-            box.innerHTML += `<div class="text-right"><span class="inline-block px-3 py-1.5 rounded-xl gold-gradient text-navy-950 font-semibold">${topic}</span></div>`;
-            let reply = '入住時間為 15:00 後，退房時間為 11:00 前，禮賓部提供 24 小時免費行李寄存。';
-            if (topic.includes('接駁')) reply = '高鐵站免費接駁車每日 10:30、13:30、15:30、18:30 由高鐵 3 號出口發車直達飯店大廳。';
-            if (topic.includes('方案')) reply = '最推薦「金卡尊榮年度會籍（NT$12,800）」，直接贈送一晚價值 NT$16,800 的海景套房住宿券並享全年訂房 8 折！';
-            setTimeout(() => {
-                box.innerHTML += `<div class="p-3 rounded-xl bg-navy-800/90 text-slate-200 leading-relaxed">${reply}</div>`;
-                box.scrollTop = box.scrollHeight;
-            }, 350);
-        }
-
-        function closeModal(id) {
-            document.getElementById(id).classList.add('hidden');
-        }
-
-        function showToast(msg) {
-            const t = document.getElementById('toast');
-            t.textContent = msg;
-            t.classList.remove('hidden');
-            clearTimeout(window._toastTimer);
-            window._toastTimer = setTimeout(() => t.classList.add('hidden'), 2800);
-        }
-
-        document.addEventListener('DOMContentLoaded', initApp);
-    </script>
+    init3D();
+  </script>
 </body>
 </html>
